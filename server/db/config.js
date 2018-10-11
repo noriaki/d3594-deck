@@ -1,6 +1,6 @@
 const resolve = require('./helpers/resolveDbUri');
 
-const appName = 'nextjs-micro-mongoose-boilerplate';
+const appName = 'd3594-deck';
 
 module.exports = {
   dbUri: resolve(appName),
