@@ -17,6 +17,7 @@
     "test": "NODE_ENV=test jest",
     "dev": "micro-dev --watch server",
     "build": "next build",
+    "db:import": "node scripts/replaceDbData.js",
     "start": "NODE_ENV=production micro"
   },
   "dependencies": {
