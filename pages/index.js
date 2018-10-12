@@ -23,7 +23,7 @@ const IndexPage = ({ classes }) => (
     </AppBar>
     <Paper className={classes.paper}>
       <Typography variant="h5" component="h3">張飛</Typography>
-      <Typography component="p">
+      <Typography>
         蜀の名将。劉備、関羽とは「桃園の誓い」を結んだ義兄弟。勇猛、無鉄砲、悪を非常に憎むことでよく知られている。
         長坂橋では二十騎ほどを率いて殿を務め、川に拠って橋を切り落とし、100万の曹軍を誰一人として寄せ付けなかった。
       </Typography>
