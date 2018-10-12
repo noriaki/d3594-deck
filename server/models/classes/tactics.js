@@ -1,7 +1,7 @@
 const { identify, md5 } = require('../concerns/identify');
 
 class Tactics {
-  static async import(json, originKey, sacrificeId) {
+  static async import(json, originKey, commanderId) {
     const origins = { init: '固有(初期)', analyzable: '分析' };
     const {
       name,
@@ -24,8 +24,8 @@ class Tactics {
       target,
       description,
     });
-    if (!tactics.sacrificeIds.includes(sacrificeId)) {
-      tactics.sacrificeIds.push(sacrificeId);
+    if (!tactics.commanderIds.includes(commanderId)) {
+      tactics.commanderIds.push(commanderId);
     }
     return tactics.save();
   }

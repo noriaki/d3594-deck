@@ -17,7 +17,7 @@ const tacticsSchema = new Schema({
   distance: { type: String },
   target: { type: String },
   description: { type: String },
-  sacrificeIds: [String],
+  commanderIds: [String],
   // effects: [EffectSchema],
 });
 
