@@ -16,6 +16,7 @@ const commanderSchema = new Schema({
   team: { type: String, required: true, enum: ['群', '魏', '蜀', '呉', '漢'] },
   army: { type: String, required: true, enum: ['弓', '歩', '騎'] },
   distance: { type: Number, required: true },
+  image: { type: String },
   maxStatus: MaxStatus.schema,
   minStatus: MinStatus.schema,
   deltaStatus: DeltaStatus.schema,

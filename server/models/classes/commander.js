@@ -12,6 +12,7 @@ class Commander {
       team,
       army,
       distance,
+      image,
       status,
     } = json;
     const commander = new this({
@@ -25,6 +26,7 @@ class Commander {
       team,
       army,
       distance,
+      image,
       maxStatus: status.max,
       minStatus: status.min,
       deltaStatus: status.delta,
