@@ -17,9 +17,11 @@
     "test": "NODE_ENV=test jest",
     "dev": "micro-dev --watch server",
     "build": "next build",
+    "db:import": "node scripts/replaceDbData.js",
     "start": "NODE_ENV=production micro"
   },
   "dependencies": {
+    "lodash.merge": "^4.6.1",
     "micro": "^9.3.3",
     "microrouter": "^2.2.3",
     "mongoose": "^5.3.2",

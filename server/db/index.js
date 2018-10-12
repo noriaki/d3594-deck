@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 
 const { dbUri } = require('./config');
 
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true);
+
 const connect = async () => {
   mongoose.Promise = Promise;
   await mongoose.connect(dbUri);
