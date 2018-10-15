@@ -1,5 +1,3 @@
-const { humanizeId, identify } = require('../concerns/identify');
-
 class Commander {
   // @async method
   static import(json) {
@@ -16,8 +14,6 @@ class Commander {
       status,
     } = json;
     const commander = new this({
-      id: humanizeId(json),
-      identifier: identify(json),
       name,
       special,
       description,

@@ -1,10 +1,12 @@
 const mongoose = require('mongoose');
 const { MaxStatus, MinStatus, DeltaStatus } = require('./status');
 const CommanderClass = require('./classes/commander');
+const { humanizeId, identify } = require('./concerns/identify');
 
 const { Schema } = mongoose;
 
 const commanderSchema = new Schema({
+  _id: { type: String, required: true },
   id: { type: String, required: true },
   identifier: { type: String, required: true },
   name: { type: String, required: true },
@@ -21,6 +23,28 @@ const commanderSchema = new Schema({
   minStatus: MinStatus.schema,
   deltaStatus: DeltaStatus.schema,
 });
+
+function setIdentifier() {
+  const {
+    name,
+    rarity,
+    special,
+    team,
+    army,
+  } = this;
+  const id = humanizeId({
+    name,
+    rarity,
+    special,
+    team,
+    army,
+  });
+  const identifier = identify(id);
+  this._id = identifier; // eslint-disable-line no-underscore-dangle
+  this.id = id;
+  this.identifier = identifier;
+}
+commanderSchema.pre('validate', setIdentifier);
 
 commanderSchema.loadClass(CommanderClass);
 const CommanderModel = mongoose.models.Commander || mongoose.model('Commander', commanderSchema);
