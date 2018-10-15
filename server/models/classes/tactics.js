@@ -13,8 +13,7 @@ class Tactics {
       description,
     } = json;
     const identifier = md5(name);
-    const tactics = await this.findOne({ identifier }) || new this({
-      identifier,
+    const tactics = await this.findById(identifier) || new this({
       name,
       origin: origins[originKey],
       type,
@@ -24,28 +23,31 @@ class Tactics {
       target,
       description,
     });
-    if (!tactics.commanderIds.includes(commanderId)) {
+    if (originKey === 'init' && !tactics.ownerIds.includes(commanderId)) {
+      tactics.ownerIds.push(commanderId);
+    }
+    if (originKey === 'analyzable' && !tactics.commanderIds.includes(commanderId)) {
       tactics.commanderIds.push(commanderId);
     }
     return tactics.save();
   }
 
-  // @async method
-  static importAll(jsons) {
-    return Promise.all(jsons.map(({ tactics, ...json }) => {
+  /* eslint-disable no-restricted-syntax, no-await-in-loop */
+  static async importAll(jsons) {
+    for (const data of jsons) {
+      const { tactics, ...json } = data;
       const commanderId = identify(json);
-      const promises = [];
       if (tactics.init != null) {
-        promises.push(this.import(tactics.init, 'init', commanderId));
+        await this.import(tactics.init, 'init', commanderId);
       }
-      promises.concat(tactics.analyzables.filter(
+      await Promise.all(tactics.analyzables.filter(
         analyzable => (analyzable !== null)
       ).map(
         analyzable => this.import(analyzable, 'analyzable', commanderId)
       ));
-      return Promise.all(promises);
-    }));
+    }
   }
+  /* eslint-enable no-restricted-syntax, no-await-in-loop */
 
   static getDataPath() { return './data/commanders/'; }
 }
