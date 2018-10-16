@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-const { MaxStatus, MinStatus, DeltaStatus } = require('./status');
-const CommanderClass = require('./classes/commander');
+const { MaxStatus, MinStatus, DeltaStatus } = require('./Status');
+const CommanderClass = require('./classes/Commander');
 const { humanizeId, identify } = require('./concerns/identify');
 
 const { Schema } = mongoose;

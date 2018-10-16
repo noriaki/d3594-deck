@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const TacticsClass = require('./classes/tactics');
+const TacticsClass = require('./classes/Tactics');
 const { md5 } = require('./concerns/identify');
 
 const { Schema } = mongoose;
