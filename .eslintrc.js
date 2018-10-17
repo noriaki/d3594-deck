@@ -30,6 +30,7 @@ module.exports = {
     'no-debugger': 'warn',
     'no-else-return': ['error', { allowElseIf: true }],
     'no-use-before-define': 'off',
+    'no-underscore-dangle': 'off',
     'no-confusing-arrow': ['error', { allowParens: true }],
     'function-paren-newline': 'off',
     'react/jsx-closing-bracket-location': [ 'error', 'after-props' ],
