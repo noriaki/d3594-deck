@@ -40,13 +40,15 @@ function setIdentifier() {
     army,
   });
   const identifier = identify(id);
-  this._id = identifier; // eslint-disable-line no-underscore-dangle
+  this._id = identifier;
   this.id = id;
   this.identifier = identifier;
 }
 commanderSchema.pre('validate', setIdentifier);
 
 commanderSchema.loadClass(CommanderClass);
-const CommanderModel = mongoose.models.Commander || mongoose.model('Commander', commanderSchema);
+const CommanderModel = (
+  mongoose.models.Commander || mongoose.model('Commander', commanderSchema)
+);
 
 module.exports = CommanderModel;

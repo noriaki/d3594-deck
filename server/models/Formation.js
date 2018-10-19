@@ -32,6 +32,8 @@ function setIdentifier() {
 formationSchema.pre('validate', setIdentifier);
 
 formationSchema.loadClass(FormationClass);
-const FormationModel = mongoose.models.Formation || mongoose.model('Formation', formationSchema);
+const FormationModel = (
+  mongoose.models.Formation || mongoose.model('Formation', formationSchema)
+);
 
 module.exports = FormationModel;
