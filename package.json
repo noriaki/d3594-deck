@@ -23,6 +23,7 @@
   "dependencies": {
     "@material-ui/core": "^3.2.0",
     "jss": "^9.8.7",
+    "lodash.isstring": "^4.0.1",
     "lodash.merge": "^4.6.1",
     "micro": "^9.3.3",
     "microrouter": "^2.2.3",
