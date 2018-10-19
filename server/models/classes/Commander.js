@@ -1,3 +1,5 @@
+const Tactics = require('../Tactics');
+
 class Commander {
   // @async method
   static import(json) {
@@ -36,6 +38,14 @@ class Commander {
   }
 
   static getDataPath() { return './data/commanders/'; }
+
+  // @async
+  specificTactics() {
+    return Tactics
+      .where('ownerIds').in(this.identifier)
+      .where('origin', '固有(初期)')
+      .findOne();
+  }
 }
 
 module.exports = Commander;
