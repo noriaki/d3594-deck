@@ -3,6 +3,8 @@ const { md5 } = require('../concerns/identify');
 
 const LearnedCommanderModel = require('../LearnedCommander');
 
+const positions = ['本営', '中衛', '前衛'];
+
 // async
 const toInstanceFromId = commanderIdOrInstance => (
   isString(commanderIdOrInstance)
@@ -11,15 +13,18 @@ const toInstanceFromId = commanderIdOrInstance => (
 );
 
 const toIdFromInstance = commander => (
-  isString(commander) ? commander : commander._id
+  (isString(commander) || commander == null) ? commander : commander._id
 );
 
 // async
 const stringId = commanderIdsOrInstances => Promise.all(
-  commanderIdsOrInstances.map(async (idOrInstance) => {
+  positions.map(async (position, index) => {
+    const idOrInstance = commanderIdsOrInstances[index];
     const commander = await toInstanceFromId(idOrInstance);
-    const commanderStringId = await commander.toString();
-    return commanderStringId;
+    const commanderStringId = (
+      commander != null ? await commander.toString() : '無し'
+    );
+    return `${position}：${commanderStringId}`;
   })
 ).then(stringIds => stringIds.join('\n'));
 
