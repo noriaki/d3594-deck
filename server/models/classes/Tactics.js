@@ -1,6 +1,17 @@
 const { identify, md5 } = require('../concerns/identify');
 
+const tacticsIdentify = (name, origin) => md5(`${name}-${origin}`);
+
 class Tactics {
+  static identify
+
+  // pre('validation') middleware
+  static setIdentifier() {
+    const identifier = tacticsIdentify(this.name, this.origin);
+    this._id = identifier;
+    this.identifier = identifier;
+  }
+
   static async import(json, originKey, commanderId) {
     const origins = { init: '固有(初期)', analyzable: '分析' };
     const {
@@ -12,10 +23,11 @@ class Tactics {
       target,
       description,
     } = json;
-    const identifier = md5(name);
+    const origin = origins[originKey];
+    const identifier = tacticsIdentify(name, origin);
     const tactics = await this.findById(identifier) || new this({
       name,
-      origin: origins[originKey],
+      origin,
       type,
       permissions,
       rate,
@@ -26,8 +38,8 @@ class Tactics {
     if (originKey === 'init' && !tactics.ownerIds.includes(commanderId)) {
       tactics.ownerIds.push(commanderId);
     }
-    if (originKey === 'analyzable' && !tactics.commanderIds.includes(commanderId)) {
-      tactics.commanderIds.push(commanderId);
+    if (originKey === 'analyzable' && !tactics.sourceCommanderIds.includes(commanderId)) {
+      tactics.sourceCommanderIds.push(commanderId);
     }
     return tactics.save();
   }

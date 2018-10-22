@@ -4923,6 +4923,11 @@ lodash.get@4.4.2:
   resolved "https://registry.yarnpkg.com/lodash.get/-/lodash.get-4.4.2.tgz#2d177f652fa31e939b4438d5341499dfa3825e99"
   integrity sha1-LRd/ZS+jHpObRDjVNBSZ36OCXpk=
 
+lodash.isstring@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/lodash.isstring/-/lodash.isstring-4.0.1.tgz#d527dfb5456eca7cc9bb95d5daeaf88ba54a5451"
+  integrity sha1-1SfftUVuynzJu5XV2ur4i6VKVFE=
+
 lodash.merge@^4.6.1:
   version "4.6.1"
   resolved "https://registry.yarnpkg.com/lodash.merge/-/lodash.merge-4.6.1.tgz#adc25d9cb99b9391c59624f379fbba60d7111d54"
@@ -5300,6 +5305,11 @@ mongodb-core@3.1.5:
   optionalDependencies:
     saslprep "^1.0.0"
 
+mongodb-uri@^0.9.7:
+  version "0.9.7"
+  resolved "https://registry.yarnpkg.com/mongodb-uri/-/mongodb-uri-0.9.7.tgz#0f771ad16f483ae65f4287969428e9fbc4aa6181"
+  integrity sha1-D3ca0W9IOuZfQoeWlCjp+8SqYYE=
+
 mongodb@3.1.6:
   version "3.1.6"
   resolved "https://registry.yarnpkg.com/mongodb/-/mongodb-3.1.6.tgz#6054641973b5bf5b5ae1c67dcbcf8fa88280273d"
@@ -5307,6 +5317,11 @@ mongodb@3.1.6:
   dependencies:
     mongodb-core "3.1.5"
     safe-buffer "^5.1.2"
+
+mongoose-autopopulate@^0.8.2:
+  version "0.8.2"
+  resolved "https://registry.yarnpkg.com/mongoose-autopopulate/-/mongoose-autopopulate-0.8.2.tgz#874587ac175feb25ff33eba25ea1bf388d690918"
+  integrity sha512-hrr1SQMYm1oLsKNuSFyWEPEMl3C6pWLJq8OKApsOxRRdOdIMnNDvSaXqJeD83zx4xffaDeVHVoxR29P560lmEQ==
 
 mongoose-legacy-pluralize@1.0.2:
   version "1.0.2"

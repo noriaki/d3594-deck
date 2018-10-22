@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
-const TacticsClass = require('./classes/tactics');
-const { md5 } = require('./concerns/identify');
+const TacticsClass = require('./classes/Tactics');
 
 const { Schema } = mongoose;
 
@@ -20,18 +19,15 @@ const tacticsSchema = new Schema({
   target: { type: String },
   description: { type: String },
   ownerIds: [String],
-  commanderIds: [String],
+  sourceCommanderIds: [String],
   // effects: [EffectSchema],
 });
 
-function setIdentifier() {
-  const identifier = md5(this.name);
-  this._id = identifier; // eslint-disable-line no-underscore-dangle
-  this.identifier = identifier;
-}
-tacticsSchema.pre('validate', setIdentifier);
+tacticsSchema.pre('validate', TacticsClass.setIdentifier);
 
 tacticsSchema.loadClass(TacticsClass);
-const TacticsModel = mongoose.models.Tactics || mongoose.model('Tactics', tacticsSchema);
+const TacticsModel = (
+  mongoose.models.Tactics || mongoose.model('Tactics', tacticsSchema)
+);
 
 module.exports = TacticsModel;
