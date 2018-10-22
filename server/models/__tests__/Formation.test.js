@@ -41,7 +41,7 @@ describe('LearnedCommander association model', () => {
       const commanders = await LearnedCommander.where('_id').in(expectedIds);
       await Formation.createAssociation(commanders, 'test');
 
-      const subject = await Formation.findOne().populate('commanders');
+      const subject = await Formation.findOne();
       expect(subject).not.toBeNull();
       expect(subject._id).toBe(md5(expectedIds.join()));
       expect(subject.name).toBe('test');
@@ -64,7 +64,7 @@ describe('LearnedCommander association model', () => {
       const commanders = await LearnedCommander.where('_id').in(expectedIds);
       await Formation.createAssociation(commanders, 'test');
 
-      const subject = await Formation.findOne().populate('commanders');
+      const subject = await Formation.findOne();
       expect(subject).not.toBeNull();
       expect(subject._id).toBe(md5(expectedIds.join()));
       expect(subject.name).toBe('test');
@@ -90,10 +90,7 @@ describe('LearnedCommander association model', () => {
       ));
       await Formation.createAssociation(commanders, 'test');
 
-      const subject = await Formation.findOne().populate({
-        path: 'commanders',
-        options: { retainNullValues: true },
-      });
+      const subject = await Formation.findOne();
       expect(subject).not.toBeNull();
       expect(subject._id).toBe(md5(expectedIds.join()));
       expect(subject.name).toBe('test');
@@ -116,7 +113,7 @@ describe('LearnedCommander association model', () => {
       const commanders = await LearnedCommander.where('_id').in(expectedIds);
       await Formation.createAssociation(commanders, 'test');
 
-      const subject = await Formation.findOne().populate('commanders');
+      const subject = await Formation.findOne();
       expect(subject).not.toBeNull();
       expect(subject._id).toBe(md5(expectedIds.join()));
       expect(subject.name).toBe('test');

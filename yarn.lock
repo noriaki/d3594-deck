@@ -5318,6 +5318,11 @@ mongodb@3.1.6:
     mongodb-core "3.1.5"
     safe-buffer "^5.1.2"
 
+mongoose-autopopulate@^0.8.2:
+  version "0.8.2"
+  resolved "https://registry.yarnpkg.com/mongoose-autopopulate/-/mongoose-autopopulate-0.8.2.tgz#874587ac175feb25ff33eba25ea1bf388d690918"
+  integrity sha512-hrr1SQMYm1oLsKNuSFyWEPEMl3C6pWLJq8OKApsOxRRdOdIMnNDvSaXqJeD83zx4xffaDeVHVoxR29P560lmEQ==
+
 mongoose-legacy-pluralize@1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/mongoose-legacy-pluralize/-/mongoose-legacy-pluralize-1.0.2.tgz#3ba9f91fa507b5186d399fb40854bff18fb563e4"

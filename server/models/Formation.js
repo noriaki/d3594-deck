@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const mongooseAutoPopulatePlugin = require('mongoose-autopopulate');
 const FormationClass = require('./classes/Formation');
 
 const { Schema } = mongoose;
@@ -6,9 +7,14 @@ const { Schema } = mongoose;
 const formationSchema = new Schema({
   _id: { type: String, required: true },
   name: { type: String },
-  commanders: [{ type: String, ref: 'LearnedCommander' }],
+  commanders: [{
+    type: String,
+    ref: 'LearnedCommander',
+    autopopulate: { options: { retainNullValues: true } },
+  }],
 });
 
+formationSchema.plugin(mongooseAutoPopulatePlugin);
 formationSchema.pre('validate', FormationClass.setIdentifier);
 
 formationSchema.loadClass(FormationClass);
