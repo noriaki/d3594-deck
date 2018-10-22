@@ -46,6 +46,7 @@
     "eslint-plugin-react": "^7.11.0",
     "jest": "^23.6.0",
     "micro-dev": "^3.0.0",
-    "microrouter-test-server": "^1.0.3"
+    "microrouter-test-server": "^1.0.3",
+    "mongodb-uri": "^0.9.7"
   }
 }

@@ -1,4 +1,7 @@
 const mongoose = require('mongoose');
+const mongodbUri = require('mongodb-uri');
+const resolveDbUri = require('./server/db/helpers/resolveDbUri');
+const { appName } = require('./server/db/config');
 const { connect, disconnect } = require('./server/db');
 
 // @async
@@ -18,6 +21,11 @@ const clearDB = () => {
 
 beforeEach(async () => {
   if (mongoose.connection.readyState === 0) {
+    try {
+      mongodbUri.formatMongoose(resolveDbUri(appName));
+    } catch (e) {
+      return;
+    }
     await connect(true);
   }
   await clearDB();
