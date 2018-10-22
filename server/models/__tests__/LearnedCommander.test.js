@@ -43,5 +43,23 @@ describe('LearnedCommander association model', () => {
         ])
       );
     });
+
+    it('`.toString` returning humanize id', async () => {
+      const commander = await Commander.findById(
+        '0022cae0ffb0ee3d8fce63d6d8cdc69f');
+      const additionalTactics = await Tactics.find({
+        origin: '分析',
+      }).sort('_id');
+      await LearnedCommander.createAssociation(
+        commander, additionalTactics
+      );
+      const subject = await LearnedCommander.findById(
+        'a7a476ff14e40130b89ba17a3d59b56a'
+      ).populate('commander').populate('tactics').populate('additionalTactics');
+
+      expect(await subject.toString()).toBe(
+        '★3・蒋琬・蜀・歩 (回避, 駆逐)'
+      );
+    });
   });
 });

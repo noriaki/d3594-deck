@@ -21,7 +21,7 @@ const stringId = async (commanderInstanceOrId, additionalTacticsInstancesOrIds) 
     commanderInstanceOrId, additionalTacticsInstancesOrIds
   );
   const additionalTacticsNames = additionalTactics.map(t => t.name);
-  return `${commander.id} (${additionalTacticsNames.join()})`;
+  return `${commander.id} (${additionalTacticsNames.join(', ')})`;
 };
 
 const identify = (commanderIdOrInstance, additionalTacticsIdsOrInstances) => {
@@ -53,7 +53,8 @@ class LearnedCommander {
     return lc;
   }
 
-  async humanizeId() {
+  // async
+  toString() {
     return stringId(this.commander, this.additionalTactics);
   }
 }
