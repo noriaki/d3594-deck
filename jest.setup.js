@@ -14,9 +14,9 @@ const clearDB = () => {
       'try set process.env.NODE_ENV = "test"',
     ].join(' '));
   }
-  Object.keys(mongoose.connection.collections).map(
+  return Promise.all(Object.keys(mongoose.connection.collections).map(
     name => mongoose.connection.collections[name].deleteMany({})
-  );
+  ));
 };
 
 beforeEach(async () => {
