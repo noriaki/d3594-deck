@@ -1,8 +1,8 @@
 const { readdirSync, readFileSync } = require('fs');
 const { resolve } = require('path');
 const { connect, disconnect } = require('../server/db');
-const Commander = require('../server/models/commander');
-const Tactics = require('../server/models/tactics');
+const Commander = require('../server/models/Commander');
+const Tactics = require('../server/models/Tactics');
 
 const logAndExit = (error) => { console.error(error); process.exit(1); };
 
