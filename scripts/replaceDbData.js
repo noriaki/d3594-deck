@@ -3,6 +3,7 @@ const { resolve } = require('path');
 const { connect, disconnect } = require('../server/db');
 const Commander = require('../server/models/Commander');
 const Tactics = require('../server/models/Tactics');
+const Formation = require('../server/models/Formation');
 
 const logAndExit = (error) => { console.error(error); process.exit(1); };
 
@@ -18,18 +19,24 @@ const getAllData = (modelClass) => {
 };
 
 const main = async () => {
+  // setup
   await connect();
+  await Formation.deleteMany({});
+  await Tactics.deleteMany({});
+  await Commander.deleteMany({});
 
   // Commander
   const commanderData = getAllData(Commander);
-  await Commander.deleteMany({});
   await Commander.importAll(commanderData);
 
   // Tactics
   const tacticsData = getAllData(Tactics);
-  await Tactics.deleteMany({});
   await Tactics.importAll(tacticsData);
 
+  // Formation
+  await Formation.importSampleData();
+
+  // teardown
   await disconnect();
 };
 
