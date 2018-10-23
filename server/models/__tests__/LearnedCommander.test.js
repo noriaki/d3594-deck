@@ -24,7 +24,7 @@ describe('LearnedCommander association model', () => {
       );
       const subject = await LearnedCommander.findById(
         'a7a476ff14e40130b89ba17a3d59b56a'
-      ).populate(['commander', 'tactics', 'additionalTactics']);
+      );
       expect(subject).not.toBeNull();
       expect(subject.commander).toBeInstanceOf(Commander);
       expect(subject.commander).toHaveProperty(
@@ -55,7 +55,7 @@ describe('LearnedCommander association model', () => {
       );
       const subject = await LearnedCommander.findById(
         'a7a476ff14e40130b89ba17a3d59b56a'
-      ).populate('commander').populate('tactics').populate('additionalTactics');
+      );
 
       expect(await subject.toString()).toBe(
         '★3・蒋琬・蜀・歩 (回避, 駆逐)'
