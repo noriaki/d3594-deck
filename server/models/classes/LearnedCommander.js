@@ -38,10 +38,13 @@ class LearnedCommander {
     this.identifier = identifier;
   }
 
-  static async createAssociation(commander, additionalTactics = []) {
-    const identifier = identify(commander, additionalTactics);
+  static async createAssociation(commanderInstanceOrId, additionalTacticsInstancesOrIds = []) {
+    const identifier = identify(commanderInstanceOrId, additionalTacticsInstancesOrIds);
     let lc = await this.findById(identifier);
     if (lc == null) {
+      const [commander, additionalTactics] = await toInstanceFromId(
+        commanderInstanceOrId, additionalTacticsInstancesOrIds
+      );
       const specificTactics = await commander.specificTactics();
       lc = new this({
         commander: commander._id,
