@@ -1,0 +1,71 @@
+{
+  "url": "https://flash-onlinegames.net/daisangokushi/post-183/",
+  "id": "post-183",
+  "imageUrl": "https://cdn.expi-games.jp/mu/img/object/imageLarge/2/190a301e773f022090b7d840b7d4ce5a0967fa30.jpg",
+  "name": "孫堅",
+  "special": null,
+  "description": "孫策と孫権の父。「反董卓連合の十八鎮諸侯」のうちの1鎮。ひときわ抜きんでた活躍を見せる。 後に董卓の長安遷都により、孫堅は洛陽に進駐し、井戸の中から玉璽を発見する。それにより自分が天下の覇者となることを確信するも、黄祖との戦いにおいて流れ矢に当たって命を落とす。",
+  "rarity": 5,
+  "cost": 3.5,
+  "team": "呉",
+  "army": "歩",
+  "distance": 3,
+  "status": {
+    "min": {
+      "attack": 90,
+      "defense": 100,
+      "intelligence": 72,
+      "siege": 20,
+      "velocity": 36
+    },
+    "max": {
+      "attack": 182,
+      "defense": 202,
+      "intelligence": 111,
+      "siege": 123,
+      "velocity": 63
+    },
+    "delta": {
+      "attack": 1.89,
+      "defense": 2.09,
+      "intelligence": 0.8,
+      "siege": 2.11,
+      "velocity": 0.57
+    }
+  },
+  "tactics": {
+    "init": {
+      "id": "19545",
+      "url": "https://expi-games.jp/d3/object/detail/19545",
+      "name": "遺志",
+      "type": "指揮",
+      "distance": 6,
+      "permissions": [
+        "歩"
+      ],
+      "rate": null,
+      "target": "自軍単体",
+      "description": "戦闘開始後3ターン目から、自軍前衛の歩兵または弓兵の兵力が大量に回復。その後、通常攻撃を受けると反撃を行う(ダメージ率42.5~85％)。同時に兵力を回復できなくなる。戦闘終了後まで持続。"
+    },
+    "analyzables": [
+      {
+        "id": "19721",
+        "url": "https://expi-games.jp/d3/object/detail/19721",
+        "name": "戦必断金",
+        "type": "指揮",
+        "distance": 4,
+        "permissions": [
+          "弓",
+          "歩",
+          "騎"
+        ],
+        "rate": null,
+        "target": "敵軍複数(2)",
+        "description": "戦闘開始後3ターン、敵軍複数が毎ターン45~90％の確率で臆病状態になり、通常攻撃が行えなくなる。"
+      },
+      null
+    ]
+  },
+  "crawledAt": "2018-10-12T08:31:34.419Z",
+  "image": "6709e590857413afa7934777258e9d2f.jpg"
+}
