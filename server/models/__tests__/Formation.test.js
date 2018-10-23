@@ -18,7 +18,7 @@ describe('LearnedCommander association model', () => {
       ];
       const data = files.map((basename) => {
         const file = `${basename}.json`;
-        const dataPath = resolve(__dirname, '../../../data/commanders', file);
+        const dataPath = resolve(__dirname, '../__factories__', file);
         return JSON.parse(readFileSync(dataPath));
       });
       await Commander.importAll(data);
