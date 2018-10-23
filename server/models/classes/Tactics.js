@@ -3,8 +3,6 @@ const { identify, md5 } = require('../concerns/identify');
 const tacticsIdentify = (name, origin) => md5(`${name}-${origin}`);
 
 class Tactics {
-  static identify
-
   // pre('validation') middleware
   static setIdentifier() {
     const identifier = tacticsIdentify(this.name, this.origin);
