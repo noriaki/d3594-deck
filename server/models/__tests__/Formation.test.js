@@ -8,7 +8,7 @@ import { md5 } from '../concerns/identify';
 
 process.env.TEST_SUITE = 'model-test-Formation';
 
-describe('LearnedCommander association model', () => {
+describe('Formation association model', () => {
   describe('create associate', () => {
     beforeEach(async () => {
       const files = [
@@ -124,6 +124,42 @@ describe('LearnedCommander association model', () => {
         '本営：★5・孫堅・呉・歩 (駆逐, 戦必断金)',
         '中衛：無し',
         '前衛：無し',
+      ].join('\n');
+      expect(await subject.toString()).toBe(expectedStringId);
+    });
+  });
+
+  describe('.importSampleData', () => {
+    beforeEach(async () => {
+      const files = [
+        'e0f015ef64ca6eef2ed4ad5debcd3fde', // S2陸遜
+        '30f401ff9134eb74663697174aa3ff10', // 周瑜
+        '29fb183da598388eee0cd2f73832de8e', // 呂蒙
+        '9daf2ffe7eec142b9231445a8ee7d831', // 水淹七軍
+        'c78a48266ec5166844c7df427834a520', // 渾水摸魚
+        'a083468786c98194d8955d0aa7085a56', // 掎角之勢
+        'a9f7deacd67d08a2ea7ff2d4255b4171', // 反計之策
+      ];
+      const data = files.map((basename) => {
+        const file = `${basename}.json`;
+        const dataPath = resolve(__dirname, '../__factories__', file);
+        return JSON.parse(readFileSync(dataPath));
+      });
+      await Commander.importAll(data);
+      await Tactics.importAll(data);
+    });
+
+    it('create a formation', async () => {
+      await Formation.importSampleData();
+      const subject = await Formation.findById(
+        '43e0f069ab00049908ab34390a9c45ca'
+      );
+      expect(subject).not.toBeNull();
+      expect(subject.name).toBe('大都督（呉レンジャー）');
+      const expectedStringId = [
+        '本営：★5・陸遜(S2)・呉・歩 (不攻, 十面埋伏)',
+        '中衛：★5・周瑜・呉・弓 (水淹七軍, 渾水摸魚)',
+        '前衛：★5・呂蒙・呉・弓 (掎角之勢, 反計之策)',
       ].join('\n');
       expect(await subject.toString()).toBe(expectedStringId);
     });
