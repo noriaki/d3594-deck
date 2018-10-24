@@ -54,6 +54,10 @@ class Formation {
     return formation;
   }
 
+  // alias Model.findById given defaults
+  // async
+  static fetchById(id) { return this.findById(id); }
+
   // async
   toString() { return stringId(this.commanders); }
 
