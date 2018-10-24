@@ -3,11 +3,11 @@ import { readFileSync } from 'fs';
 import { get } from 'microrouter';
 import { createServer } from 'microrouter-test-server';
 
-import Commander from '../../models/Commander';
-import Tactics from '../../models/Tactics';
+import Commander from '../../../models/Commander';
+import Tactics from '../../../models/Tactics';
 
 import formationRouters from '../formation';
-import Formation from '../../models/Formation';
+import Formation from '../../../models/Formation';
 
 describe('Routes: `/f`', () => {
   let server;
@@ -37,7 +37,7 @@ describe('Routes: `/f`', () => {
       const data = files.map((basename) => {
         const file = `${basename}.json`;
         const dataPath = resolve(
-          __dirname, '../../models/__factories__', file
+          __dirname, '../../../models/__factories__', file
         );
         return JSON.parse(readFileSync(dataPath));
       });

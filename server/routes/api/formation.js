@@ -1,7 +1,7 @@
 const { send } = require('micro');
 
-const setApiHeaders = require('./helpers/setApiHeaders');
-const Formation = require('../models/Formation');
+const setApiHeaders = require('../helpers/setApiHeaders');
+const Formation = require('../../models/Formation');
 
 const show = async (req, res) => {
   setApiHeaders(res);
