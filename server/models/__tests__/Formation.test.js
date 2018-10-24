@@ -147,10 +147,10 @@ describe('Formation association model', () => {
       });
       await Commander.importAll(data);
       await Tactics.importAll(data);
+      await Formation.importSampleData();
     });
 
     it('create a formation', async () => {
-      await Formation.importSampleData();
       const subject = await Formation.findById(
         '43e0f069ab00049908ab34390a9c45ca'
       );
@@ -162,6 +162,13 @@ describe('Formation association model', () => {
         '前衛：★5・呂蒙・呉・弓 (掎角之勢, 反計之策)',
       ].join('\n');
       expect(await subject.toString()).toBe(expectedStringId);
+    });
+
+    it('.siege is sum of commanders siege', async () => {
+      const subject = await Formation.findById(
+        '43e0f069ab00049908ab34390a9c45ca'
+      );
+      expect(subject.siege).toBe(196);
     });
   });
 });

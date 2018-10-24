@@ -57,6 +57,15 @@ class Formation {
   // async
   toString() { return stringId(this.commanders); }
 
+  get siege() {
+    const siegeValues = this.commanders.map(
+      ({ commander }) => (commander.maxStatus.siege)
+    );
+    return Math.floor(
+      siegeValues.reduce((total, current) => (total + current))
+    );
+  }
+
   static async importSampleData() {
     const commanderIds = [
       'e0f015ef64ca6eef2ed4ad5debcd3fde', // S2陸遜
