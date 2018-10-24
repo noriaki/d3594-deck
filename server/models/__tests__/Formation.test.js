@@ -177,5 +177,12 @@ describe('Formation association model', () => {
       );
       expect(subject.velocity).toBe(62);
     });
+
+    it('.cost is sum of commanders cost', async () => {
+      const subject = await Formation.findById(
+        '43e0f069ab00049908ab34390a9c45ca'
+      );
+      expect(subject.cost).toBe(9.5);
+    });
   });
 });

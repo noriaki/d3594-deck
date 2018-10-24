@@ -73,6 +73,13 @@ class Formation {
     return Math.floor(Math.min(...velocityValues));
   }
 
+  get cost() {
+    const costValues = this.commanders.map(
+      ({ commander }) => (commander.cost)
+    );
+    return costValues.reduce((total, current) => (total + current));
+  }
+
   static async importSampleData() {
     const commanderIds = [
       'e0f015ef64ca6eef2ed4ad5debcd3fde', // S2陸遜
