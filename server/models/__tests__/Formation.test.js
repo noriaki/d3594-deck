@@ -170,5 +170,12 @@ describe('Formation association model', () => {
       );
       expect(subject.siege).toBe(196);
     });
+
+    it('.velocity is min of commanders velocity', async () => {
+      const subject = await Formation.findById(
+        '43e0f069ab00049908ab34390a9c45ca'
+      );
+      expect(subject.velocity).toBe(62);
+    });
   });
 });

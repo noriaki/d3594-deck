@@ -66,6 +66,13 @@ class Formation {
     );
   }
 
+  get velocity() {
+    const velocityValues = this.commanders.map(
+      ({ commander }) => (commander.maxStatus.velocity)
+    );
+    return Math.floor(Math.min(...velocityValues));
+  }
+
   static async importSampleData() {
     const commanderIds = [
       'e0f015ef64ca6eef2ed4ad5debcd3fde', // S2陸遜
