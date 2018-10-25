@@ -1,3 +1,4 @@
+const isString = require('lodash.isstring');
 const { createHash } = require('crypto');
 
 const humanizeId = ({
@@ -12,8 +13,7 @@ const humanizeId = ({
 };
 
 const identify = identifier => (
-  typeof identifier === 'string'
-    ? md5(identifier) : md5(humanizeId(identifier))
+  isString(identifier) ? md5(identifier) : md5(humanizeId(identifier))
 );
 
 const md5 = (src) => {
