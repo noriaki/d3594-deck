@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
 const mongooseAutoPopulatePlugin = require('mongoose-autopopulate');
+const isString = require('lodash.isstring');
+const { md5 } = require('./concerns/identify');
+const TacticsModel = require('./Tactics');
 const LearnedCommanderClass = require('./classes/LearnedCommander');
 
 const { Schema } = mongoose;
@@ -24,8 +27,49 @@ const learnedCommanderSchema = new Schema({
   }],
 });
 
+const toIdFromInstance = insOrId => (
+  (isString(insOrId) || insOrId == null) ? insOrId : insOrId._id
+);
+
+const identify = (commanderIdOrInstance, additionalTacticsIdsOrInstances) => {
+  const commanderId = toIdFromInstance(commanderIdOrInstance);
+  const additionalTacticsIds = additionalTacticsIdsOrInstances.map(
+    toIdFromInstance
+  );
+  return md5(`${commanderId}(${additionalTacticsIds.join()})`);
+};
+
+function setIdentifier() {
+  const identifier = identify(this.commander, this.additionalTactics);
+  this._id = identifier;
+  this.identifier = identifier;
+}
+
+async function setSpecificTactics() {
+  const commanderId = toIdFromInstance(this.commander);
+  const specificTactics = await TacticsModel.fetchByOwnerId(commanderId);
+  this.tactics = specificTactics._id;
+}
+
+async function createAssociation(commander, additionalTactics = []) {
+  const identifier = identify(commander, additionalTactics);
+  const commanderId = toIdFromInstance(commander);
+  const additionalTacticsIds = additionalTactics.map(toIdFromInstance);
+  let lc = await this.findById(identifier);
+  if (lc == null) {
+    lc = new this({
+      commander: commanderId,
+      additionalTactics: additionalTacticsIds,
+    });
+    await lc.save();
+  }
+  return lc;
+}
+learnedCommanderSchema.static('createAssociation', createAssociation);
+
 learnedCommanderSchema.plugin(mongooseAutoPopulatePlugin);
-learnedCommanderSchema.pre('validate', LearnedCommanderClass.setIdentifier);
+learnedCommanderSchema.pre('validate', setIdentifier);
+learnedCommanderSchema.pre('validate', setSpecificTactics);
 
 learnedCommanderSchema.loadClass(LearnedCommanderClass);
 const LearnedCommanderModel = (

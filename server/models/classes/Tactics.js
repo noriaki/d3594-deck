@@ -60,6 +60,12 @@ class Tactics {
   /* eslint-enable no-restricted-syntax, no-await-in-loop */
 
   static getDataPath() { return './data/commanders/'; }
+
+  // @async
+  static fetchByOwnerId(id) {
+    return this
+      .where('ownerIds').in(id).where('origin', '固有(初期)').findOne();
+  }
 }
 
 module.exports = Tactics;
