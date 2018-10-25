@@ -41,10 +41,7 @@ class Commander {
 
   // @async
   specificTactics() {
-    return Tactics
-      .where('ownerIds').in(this.identifier)
-      .where('origin', '固有(初期)')
-      .findOne();
+    return Tactics.fetchByOwnerId(this._id);
   }
 }
 
