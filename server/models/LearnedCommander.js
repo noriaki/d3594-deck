@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const mongooseAutoPopulatePlugin = require('mongoose-autopopulate');
 const isString = require('lodash.isstring');
-const { md5 } = require('./concerns/identify');
+const { md5, toIdFromInstance } = require('./concerns/identify');
 const TacticsModel = require('./Tactics');
 const LearnedCommanderClass = require('./classes/LearnedCommander');
 
@@ -26,10 +26,6 @@ const learnedCommanderSchema = new Schema({
     autopopulate: { options: { retainNullValues: true } },
   }],
 });
-
-const toIdFromInstance = insOrId => (
-  (isString(insOrId) || insOrId == null) ? insOrId : insOrId._id
-);
 
 const identify = (commanderIdOrInstance, additionalTacticsIdsOrInstances) => {
   const commanderId = toIdFromInstance(commanderIdOrInstance);

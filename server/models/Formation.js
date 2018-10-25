@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const mongooseAutoPopulatePlugin = require('mongoose-autopopulate');
-const isString = require('lodash.isstring');
-const { md5 } = require('./concerns/identify');
+const { md5, toIdFromInstance } = require('./concerns/identify');
 const FormationClass = require('./classes/Formation');
 
 const { Schema } = mongoose;
@@ -15,10 +14,6 @@ const formationSchema = new Schema({
     autopopulate: { options: { retainNullValues: true } },
   }],
 });
-
-const toIdFromInstance = commander => (
-  (isString(commander) || commander == null) ? commander : commander._id
-);
 
 const identify = (commanderIdsOrInstances) => {
   const commanderIds = commanderIdsOrInstances.map(toIdFromInstance);
