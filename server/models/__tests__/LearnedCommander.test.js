@@ -12,7 +12,7 @@ describe('LearnedCommander association model', () => {
       const file = '0022cae0ffb0ee3d8fce63d6d8cdc69f.json';
       const dataPath = resolve(__dirname, '../__factories__', file);
       const data = JSON.parse(readFileSync(dataPath));
-      await Commander.import(data);
+      await Commander.importData(data);
       await Tactics.importAll([data]);
     });
 
@@ -57,7 +57,7 @@ describe('LearnedCommander association model', () => {
         'a7a476ff14e40130b89ba17a3d59b56a'
       );
 
-      expect(await subject.toString()).toBe(
+      expect(subject.toString()).toBe(
         '★3・蒋琬・蜀・歩 (回避, 駆逐)'
       );
     });

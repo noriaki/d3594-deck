@@ -53,7 +53,7 @@ describe('Formation association model', () => {
         '中衛：★3・董荼那・群・騎 (戦必断金, 頑抗)',
         '前衛：★3・蒋琬・蜀・歩 (回避, 駆逐)',
       ].join('\n');
-      expect(await subject.toString()).toBe(expectedStringId);
+      expect(subject.toString()).toBe(expectedStringId);
     });
 
     it('when passed 2 commanders', async () => {
@@ -76,7 +76,7 @@ describe('Formation association model', () => {
         '中衛：★3・董荼那・群・騎 (戦必断金, 頑抗)',
         '前衛：無し',
       ].join('\n');
-      expect(await subject.toString()).toBe(expectedStringId);
+      expect(subject.toString()).toBe(expectedStringId);
     });
 
     it('when passed 2 commanders, that is including `null`', async () => {
@@ -103,7 +103,7 @@ describe('Formation association model', () => {
         '中衛：無し',
         '前衛：★3・蒋琬・蜀・歩 (回避, 駆逐)',
       ].join('\n');
-      expect(await subject.toString()).toBe(expectedStringId);
+      expect(subject.toString()).toBe(expectedStringId);
     });
 
     it('when passed 1 commander', async () => {
@@ -125,7 +125,7 @@ describe('Formation association model', () => {
         '中衛：無し',
         '前衛：無し',
       ].join('\n');
-      expect(await subject.toString()).toBe(expectedStringId);
+      expect(subject.toString()).toBe(expectedStringId);
     });
   });
 
@@ -161,7 +161,7 @@ describe('Formation association model', () => {
         '中衛：★5・周瑜・呉・弓 (水淹七軍, 渾水摸魚)',
         '前衛：★5・呂蒙・呉・弓 (掎角之勢, 反計之策)',
       ].join('\n');
-      expect(await subject.toString()).toBe(expectedStringId);
+      expect(subject.toString()).toBe(expectedStringId);
     });
 
     it('.siege is sum of commanders siege', async () => {
