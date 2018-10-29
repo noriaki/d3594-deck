@@ -34,7 +34,6 @@ const IndexPage = ({ classes, formation }) => (
 
 IndexPage.getInitialProps = async ({ req, query }) => {
   const isServer = !!req;
-  console.log(`render in ${isServer ? 'server' : 'client'}`);
   if (isServer) {
     const { formation } = query;
     return { formation };
