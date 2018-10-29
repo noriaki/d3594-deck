@@ -1,9 +1,11 @@
 const { parse } = require('url');
 const next = require('next');
 const { get, router } = require('microrouter');
+const { readdirSync } = require('fs');
+const { resolve } = require('path');
 
 const db = require('./db');
-const routes = require('./routes');
+const createRoutes = require('./routes');
 
 const dev = process.env.NODE_ENV !== 'production';
 
@@ -15,15 +17,27 @@ const nextJsRouter = (req, res) => {
   return handle(req, res, parsedUrl);
 };
 
-const setup = async (handler) => {
-  await app.prepare();
-  await db.connect();
-  return handler;
+const preloadModels = () => {
+  const dirPath = resolve(__dirname, './models');
+  const correctFileRegexp = /.*\.js$/;
+  const correctFile = filename => correctFileRegexp.test(filename);
+  readdirSync(dirPath)
+    .filter(correctFile)
+    .forEach((f) => {
+      // eslint-disable-next-line global-require, import/no-dynamic-require
+      require(resolve(dirPath, f));
+    });
 };
 
-module.exports = setup(
-  router(...[
+const setup = async () => {
+  await app.prepare();
+  await db.connect();
+  preloadModels();
+  const routes = createRoutes(app);
+  return router(...[
     ...routes,
     get('/*', nextJsRouter), // default route
-  ])
-);
+  ]);
+};
+
+module.exports = setup();
