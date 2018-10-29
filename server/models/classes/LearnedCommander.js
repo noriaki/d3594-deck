@@ -1,5 +1,5 @@
 class LearnedCommander {
-  toString() {
+  get humanize() {
     const additionalTacticsNames = this.additionalTactics.map(t => t.name);
     return `${this.commander.id} (${additionalTacticsNames.join(', ')})`;
   }

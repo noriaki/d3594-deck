@@ -2,16 +2,14 @@ const positions = ['本営', '中衛', '前衛'];
 
 const stringId = commanders => positions.map((position, index) => {
   const commander = commanders[index];
-  const commanderStringId = (
-    commander != null ? commander.toString() : '無し'
-  );
+  const commanderStringId = commander != null ? commander.humanize : '無し';
   return `${position}：${commanderStringId}`;
 }).join('\n');
 
 class Formation {
   static get positions() { return positions; }
 
-  toString() { return stringId(this.commanders); }
+  get humanize() { return stringId(this.commanders); }
 
   get siege() {
     const siegeValues = this.commanders.map(

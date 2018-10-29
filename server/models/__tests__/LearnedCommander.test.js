@@ -44,7 +44,7 @@ describe('LearnedCommander association model', () => {
       );
     });
 
-    it('`.toString` returning humanize id', async () => {
+    it('`.humanize` returning pretty text human friendly', async () => {
       const commander = await Commander.findById(
         '0022cae0ffb0ee3d8fce63d6d8cdc69f');
       const additionalTactics = await Tactics.find({
@@ -57,7 +57,7 @@ describe('LearnedCommander association model', () => {
         'a7a476ff14e40130b89ba17a3d59b56a'
       );
 
-      expect(subject.toString()).toBe(
+      expect(subject.humanize).toBe(
         '★3・蒋琬・蜀・歩 (回避, 駆逐)'
       );
     });
