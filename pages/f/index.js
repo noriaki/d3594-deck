@@ -6,15 +6,18 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
+import Formation from '../../components/Formation';
+
 const styles = theme => ({
   paper: {
     ...theme.mixins.gutters(),
-    paddingTop: theme.spacing.unit * 2,
-    paddingBottom: theme.spacing.unit * 2,
+    paddingLeft: theme.spacing.unit,
+    paddingRight: theme.spacing.unit,
+    padding: theme.spacing.unit,
   },
 });
 
-const IndexPage = ({ classes, formation }) => (
+const FormationDetailPage = ({ classes, formation }) => (
   <div>
     <AppBar position="sticky">
       <Toolbar>
@@ -22,17 +25,21 @@ const IndexPage = ({ classes, formation }) => (
       </Toolbar>
     </AppBar>
     <Paper className={classes.paper}>
+      <Formation commanders={formation.commanders} />
+    </Paper>
+    <Paper className={classes.paper}>
       <Typography variant="h5" component="h3">コスト</Typography>
       <Typography>{formation.cost}</Typography>
       <Typography variant="h5" component="h3">速度</Typography>
       <Typography>{formation.velocity}</Typography>
       <Typography variant="h5" component="h3">攻城</Typography>
       <Typography>{formation.siege}</Typography>
+      <pre>{formation.humanize}</pre>
     </Paper>
   </div>
 );
 
-IndexPage.getInitialProps = async ({ req, query }) => {
+FormationDetailPage.getInitialProps = async ({ req, query }) => {
   const isServer = !!req;
   if (isServer) {
     const { formation } = query;
@@ -46,9 +53,11 @@ IndexPage.getInitialProps = async ({ req, query }) => {
   return { formation: json };
 };
 
-IndexPage.propTypes = {
+FormationDetailPage.propTypes = {
   classes: PropTypes.objectOf(PropTypes.string).isRequired,
-  formation: PropTypes.objectOf(PropTypes.string).isRequired,
+  formation: PropTypes.objectOf(PropTypes.oneOfType(
+    [PropTypes.string, PropTypes.number, PropTypes.array]
+  )).isRequired,
 };
 
-export default withStyles(styles)(IndexPage);
+export default withStyles(styles)(FormationDetailPage);
