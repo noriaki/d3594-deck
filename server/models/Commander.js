@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const { MaxStatus, MinStatus, DeltaStatus } = require('./Status');
+const Tactics = require('./Tactics');
 const CommanderClass = require('./classes/Commander');
 const { humanizeId, identify } = require('./concerns/identify');
 
@@ -45,6 +46,57 @@ function setIdentifier() {
   this.identifier = identifier;
 }
 commanderSchema.pre('validate', setIdentifier);
+
+// @async
+function specificTactics() {
+  return Tactics.fetchByOwnerId(this._id);
+}
+
+commanderSchema.method('specificTactics', specificTactics);
+
+// @async method
+function importData(json) {
+  const {
+    name,
+    special,
+    description,
+    rarity,
+    cost,
+    team,
+    army,
+    distance,
+    image,
+    status,
+  } = json;
+  const commander = new this({
+    name,
+    special,
+    description,
+    rarity,
+    cost,
+    team,
+    army,
+    distance,
+    image,
+    maxStatus: status.max,
+    minStatus: status.min,
+    deltaStatus: status.delta,
+  });
+  return commander.save();
+}
+
+commanderSchema.static('importData', importData);
+
+// @async method
+function importAll(jsons) {
+  return Promise.all(jsons.map(json => this.importData(json)));
+}
+
+commanderSchema.static('importAll', importAll);
+
+const getDataPath = () => './data/commanders/';
+
+commanderSchema.static('getDataPath', getDataPath);
 
 commanderSchema.loadClass(CommanderClass);
 const CommanderModel = (

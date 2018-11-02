@@ -12,7 +12,7 @@ describe('Commander model', () => {
       const file = '0022cae0ffb0ee3d8fce63d6d8cdc69f.json';
       const dataPath = resolve(__dirname, '../__factories__', file);
       const data = JSON.parse(readFileSync(dataPath));
-      commander = await Commander.import(data);
+      commander = await Commander.importData(data);
       await Tactics.importAll([data]);
     });
 

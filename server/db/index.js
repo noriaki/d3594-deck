@@ -6,6 +6,9 @@ const { appName, dbUri } = require('./config');
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
+mongoose.set('toJSON', {
+  transform: true, flattenDecimals: true, getters: true,
+});
 mongoose.Promise = Promise;
 
 const connect = async (refresh = false) => {

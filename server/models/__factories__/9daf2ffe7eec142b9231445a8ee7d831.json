@@ -1,0 +1,71 @@
+{
+  "url": "https://flash-onlinegames.net/daisangokushi/post-412/",
+  "id": "post-412",
+  "imageUrl": "https://cdn.expi-games.jp/mu/img/object/imageLarge/2/a6364bd79ca3e3588f5c0ae3b1da07968a9a341e.png",
+  "name": "龐統",
+  "special": null,
+  "description": "「鳳雛」と称され、諸葛亮と並ぶ二大軍師の一人。劉備の二大軍師の一人である。劉備の劉璋討伐に協力し、輝かしい功績を立てる。しかし、蜀侵攻の途中、落鳳坡で伏兵の矢を受け命を落とす。",
+  "rarity": 4,
+  "cost": 2.5,
+  "team": "蜀",
+  "army": "歩",
+  "distance": 3,
+  "status": {
+    "min": {
+      "attack": 59,
+      "defense": 71,
+      "intelligence": 98,
+      "siege": 18,
+      "velocity": 23
+    },
+    "max": {
+      "attack": 93,
+      "defense": 112,
+      "intelligence": 167,
+      "siege": 74,
+      "velocity": 35
+    },
+    "delta": {
+      "attack": 0.71,
+      "defense": 0.85,
+      "intelligence": 1.42,
+      "siege": 1.15,
+      "velocity": 0.25
+    }
+  },
+  "tactics": {
+    "init": {
+      "id": "19574",
+      "url": "https://expi-games.jp/d3/object/detail/19574",
+      "name": "索命連環",
+      "type": "主動",
+      "distance": 4,
+      "permissions": [
+        "歩"
+      ],
+      "rate": "35%",
+      "target": "敵軍単体",
+      "description": "敵軍単体の強化効果を解除。対象は策略系攻撃で受けるダメージが17%上昇(知力の影響を受ける)。さらに呪詛状態になり、毎ターン50%の確率で兵力が大幅に低下(ダメージ率72.5％、知略の影響を受ける)。2ターン持続。"
+    },
+    "analyzables": [
+      {
+        "id": "19623",
+        "url": "https://expi-games.jp/d3/object/detail/19623",
+        "name": "水淹七軍",
+        "type": "主動",
+        "distance": 3,
+        "permissions": [
+          "弓",
+          "歩",
+          "騎"
+        ],
+        "rate": "50%",
+        "target": "敵軍複数(2)",
+        "description": "準備1ターンの後、敵軍複数に強力な策略系攻撃を行う(ダメージ率102.5~205％、知略の影響を受ける)。さらに対象は攻撃が5低下(知略の影響を受ける)。2ターン持続。"
+      },
+      null
+    ]
+  },
+  "crawledAt": "2018-10-12T08:36:59.488Z",
+  "image": "9daf2ffe7eec142b9231445a8ee7d831.png"
+}

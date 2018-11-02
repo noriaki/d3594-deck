@@ -1,22 +1,13 @@
-const {
-  get,
-  post,
-  put,
-  patch,
-  del,
-} = require('microrouter');
+const { get } = require('microrouter');
 
-const helloRouter = require('./hello');
-const todoRouters = require('./todo');
+const formationRouter = require('./formation');
+const formationApiRouter = require('./api/formation');
 
-module.exports = [
-  // route(hello): variable url
-  get('/hello/:who', helloRouter),
-  // route(todos): CRUD API uri
-  get('/todos', todoRouters.list),
-  post('/todos', todoRouters.create),
-  get('/todos/:id', todoRouters.show),
-  put('/todos/:id', todoRouters.update),
-  patch('/todos/:id', todoRouters.update),
-  del('/todos/:id', todoRouters.destroy),
-];
+const apiNamespace = '/api/v1';
+
+module.exports = app => ([
+  // api
+  get(`${apiNamespace}/f/:id`, formationApiRouter.show),
+  // pages
+  get('/f/:id', formationRouter.show(app)),
+]);

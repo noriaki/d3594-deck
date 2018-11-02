@@ -1,4 +1,7 @@
 const mongoose = require('mongoose');
+const mongooseAutoPopulatePlugin = require('mongoose-autopopulate');
+const { md5, toIdFromInstance } = require('./concerns/identify');
+const TacticsModel = require('./Tactics');
 const LearnedCommanderClass = require('./classes/LearnedCommander');
 
 const { Schema } = mongoose;
@@ -6,12 +9,62 @@ const { Schema } = mongoose;
 const learnedCommanderSchema = new Schema({
   _id: { type: String },
   identifier: { type: String },
-  commander: { type: String, ref: 'Commander' },
-  tactics: { type: String, ref: 'Tactics' },
-  additionalTactics: [{ type: String, ref: 'Tactics' }],
+  commander: {
+    type: String,
+    ref: 'Commander',
+    autopopulate: true,
+  },
+  tactics: {
+    type: String,
+    ref: 'Tactics',
+    autopopulate: true,
+  },
+  additionalTactics: [{
+    type: String,
+    ref: 'Tactics',
+    autopopulate: { options: { retainNullValues: true } },
+  }],
 });
 
-learnedCommanderSchema.pre('validate', LearnedCommanderClass.setIdentifier);
+const identify = (commanderIdOrInstance, additionalTacticsIdsOrInstances) => {
+  const commanderId = toIdFromInstance(commanderIdOrInstance);
+  const additionalTacticsIds = additionalTacticsIdsOrInstances.map(
+    toIdFromInstance
+  );
+  return md5(`${commanderId}(${additionalTacticsIds.join()})`);
+};
+
+function setIdentifier() {
+  const identifier = identify(this.commander, this.additionalTactics);
+  this._id = identifier;
+  this.identifier = identifier;
+}
+
+async function setSpecificTactics() {
+  const commanderId = toIdFromInstance(this.commander);
+  const specificTactics = await TacticsModel.fetchByOwnerId(commanderId);
+  this.tactics = specificTactics._id;
+}
+
+async function createAssociation(commander, additionalTactics = []) {
+  const identifier = identify(commander, additionalTactics);
+  const commanderId = toIdFromInstance(commander);
+  const additionalTacticsIds = additionalTactics.map(toIdFromInstance);
+  let lc = await this.findById(identifier);
+  if (lc == null) {
+    lc = new this({
+      commander: commanderId,
+      additionalTactics: additionalTacticsIds,
+    });
+    await lc.save();
+  }
+  return lc;
+}
+learnedCommanderSchema.static('createAssociation', createAssociation);
+
+learnedCommanderSchema.plugin(mongooseAutoPopulatePlugin);
+learnedCommanderSchema.pre('validate', setIdentifier);
+learnedCommanderSchema.pre('validate', setSpecificTactics);
 
 learnedCommanderSchema.loadClass(LearnedCommanderClass);
 const LearnedCommanderModel = (
