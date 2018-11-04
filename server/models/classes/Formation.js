@@ -2,7 +2,7 @@ const positions = ['本営', '中衛', '前衛'];
 
 const stringId = commanders => positions.map((position, index) => {
   const commander = commanders[index];
-  const commanderStringId = commander != null ? commander.humanize : '無し';
+  const commanderStringId = commander != null ? commander.humanize : '未配置';
   return `${position}：${commanderStringId}`;
 }).join('\n');
 
