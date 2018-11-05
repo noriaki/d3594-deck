@@ -66,11 +66,11 @@ describe('Formation association model', () => {
 
       const subject = await Formation.findOne();
       expect(subject).not.toBeNull();
-      expect(subject._id).toBe(md5(expectedIds.join()));
+      expect(subject._id).toBe(md5([...expectedIds, null].join()));
       expect(subject.name).toBe('test');
-      subject.commanders.forEach((commander, index) => {
-        expect(commander).toHaveProperty('_id', expectedIds[index]);
-      });
+      expect(subject.commanders[0]).toHaveProperty('_id', expectedIds[0]);
+      expect(subject.commanders[1]).toHaveProperty('_id', expectedIds[1]);
+      expect(subject.commanders[2]).toBeNull();
       const expectedStringId = [
         '本営：★5・孫堅・呉・歩 (駆逐, 戦必断金)',
         '中衛：★3・董荼那・群・騎 (戦必断金, 頑抗)',
@@ -115,11 +115,11 @@ describe('Formation association model', () => {
 
       const subject = await Formation.findOne();
       expect(subject).not.toBeNull();
-      expect(subject._id).toBe(md5(expectedIds.join()));
+      expect(subject._id).toBe(md5([...expectedIds, null, null].join()));
       expect(subject.name).toBe('test');
-      subject.commanders.forEach((commander, index) => {
-        expect(commander).toHaveProperty('_id', expectedIds[index]);
-      });
+      expect(subject.commanders[0]).toHaveProperty('_id', expectedIds[0]);
+      expect(subject.commanders[1]).toBeNull();
+      expect(subject.commanders[2]).toBeNull();
       const expectedStringId = [
         '本営：★5・孫堅・呉・歩 (駆逐, 戦必断金)',
         '中衛：未配置',

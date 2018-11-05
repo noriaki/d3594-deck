@@ -47,7 +47,6 @@ async function setSpecificTactics() {
 }
 
 function fillAdditionalTactics() {
-  // const { additionalTactics } = this;
   this.additionalTactics = [...Array(2)].map(
     (_, i) => (toIdFromInstance(this.additionalTactics[i]) || null)
   );

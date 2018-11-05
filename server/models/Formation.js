@@ -26,6 +26,12 @@ function setIdentifier() {
   this._id = identifier;
 }
 
+function fillCommanders() {
+  this.commanders = [...Array(3)].map(
+    (_, i) => (toIdFromInstance(this.commanders[i]) || null)
+  );
+}
+
 async function createAssociation(commanders, name) {
   const identifier = identify(commanders);
   let formation = await this.findById(identifier);
@@ -70,12 +76,25 @@ async function importSampleData() {
       LearnedCommander.createAssociation(commanderId, tacticsIds[i])
     )
   ));
-  return this.createAssociation(commanders, '大都督（呉レンジャー）');
+  // /f/43e0f069ab00049908ab34390a9c45ca
+  await this.createAssociation(commanders, '大都督（呉レンジャー）');
+  const immatureCommander = await LearnedCommander.createAssociation(
+    commanderIds[1], [null, tacticsIds[1][1]]
+  );
+  // /f/8f112238f2392424f26f740360629aae
+  await this.createAssociation(
+    [commanders[0], immatureCommander], '前衛不在の大都督'
+  );
+  // /f/688d618a2fd4261edb5b972681873209
+  await this.createAssociation(
+    [commanders[0], null, immatureCommander], '中衛不在の大都督'
+  );
 }
 
 formationSchema.static('importSampleData', importSampleData);
 
 formationSchema.plugin(mongooseAutoPopulatePlugin);
+formationSchema.pre('validate', fillCommanders);
 formationSchema.pre('validate', setIdentifier);
 
 formationSchema.loadClass(FormationClass);

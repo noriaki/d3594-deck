@@ -12,7 +12,9 @@ class Formation {
   get humanize() { return stringId(this.commanders); }
 
   get siege() {
-    const siegeValues = this.commanders.map(
+    const siegeValues = this.commanders.filter(
+      c => (c && c.commander && c.commander.maxStatus)
+    ).map(
       ({ commander }) => (commander.maxStatus.siege)
     );
     return Math.floor(
@@ -21,14 +23,16 @@ class Formation {
   }
 
   get velocity() {
-    const velocityValues = this.commanders.map(
+    const velocityValues = this.commanders.filter(
+      c => (c && c.commander && c.commander.maxStatus)
+    ).map(
       ({ commander }) => (commander.maxStatus.velocity)
     );
     return Math.floor(Math.min(...velocityValues));
   }
 
   get cost() {
-    const costValues = this.commanders.map(
+    const costValues = this.commanders.filter(c => (c && c.commander)).map(
       ({ commander }) => (commander.cost)
     );
     return costValues.reduce((total, current) => (total + current));
