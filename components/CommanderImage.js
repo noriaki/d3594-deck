@@ -38,7 +38,14 @@ const styles = theme => ({
   },
 });
 
-const CommanderImage = ({ commander, classes }) => {
+export const CommanderImage = ({ commander, classes }) => {
+  if (commander == null) {
+    // eslint-disable-next-line no-param-reassign
+    commander = {
+      imageURL: '/static/images/default-commander.png',
+      name: '未配置',
+    };
+  }
   const tileBarClasses = {
     root: classes.tileBarRoot,
     titleWrap: classes.titleWrap,

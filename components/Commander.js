@@ -27,8 +27,11 @@ const styles = theme => ({
   },
 });
 
-const Commander = ({ commander, position, classes }) => {
-  const { tactics, additionalTactics } = commander;
+const defaultCommander = { additionalTactics: [] };
+
+export const Commander = ({ commander, position, classes }) => {
+  const finalCommander = commander || defaultCommander;
+  const { tactics, additionalTactics } = finalCommander;
   return (
     <div className={classes.container}>
       <div className={classes.position}>
@@ -37,7 +40,7 @@ const Commander = ({ commander, position, classes }) => {
           src={`/static/images/${position}.png`} />
       </div>
       <div className={classes.commander}>
-        <CommanderImage commander={commander.commander} />
+        <CommanderImage commander={finalCommander.commander} />
       </div>
       <div className={classes.tactics}>
         <Tactics tactics={tactics} />
