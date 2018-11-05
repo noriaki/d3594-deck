@@ -46,6 +46,13 @@ async function setSpecificTactics() {
   this.tactics = specificTactics._id;
 }
 
+function fillAdditionalTactics() {
+  // const { additionalTactics } = this;
+  this.additionalTactics = [...Array(2)].map(
+    (_, i) => (toIdFromInstance(this.additionalTactics[i]) || null)
+  );
+}
+
 async function createAssociation(commander, additionalTactics = []) {
   const identifier = identify(commander, additionalTactics);
   const commanderId = toIdFromInstance(commander);
@@ -63,8 +70,9 @@ async function createAssociation(commander, additionalTactics = []) {
 learnedCommanderSchema.static('createAssociation', createAssociation);
 
 learnedCommanderSchema.plugin(mongooseAutoPopulatePlugin);
-learnedCommanderSchema.pre('validate', setIdentifier);
 learnedCommanderSchema.pre('validate', setSpecificTactics);
+learnedCommanderSchema.pre('validate', fillAdditionalTactics);
+learnedCommanderSchema.pre('validate', setIdentifier);
 
 learnedCommanderSchema.loadClass(LearnedCommanderClass);
 const LearnedCommanderModel = (
