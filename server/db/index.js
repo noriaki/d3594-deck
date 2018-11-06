@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const { readdirSync } = require('fs');
+const { resolve } = require('path');
 
 const resolveDbUri = require('./helpers/resolveDbUri');
 const { appName, dbUri } = require('./config');
@@ -29,7 +31,27 @@ const connect = async (refresh = false) => {
 // async method
 const disconnect = () => mongoose.disconnect();
 
+const preloadModels = () => {
+  const dirPath = resolve(__dirname, '../models');
+  const correctFileRegexp = /.*\.js$/;
+  const correctFile = filename => correctFileRegexp.test(filename);
+  readdirSync(dirPath)
+    .filter(correctFile)
+    .forEach((f) => {
+      // eslint-disable-next-line global-require, import/no-dynamic-require
+      require(resolve(dirPath, f));
+    });
+};
+
+const deleteLoadedModels = () => {
+  Object.keys(mongoose.connection.models).forEach((name) => {
+    delete mongoose.connection.models[name];
+  });
+};
+
 module.exports = {
   connect,
   disconnect,
+  preloadModels,
+  deleteLoadedModels,
 };
