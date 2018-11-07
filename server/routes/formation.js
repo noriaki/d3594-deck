@@ -11,6 +11,18 @@ const show = app => async (req, res) => {
   return app.render(req, res, '/f', { formation, id });
 };
 
+const edit = app => async (req, res) => {
+  const { id } = req.params;
+  let formation;
+  if (id != null) {
+    formation = await Formation.fetchById(id);
+  } else {
+    formation = new Formation();
+  }
+  return app.render(req, res, '/f/edit', { formation, id });
+};
+
 module.exports = {
   show,
+  edit,
 };
