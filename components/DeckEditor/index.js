@@ -4,6 +4,10 @@ import React, { Fragment, PureComponent } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
+import TextField from '@material-ui/core/TextField';
+
+// material-ui icons
+import SearchIcon from '@material-ui/icons/SearchRounded';
 
 // components
 import HalfModalCloseIcon from '../HalfModalCloseIcon';
@@ -26,15 +30,30 @@ const styles = theme => ({
     right: 'auto',
     padding: theme.spacing.unit * 2,
     borderRadius: [
-      theme.spacing.unit, theme.spacing.unit, 0, 0,
+      theme.shape.borderRadius * 2, theme.shape.borderRadius * 2, 0, 0,
     ].map(u => `${u}px`).join(' '),
   },
   closeIcon: {
     display: 'flex',
     justifyContent: 'center',
-    marginBottom: theme.spacing.unit * 2,
+    marginBottom: theme.spacing.unit,
   },
 });
+
+const labelStyles = {
+  container: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+};
+
+const LabelComponent = withStyles(labelStyles)(({ classes }) => (
+  <span className={classes.container}>
+    <SearchIcon fontSize="small" />
+    検索
+  </span>
+));
 
 export class DeckEditorComponent extends PureComponent {
   state = {
@@ -69,6 +88,12 @@ export class DeckEditorComponent extends PureComponent {
           <div className={classes.closeIcon}>
             <HalfModalCloseIcon onClick={this.toggleSearcher(false)} />
           </div>
+          <TextField
+            label={<LabelComponent />}
+            type="search"
+            fullWidth
+            margin="dense"
+            variant="outlined" />
           SwipeableDrawer
         </SwipeableDrawer>
       </Fragment>
