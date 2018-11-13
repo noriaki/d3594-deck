@@ -1,4 +1,4 @@
-import React, { Fragment, PureComponent } from 'react';
+import React, { Fragment, Component } from 'react';
 
 // material-ui components
 import { withStyles } from '@material-ui/core/styles';
@@ -11,6 +11,7 @@ import SearchIcon from '@material-ui/icons/SearchRounded';
 
 // components
 import HalfModalCloseIcon from '../HalfModalCloseIcon';
+import Filter from './Filter';
 
 const styles = theme => ({
   container: {
@@ -55,9 +56,12 @@ const LabelComponent = withStyles(labelStyles)(({ classes }) => (
   </span>
 ));
 
-export class DeckEditorComponent extends PureComponent {
+export class DeckEditorComponent extends Component {
   state = {
     openSearcher: true,
+    filter: {
+      rarity: [5, 4, 3],
+    },
   }
 
   toggleSearcher = open => () => {
@@ -69,9 +73,17 @@ export class DeckEditorComponent extends PureComponent {
     });
   }
 
+  updateQuery = () => {}
+
+  updateFilter = target => (event) => {
+    const { value } = event.target;
+    const { filter, ...other } = this.state;
+    this.setState({ ...other, filter: { ...filter, [target]: value } });
+  }
+
   render() {
     const { classes } = this.props;
-    const { openSearcher } = this.state;
+    const { openSearcher, filter } = this.state;
     return (
       <Fragment>
         <div className={classes.container}>
@@ -94,6 +106,9 @@ export class DeckEditorComponent extends PureComponent {
             fullWidth
             margin="dense"
             variant="outlined" />
+          <Filter
+            handleChange={this.updateFilter}
+            rarity={filter.rarity} />
           SwipeableDrawer
         </SwipeableDrawer>
       </Fragment>
