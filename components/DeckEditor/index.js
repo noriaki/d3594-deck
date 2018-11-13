@@ -61,6 +61,8 @@ export class DeckEditorComponent extends Component {
     openSearcher: true,
     filter: {
       rarity: [5, 4, 3],
+      army: ['歩'],
+      team: ['群', '魏', '蜀'],
     },
   }
 
@@ -108,7 +110,9 @@ export class DeckEditorComponent extends Component {
             variant="outlined" />
           <Filter
             handleChange={this.updateFilter}
-            rarity={filter.rarity} />
+            rarity={filter.rarity}
+            army={filter.army}
+            team={filter.team} />
           SwipeableDrawer
         </SwipeableDrawer>
       </Fragment>
