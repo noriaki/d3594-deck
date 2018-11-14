@@ -108,11 +108,7 @@ export class DeckEditorComponent extends Component {
             fullWidth
             margin="dense"
             variant="outlined" />
-          <Filter
-            handleChange={this.updateFilter}
-            rarity={filter.rarity}
-            army={filter.army}
-            team={filter.team} />
+          <Filter filter={filter} handleChange={this.updateFilter} />
           SwipeableDrawer
         </SwipeableDrawer>
       </Fragment>
