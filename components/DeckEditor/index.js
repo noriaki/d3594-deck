@@ -4,13 +4,10 @@ import React, { Fragment, Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
-import TextField from '@material-ui/core/TextField';
-
-// material-ui icons
-import SearchIcon from '@material-ui/icons/SearchRounded';
 
 // components
 import HalfModalCloseIcon from '../HalfModalCloseIcon';
+import Search from './Search';
 import Filter from './Filter';
 
 const styles = theme => ({
@@ -41,24 +38,10 @@ const styles = theme => ({
   },
 });
 
-const labelStyles = {
-  container: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-};
-
-const LabelComponent = withStyles(labelStyles)(({ classes }) => (
-  <span className={classes.container}>
-    <SearchIcon fontSize="small" />
-    検索
-  </span>
-));
-
 export class DeckEditorComponent extends Component {
   state = {
     openSearcher: true,
+    query: '',
     filter: {
       rarity: [5, 4, 3],
       army: ['歩'],
@@ -75,7 +58,10 @@ export class DeckEditorComponent extends Component {
     });
   }
 
-  updateQuery = () => {}
+  updateQuery = (event) => {
+    const { query, ...other } = this.state;
+    this.setState({ ...other, query: event.target.value });
+  }
 
   updateFilter = target => (event) => {
     const { value } = event.target;
@@ -102,12 +88,7 @@ export class DeckEditorComponent extends Component {
           <div className={classes.closeIcon}>
             <HalfModalCloseIcon onClick={this.toggleSearcher(false)} />
           </div>
-          <TextField
-            label={<LabelComponent />}
-            type="search"
-            fullWidth
-            margin="dense"
-            variant="outlined" />
+          <Search handleChange={this.updateQuery} />
           <Filter filter={filter} handleChange={this.updateFilter} />
           SwipeableDrawer
         </SwipeableDrawer>
