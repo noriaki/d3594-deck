@@ -17,6 +17,11 @@ const styles = theme => ({
 
 const baseRarity = [5, 4, 3, 2, 1];
 
+const renderSortedValue = (selected) => {
+  const sortedValue = baseRarity.filter(r => selected.includes(r));
+  return `\u2605${sortedValue.join(',')}`;
+};
+
 export const RarityFilterComponent = ({ classes, rarity, handleChange }) => (
   <FormControl margin="dense" className={classes.formControl}>
     <InputLabel htmlFor="select-rarity">稀少度</InputLabel>
@@ -27,7 +32,7 @@ export const RarityFilterComponent = ({ classes, rarity, handleChange }) => (
       onChange={handleChange('rarity')}
       name="rarity"
       input={<Input id="select-rarity" />}
-      renderValue={selected => `★${selected.join(',')}`}>
+      renderValue={renderSortedValue}>
       { baseRarity.map(buildItemIterator('rarity', rarity)) }
     </Select>
   </FormControl>

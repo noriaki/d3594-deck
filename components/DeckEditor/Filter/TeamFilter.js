@@ -17,6 +17,11 @@ const styles = theme => ({
 
 const baseTeam = ['群', '漢', '魏', '蜀', '呉'];
 
+const renderSortedValue = (selected) => {
+  const sortedValue = baseTeam.filter(r => selected.includes(r));
+  return sortedValue.join(',');
+};
+
 export const TeamFilterComponent = ({ classes, team, handleChange }) => (
   <FormControl margin="dense" className={classes.formControl}>
     <InputLabel htmlFor="select-team">兵種</InputLabel>
@@ -27,7 +32,7 @@ export const TeamFilterComponent = ({ classes, team, handleChange }) => (
       onChange={handleChange('team')}
       name="team"
       input={<Input id="select-team" />}
-      renderValue={selected => selected.join(',')}>
+      renderValue={renderSortedValue}>
       { baseTeam.map(buildItemIterator('team', team)) }
     </Select>
   </FormControl>

@@ -17,6 +17,11 @@ const styles = theme => ({
 
 const baseArmy = ['弓', '歩', '騎'];
 
+const renderSortedValue = (selected) => {
+  const sortedValue = baseArmy.filter(r => selected.includes(r));
+  return sortedValue.join(',');
+};
+
 export const ArmyFilterComponent = ({ classes, army, handleChange }) => (
   <FormControl margin="dense" className={classes.formControl}>
     <InputLabel htmlFor="select-army">兵種</InputLabel>
@@ -27,7 +32,7 @@ export const ArmyFilterComponent = ({ classes, army, handleChange }) => (
       onChange={handleChange('army')}
       name="army"
       input={<Input id="select-army" />}
-      renderValue={selected => `★${selected.join(',')}`}>
+      renderValue={renderSortedValue}>
       { baseArmy.map(buildItemIterator('army', army)) }
     </Select>
   </FormControl>
