@@ -59,9 +59,9 @@ export class DeckEditorComponent extends Component {
     });
   }
 
-  updateQuery = (event) => {
+  updateQuery = (value) => {
     const { query, ...other } = this.state;
-    this.setState({ ...other, query: event.target.value });
+    this.setState({ ...other, query: value });
   }
 
   updateFilter = target => (event) => {
@@ -85,11 +85,12 @@ export class DeckEditorComponent extends Component {
           open={openSearcher}
           onClose={this.toggleSearcher(false)}
           onOpen={this.toggleSearcher(true)}
+          ModalProps={{ keepMounted: true }}
           classes={{ modal: classes.modal, paper: classes.paper }}>
           <div className={classes.closeIcon}>
             <HalfModalCloseIcon onClick={this.toggleSearcher(false)} />
           </div>
-          <Search onChange={this.updateQuery} />
+          <Search defaultValue="hoge" onChange={this.updateQuery} />
           <Filter filter={filter} onChange={this.updateFilter} />
           <Typography>SwipeableDrawer</Typography>
           <Typography>
