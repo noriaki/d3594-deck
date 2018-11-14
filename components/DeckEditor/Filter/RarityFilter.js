@@ -22,7 +22,11 @@ const renderSortedValue = (selected) => {
   return `\u2605${sortedValue.join(',')}`;
 };
 
-export const RarityFilterComponent = ({ classes, rarity, handleChange }) => (
+export const RarityFilterComponent = ({
+  classes,
+  rarity,
+  onChange: handleChange,
+}) => (
   <FormControl margin="dense" className={classes.formControl}>
     <InputLabel htmlFor="select-rarity">稀少度</InputLabel>
     <Select

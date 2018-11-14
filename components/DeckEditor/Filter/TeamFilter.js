@@ -22,7 +22,11 @@ const renderSortedValue = (selected) => {
   return sortedValue.join(',');
 };
 
-export const TeamFilterComponent = ({ classes, team, handleChange }) => (
+export const TeamFilterComponent = ({
+  classes,
+  team,
+  onChange: handleChange,
+}) => (
   <FormControl margin="dense" className={classes.formControl}>
     <InputLabel htmlFor="select-team">兵種</InputLabel>
     <Select

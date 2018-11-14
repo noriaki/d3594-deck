@@ -4,6 +4,7 @@ import React, { Fragment, Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
+import Typography from '@material-ui/core/Typography';
 
 // components
 import HalfModalCloseIcon from '../HalfModalCloseIcon';
@@ -71,7 +72,7 @@ export class DeckEditorComponent extends Component {
 
   render() {
     const { classes } = this.props;
-    const { openSearcher, filter } = this.state;
+    const { openSearcher, query, filter } = this.state;
     return (
       <Fragment>
         <div className={classes.container}>
@@ -88,9 +89,13 @@ export class DeckEditorComponent extends Component {
           <div className={classes.closeIcon}>
             <HalfModalCloseIcon onClick={this.toggleSearcher(false)} />
           </div>
-          <Search handleChange={this.updateQuery} />
-          <Filter filter={filter} handleChange={this.updateFilter} />
-          SwipeableDrawer
+          <Search onChange={this.updateQuery} />
+          <Filter filter={filter} onChange={this.updateFilter} />
+          <Typography>SwipeableDrawer</Typography>
+          <Typography>
+            query:
+            { query }
+          </Typography>
         </SwipeableDrawer>
       </Fragment>
     );

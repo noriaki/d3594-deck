@@ -16,11 +16,11 @@ const styles = {
   },
 };
 
-export const FilterComponent = ({ classes, filter, handleChange }) => (
+export const FilterComponent = ({ classes, filter, onChange }) => (
   <div className={classes.root}>
-    <RarityFilter rarity={filter.rarity} handleChange={handleChange} />
-    <ArmyFilter army={filter.army} handleChange={handleChange} />
-    <TeamFilter team={filter.team} handleChange={handleChange} />
+    <RarityFilter rarity={filter.rarity} onChange={onChange} />
+    <ArmyFilter army={filter.army} onChange={onChange} />
+    <TeamFilter team={filter.team} onChange={onChange} />
   </div>
 );
 

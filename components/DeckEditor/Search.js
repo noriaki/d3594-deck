@@ -7,7 +7,7 @@ import TextField from '@material-ui/core/TextField';
 // material-ui icons
 import SearchIcon from '@material-ui/icons/SearchRounded';
 
-const Search = ({ handleChange }) => (
+const Search = ({ onChange: handleChange }) => (
   <TextField
     onChange={handleChange}
     label={<LabelComponent />}
