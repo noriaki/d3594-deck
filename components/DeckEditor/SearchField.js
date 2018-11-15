@@ -15,7 +15,7 @@ const KEYS = {
   DELETE: 46,
 };
 
-class Search extends PureComponent {
+class SearchField extends PureComponent {
   state = { value: this.props.defaultValue }
 
   timer = null
@@ -60,7 +60,7 @@ class Search extends PureComponent {
   }
 }
 
-export default Search;
+export default SearchField;
 
 const labelStyles = {
   container: {

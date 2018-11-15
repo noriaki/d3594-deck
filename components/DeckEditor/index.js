@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 
 // components
 import HalfModalCloseIcon from '../HalfModalCloseIcon';
-import Search from './Search';
+import SearchField from './SearchField';
 import Filter from './Filter';
 
 const styles = theme => ({
@@ -90,7 +90,7 @@ export class DeckEditorComponent extends Component {
           <div className={classes.closeIcon}>
             <HalfModalCloseIcon onClick={this.toggleSearcher(false)} />
           </div>
-          <Search defaultValue="hoge" onChange={this.updateQuery} />
+          <SearchField defaultValue="hoge" onChange={this.updateQuery} />
           <Filter filter={filter} onChange={this.updateFilter} />
           <Typography>SwipeableDrawer</Typography>
           <Typography>
