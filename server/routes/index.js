@@ -9,5 +9,7 @@ module.exports = app => ([
   // api
   get(`${apiNamespace}/f/:id`, formationApiRouter.show),
   // pages
+  get('/f/new', formationRouter.edit(app)),
   get('/f/:id', formationRouter.show(app)),
+  get('/f/:id/edit', formationRouter.edit(app)),
 ]);

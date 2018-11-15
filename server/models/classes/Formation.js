@@ -18,7 +18,7 @@ class Formation {
       ({ commander }) => (commander.maxStatus.siege)
     );
     return Math.floor(
-      siegeValues.reduce((total, current) => (total + current))
+      siegeValues.reduce((total, current) => (total + current), 0)
     );
   }
 
@@ -35,7 +35,7 @@ class Formation {
     const costValues = this.commanders.filter(c => (c && c.commander)).map(
       ({ commander }) => (commander.cost)
     );
-    return costValues.reduce((total, current) => (total + current));
+    return costValues.reduce((total, current) => (total + current), 0);
   }
 }
 

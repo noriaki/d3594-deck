@@ -5,11 +5,15 @@ import { createMuiTheme, createGenerateClassName } from '@material-ui/core/style
 import purple from '@material-ui/core/colors/purple';
 import green from '@material-ui/core/colors/green';
 
+// default theme variables
+const { unit } = createMuiTheme().spacing;
+
 // A theme with custom primary and secondary color.
 // It's optional.
 const theme = createMuiTheme({
   typography: {
     useNextVariants: true,
+    fontSize: 12,
   },
   palette: {
     primary: {
@@ -21,6 +25,21 @@ const theme = createMuiTheme({
       light: green[300],
       main: green[500],
       dark: green[700],
+    },
+  },
+  overrides: {
+    MuiInputLabel: {
+      outlined: {
+        '&$marginDense': {
+          transform: `translate(14px, ${unit}px) scale(1)`,
+        },
+      },
+    },
+    MuiOutlinedInput: {
+      inputMarginDense: {
+        paddingTop: unit,
+        paddingBottom: unit,
+      },
     },
   },
 });
