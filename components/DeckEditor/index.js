@@ -73,6 +73,7 @@ export class DeckEditorComponent extends Component {
   render() {
     const { classes } = this.props;
     const { openSearcher, query, filter } = this.state;
+    const defaultSearchQuery = '';
     return (
       <Fragment>
         <div className={classes.container}>
@@ -90,7 +91,9 @@ export class DeckEditorComponent extends Component {
           <div className={classes.closeIcon}>
             <HalfModalCloseIcon onClick={this.toggleSearcher(false)} />
           </div>
-          <SearchField defaultValue="hoge" onChange={this.updateQuery} />
+          <SearchField
+            defaultValue={defaultSearchQuery}
+            onChange={this.updateQuery} />
           <Filter filter={filter} onChange={this.updateFilter} />
           <Typography>SwipeableDrawer</Typography>
           <Typography>

@@ -16,7 +16,7 @@ const KEYS = {
 };
 
 class SearchField extends PureComponent {
-  state = { value: this.props.defaultValue }
+  state = { value: this.props.defaultValue || '' }
 
   timer = null
 
@@ -44,11 +44,10 @@ class SearchField extends PureComponent {
   }
 
   render() {
-    const { defaultValue } = this.props;
     const { value } = this.state;
     return (
       <TextField
-        value={value != null ? value : defaultValue}
+        value={value}
         onChange={this.handleChange}
         onKeyDown={this.handleKeyDown}
         label={<LabelComponent />}
