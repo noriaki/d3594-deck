@@ -33,9 +33,12 @@
     "mongoose-autopopulate": "^0.8.2",
     "next": "^7.0.2",
     "prop-types": "^15.6.2",
+    "qs": "^6.5.2",
     "react": "^16.6.1",
     "react-dom": "^16.6.1",
-    "react-jss": "^8.6.1"
+    "react-jss": "^8.6.1",
+    "request": "^2.88.0",
+    "request-promise-native": "^1.0.5"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
