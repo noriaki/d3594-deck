@@ -1,0 +1,71 @@
+{
+  "url": "https://flash-onlinegames.net/daisangokushi/post-443/",
+  "id": "post-443",
+  "imageUrl": "https://cdn.expi-games.jp/mu/img/object/imageLarge/2/e97cabf52bb4329a4b9c3755530805e87b26d023.jpg",
+  "name": "朱儁",
+  "special": null,
+  "description": "皇甫嵩とともに各地の黄巾軍の蜂起を鎮圧し、その功績により車騎将軍の職を与えられる。後に董卓の残党の李傕、郭汜の乱世により公卿を奪われ、朱儁は漢王室が衰退する状況を悲しみ、病没した。",
+  "rarity": 4,
+  "cost": 2.5,
+  "team": "漢",
+  "army": "弓",
+  "distance": 4,
+  "status": {
+    "min": {
+      "attack": 89,
+      "defense": 83,
+      "intelligence": 75,
+      "siege": 12,
+      "velocity": 48
+    },
+    "max": {
+      "attack": 136,
+      "defense": 127,
+      "intelligence": 106,
+      "siege": 46,
+      "velocity": 73
+    },
+    "delta": {
+      "attack": 0.96,
+      "defense": 0.9,
+      "intelligence": 0.65,
+      "siege": 0.7,
+      "velocity": 0.52
+    }
+  },
+  "tactics": {
+    "init": {
+      "id": "19551",
+      "url": "https://expi-games.jp/d3/object/detail/19551",
+      "name": "節鎮関東",
+      "type": "指揮",
+      "distance": 5,
+      "permissions": [
+        "弓"
+      ],
+      "rate": null,
+      "target": "自軍複数(2)",
+      "description": "戦闘開始後2ターン、自軍複数が毎ターン先行効果を獲得。その間、敵軍複数が動揺状態になり、毎ターン一定の兵力が減少(ダメージ率60~120%)。動揺状態によるダメージは回避を無視。"
+    },
+    "analyzables": [
+      {
+        "id": "19725",
+        "url": "https://expi-games.jp/d3/object/detail/19725",
+        "name": "長駆直入",
+        "type": "指揮",
+        "distance": 3,
+        "permissions": [
+          "弓",
+          "歩",
+          "騎"
+        ],
+        "rate": null,
+        "target": "自軍複数(2)",
+        "description": "戦闘開始後3ターン、自軍複数が毎ターン35~70%の確率で先行効果を獲得。さらに対象は防御が11.5~23上昇(知略の影響を受ける)。"
+      },
+      null
+    ]
+  },
+  "crawledAt": "2018-10-12T08:34:28.455Z",
+  "image": "5abed51fa17562728f0b54288c547c56.jpg"
+}
