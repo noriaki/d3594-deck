@@ -8,6 +8,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 
 import { buildItemIterator, menuProps } from './concerns/menu';
+import { baseArmy } from '../../../../server/models/classes/Commander';
 
 const styles = {
   formControl: {
@@ -16,8 +17,6 @@ const styles = {
     paddingRight: 1,
   },
 };
-
-const baseArmy = ['弓', '歩', '騎'];
 
 const renderSortedValue = (selected) => {
   const sortedValue = baseArmy.filter(r => selected.includes(r));

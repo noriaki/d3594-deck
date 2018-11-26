@@ -8,6 +8,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 
 import { buildItemIterator, menuProps } from './concerns/menu';
+import { baseRarity } from '../../../../server/models/classes/Commander';
 
 const styles = {
   formControl: {
@@ -16,8 +17,6 @@ const styles = {
     paddingRight: 1,
   },
 };
-
-const baseRarity = [5, 4, 3, 2, 1];
 
 const renderSortedValue = (selected) => {
   const sortedValue = baseRarity.filter(r => selected.includes(r));

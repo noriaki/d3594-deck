@@ -8,6 +8,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 
 import { buildItemIterator, menuProps } from './concerns/menu';
+import { baseTeam } from '../../../../server/models/classes/Commander';
 
 const styles = {
   formControl: {
@@ -16,8 +17,6 @@ const styles = {
     paddingRight: 1,
   },
 };
-
-const baseTeam = ['群', '漢', '魏', '蜀', '呉'];
 
 const renderSortedValue = (selected) => {
   const sortedValue = baseTeam.filter(r => selected.includes(r));
