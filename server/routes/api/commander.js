@@ -18,7 +18,7 @@ const search = (req, res) => {
     );
   }
   return query.select([
-    '_id', 'identifier', 'name', 'imageURL',
+    '_id', 'id', 'identifier', 'name', 'image', 'imageURL',
   ]).find();
 };
 

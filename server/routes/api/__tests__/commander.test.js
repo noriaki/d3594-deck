@@ -54,7 +54,9 @@ describe('Routes: `/c`', () => {
     it('returning valid object shape', async () => {
       query.text = '周瑜';
       const options = { qs: query, json: true };
-      const expectedKeys = ['_id', 'identifier', 'name', 'imageURL'].sort();
+      const expectedKeys = [
+        '_id', 'id', 'identifier', 'name', 'image', 'imageURL',
+      ].sort();
       const subjects = await server.get('/c', options);
       expect(subjects).toHaveLength(1);
       const subject = Object.keys(subjects[0]).sort();
