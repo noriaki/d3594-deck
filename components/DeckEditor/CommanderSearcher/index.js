@@ -3,12 +3,12 @@ import React, { Component } from 'react';
 // material-ui components
 import { withStyles } from '@material-ui/core/styles';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
-import Typography from '@material-ui/core/Typography';
 
 // components
 import HalfModalCloseIcon from '../../HalfModalCloseIcon';
 import SearchField from './SearchField';
 import Filter from './Filter';
+import FetchAndDisplay from './FetchAndDisplay';
 
 const styles = theme => ({
   modal: {
@@ -20,7 +20,9 @@ const styles = theme => ({
     width: '96vw',
     left: 'auto',
     right: 'auto',
-    padding: theme.spacing.unit * 2,
+    padding: [
+      theme.spacing.unit * 2, theme.spacing.unit * 2, 0,
+    ].map(u => `${u}px`).join(' '),
     borderRadius: [
       theme.shape.borderRadius * 2, theme.shape.borderRadius * 2, 0, 0,
     ].map(u => `${u}px`).join(' '),
@@ -36,8 +38,8 @@ export class CommanderSearcherComponent extends Component {
   state = {
     searchText: '',
     filter: {
-      rarity: [5, 4, 3],
-      army: ['弓', '歩', '騎'],
+      rarity: [5, 4],
+      army: ['弓'/*, '歩', '騎'*/],
       team: ['群', '漢', '魏', '蜀', '呉'],
     },
   }
@@ -75,13 +77,13 @@ export class CommanderSearcherComponent extends Component {
         <div className={classes.closeIcon}>
           <HalfModalCloseIcon onClick={handleClose} />
         </div>
-        <SearchField onChange={this.updateSearchText} />
-        <Filter filter={filter} onChange={this.updateFilter} />
-        <Typography>SwipeableDrawer</Typography>
-        <Typography>
-          searchText:
-          { text }
-        </Typography>
+        <div>
+          <SearchField onChange={this.updateSearchText} />
+        </div>
+        <div>
+          <Filter filter={filter} onChange={this.updateFilter} />
+        </div>
+        <FetchAndDisplay query={{ text, filter }} />
       </SwipeableDrawer>
     );
   }
