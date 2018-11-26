@@ -19,7 +19,7 @@
     "build": "next build",
     "db:import:dev": "node scripts/replaceDbData.js",
     "db:import": "NODE_ENV=production node scripts/importData.js",
-    "start": "NODE_ENV=production micro",
+    "start": "NODE_ENV=production micro -l tcp://0.0.0.0:$PORT",
     "heroku-postbuild": "yarn build"
   },
   "dependencies": {
