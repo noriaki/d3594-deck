@@ -17,8 +17,10 @@
     "test": "NODE_ENV=test jest",
     "dev": "micro-dev --watch server",
     "build": "next build",
-    "db:import": "node scripts/replaceDbData.js",
-    "start": "NODE_ENV=production micro"
+    "db:import:dev": "node scripts/replaceDbData.js",
+    "db:import": "NODE_ENV=production node scripts/importData.js",
+    "start": "NODE_ENV=production micro",
+    "heroku-postbuild": "yarn build"
   },
   "dependencies": {
     "@material-ui/core": "^3.2.0",
