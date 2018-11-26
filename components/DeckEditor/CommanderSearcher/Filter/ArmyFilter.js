@@ -9,11 +9,13 @@ import Select from '@material-ui/core/Select';
 
 import { buildItemIterator, menuProps } from './concerns/menu';
 
-const styles = theme => ({
+const styles = {
   formControl: {
-    width: `calc(calc(100% - ${theme.spacing.unit * 2}px) / 3)`,
+    width: '33.333%',
+    paddingLeft: 1,
+    paddingRight: 1,
   },
-});
+};
 
 const baseArmy = ['弓', '歩', '騎'];
 
