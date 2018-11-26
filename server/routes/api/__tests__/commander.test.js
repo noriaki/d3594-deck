@@ -31,7 +31,7 @@ describe('Routes: `/c`', () => {
         '5abed51fa17562728f0b54288c547c56', // 朱儁,漢,弓,4
         'a9f7deacd67d08a2ea7ff2d4255b4171', // 張角,群,騎,5
         'c78a48266ec5166844c7df427834a520', // 張春華,魏,弓,5
-        'e0f015ef64ca6eef2ed4ad5debcd3fde', // S2陸遜,呉,歩,5
+        'e0f015ef64ca6eef2ed4ad5debcd3fde', // 陸遜(S2),呉,歩,5
       ];
       const data = files.map((basename) => {
         const file = `${basename}.json`;
@@ -49,6 +49,27 @@ describe('Routes: `/c`', () => {
           team: ['群', '漢', '魏', '蜀', '呉'],
         },
       };
+    });
+
+    it('returning sorted results', async () => {
+      const options = { qs: query, json: true };
+      // sort by:
+      //  1. rarity(desc)
+      //  2. cost(desc)
+      //  3. team['群', '魏', '蜀', '呉', '漢']
+      //  4. army['弓', '歩', '騎']
+      //  5. identifier(asc)
+      const expectedIds = [
+        '30f401ff9134eb74663697174aa3ff10', // 周瑜,呉,弓,5
+        'e0f015ef64ca6eef2ed4ad5debcd3fde', // 陸遜(S2),呉,歩,5
+        'a9f7deacd67d08a2ea7ff2d4255b4171', // 張角,群,騎,5
+        'c78a48266ec5166844c7df427834a520', // 張春華,魏,弓,5
+        '5abed51fa17562728f0b54288c547c56', // 朱儁,漢,弓,4
+        '0022cae0ffb0ee3d8fce63d6d8cdc69f', // 蒋琬,蜀,歩,3
+      ];
+      const subjects = await server.get('/c', options);
+      expect(subjects).toHaveLength(expectedIds.length);
+      expect(subjects.map(s => s.identifier)).toEqual(expectedIds);
     });
 
     it('returning valid object shape', async () => {
@@ -104,7 +125,7 @@ describe('Routes: `/c`', () => {
       const options = { qs: query, json: true };
       const expectedIds = [
         '0022cae0ffb0ee3d8fce63d6d8cdc69f', // 蒋琬,蜀,歩,3
-        'e0f015ef64ca6eef2ed4ad5debcd3fde', // S2陸遜,呉,歩,5
+        'e0f015ef64ca6eef2ed4ad5debcd3fde', // 陸遜(S2),呉,歩,5
       ];
       const subjects = await server.get('/c', options);
       expect(subjects).toHaveLength(expectedIds.length);
@@ -122,7 +143,7 @@ describe('Routes: `/c`', () => {
       const options = { qs: query, json: true };
       const expectedIds = [
         '30f401ff9134eb74663697174aa3ff10', // 周瑜,呉,弓,5
-        'e0f015ef64ca6eef2ed4ad5debcd3fde', // S2陸遜,呉,歩,5
+        'e0f015ef64ca6eef2ed4ad5debcd3fde', // 陸遜(S2),呉,歩,5
       ];
       const subjects = await server.get('/c', options);
       expect(subjects).toHaveLength(expectedIds.length);

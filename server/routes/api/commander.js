@@ -17,9 +17,10 @@ const search = (req, res) => {
       query
     );
   }
-  return query.select([
-    '_id', 'id', 'identifier', 'name', 'image', 'imageURL',
-  ]).find();
+  return query
+    .select(['_id', 'id', 'identifier', 'name', 'image', 'imageURL'])
+    .sort('sortKey')
+    .find();
 };
 
 module.exports = {
