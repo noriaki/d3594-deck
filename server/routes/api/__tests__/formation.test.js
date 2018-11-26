@@ -9,6 +9,8 @@ import Tactics from '../../../models/Tactics';
 import formationRouters from '../formation';
 import Formation from '../../../models/Formation';
 
+process.env.TEST_SUITE = 'route-test-api-formation';
+
 describe('Routes: `/f`', () => {
   let server;
   const routes = [

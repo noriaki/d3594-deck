@@ -8,38 +8,39 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 
 import { buildItemIterator, menuProps } from './concerns/menu';
+import { baseRarity } from '../../../../server/models/classes/Commander';
 
-const styles = theme => ({
+const styles = {
   formControl: {
-    width: `calc(calc(100% - ${theme.spacing.unit * 2}px) / 3)`,
+    width: '33.333%',
+    paddingLeft: 1,
+    paddingRight: 1,
   },
-});
-
-const baseArmy = ['弓', '歩', '騎'];
-
-const renderSortedValue = (selected) => {
-  const sortedValue = baseArmy.filter(r => selected.includes(r));
-  return sortedValue.join(',');
 };
 
-export const ArmyFilterComponent = ({
+const renderSortedValue = (selected) => {
+  const sortedValue = baseRarity.filter(r => selected.includes(r));
+  return `\u2605${sortedValue.join(',')}`;
+};
+
+export const RarityFilterComponent = ({
   classes,
-  army,
+  rarity,
   onChange: handleChange,
 }) => (
   <FormControl margin="dense" className={classes.formControl}>
-    <InputLabel htmlFor="select-army">兵種</InputLabel>
+    <InputLabel htmlFor="select-rarity">稀少度</InputLabel>
     <Select
       MenuProps={menuProps}
       multiple
-      value={army}
-      onChange={handleChange('army')}
-      name="army"
-      input={<Input id="select-army" />}
+      value={rarity}
+      onChange={handleChange('rarity')}
+      name="rarity"
+      input={<Input id="select-rarity" />}
       renderValue={renderSortedValue}>
-      { baseArmy.map(buildItemIterator('army', army)) }
+      { baseRarity.map(buildItemIterator('rarity', rarity)) }
     </Select>
   </FormControl>
 );
 
-export default withStyles(styles)(ArmyFilterComponent);
+export default withStyles(styles)(RarityFilterComponent);

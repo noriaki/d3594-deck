@@ -8,38 +8,39 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 
 import { buildItemIterator, menuProps } from './concerns/menu';
+import { baseTeam } from '../../../../server/models/classes/Commander';
 
-const styles = theme => ({
+const styles = {
   formControl: {
-    width: `calc(calc(100% - ${theme.spacing.unit * 2}px) / 3)`,
+    width: '33.333%',
+    paddingLeft: 1,
+    paddingRight: 1,
   },
-});
-
-const baseRarity = [5, 4, 3, 2, 1];
-
-const renderSortedValue = (selected) => {
-  const sortedValue = baseRarity.filter(r => selected.includes(r));
-  return `\u2605${sortedValue.join(',')}`;
 };
 
-export const RarityFilterComponent = ({
+const renderSortedValue = (selected) => {
+  const sortedValue = baseTeam.filter(r => selected.includes(r));
+  return sortedValue.join(',');
+};
+
+export const TeamFilterComponent = ({
   classes,
-  rarity,
+  team,
   onChange: handleChange,
 }) => (
   <FormControl margin="dense" className={classes.formControl}>
-    <InputLabel htmlFor="select-rarity">稀少度</InputLabel>
+    <InputLabel htmlFor="select-team">兵種</InputLabel>
     <Select
       MenuProps={menuProps}
       multiple
-      value={rarity}
-      onChange={handleChange('rarity')}
-      name="rarity"
-      input={<Input id="select-rarity" />}
+      value={team}
+      onChange={handleChange('team')}
+      name="team"
+      input={<Input id="select-team" />}
       renderValue={renderSortedValue}>
-      { baseRarity.map(buildItemIterator('rarity', rarity)) }
+      { baseTeam.map(buildItemIterator('team', team)) }
     </Select>
   </FormControl>
 );
 
-export default withStyles(styles)(RarityFilterComponent);
+export default withStyles(styles)(TeamFilterComponent);

@@ -20,6 +20,7 @@ const commanderSchema = new Schema({
   army: { type: String, required: true, enum: ['弓', '歩', '騎'] },
   distance: { type: Number, required: true },
   image: { type: String },
+  sortKey: { type: String, required: true },
   maxStatus: MaxStatus.schema,
   minStatus: MinStatus.schema,
   deltaStatus: DeltaStatus.schema,
@@ -46,6 +47,22 @@ function setIdentifier() {
   this.identifier = identifier;
 }
 commanderSchema.pre('validate', setIdentifier);
+
+function setSortKey() {
+  const { baseRarity, baseArmy, baseTeam } = CommanderClass;
+  const rarity = baseRarity.indexOf(this.rarity);
+  const cost = 100 - Math.floor(this.cost * 10);
+  const army = baseArmy.indexOf(this.army);
+  const team = baseTeam.indexOf(this.team);
+  this.sortKey = [
+    rarity > -1 ? rarity : baseRarity.length,
+    cost,
+    team > -1 ? team : baseTeam.length,
+    army > -1 ? army : baseArmy.length,
+    this.identifier.slice(0, 6),
+  ].join('/');
+}
+commanderSchema.pre('validate', setSortKey);
 
 // @async
 function specificTactics() {

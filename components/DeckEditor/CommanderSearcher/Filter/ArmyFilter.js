@@ -8,38 +8,39 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 
 import { buildItemIterator, menuProps } from './concerns/menu';
+import { baseArmy } from '../../../../server/models/classes/Commander';
 
-const styles = theme => ({
+const styles = {
   formControl: {
-    width: `calc(calc(100% - ${theme.spacing.unit * 2}px) / 3)`,
+    width: '33.333%',
+    paddingLeft: 1,
+    paddingRight: 1,
   },
-});
-
-const baseTeam = ['群', '漢', '魏', '蜀', '呉'];
+};
 
 const renderSortedValue = (selected) => {
-  const sortedValue = baseTeam.filter(r => selected.includes(r));
+  const sortedValue = baseArmy.filter(r => selected.includes(r));
   return sortedValue.join(',');
 };
 
-export const TeamFilterComponent = ({
+export const ArmyFilterComponent = ({
   classes,
-  team,
+  army,
   onChange: handleChange,
 }) => (
   <FormControl margin="dense" className={classes.formControl}>
-    <InputLabel htmlFor="select-team">兵種</InputLabel>
+    <InputLabel htmlFor="select-army">兵種</InputLabel>
     <Select
       MenuProps={menuProps}
       multiple
-      value={team}
-      onChange={handleChange('team')}
-      name="team"
-      input={<Input id="select-team" />}
+      value={army}
+      onChange={handleChange('army')}
+      name="army"
+      input={<Input id="select-army" />}
       renderValue={renderSortedValue}>
-      { baseTeam.map(buildItemIterator('team', team)) }
+      { baseArmy.map(buildItemIterator('army', army)) }
     </Select>
   </FormControl>
 );
 
-export default withStyles(styles)(TeamFilterComponent);
+export default withStyles(styles)(ArmyFilterComponent);

@@ -3,14 +3,12 @@ import { readFileSync } from 'fs';
 import React from 'react';
 import { createShallow } from '@material-ui/core/test-utils';
 import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
 
 import Commander from '../../server/models/Commander';
 import Tactics from '../../server/models/Tactics';
 import Formation from '../../server/models/Formation';
 
-import { Tactics as TacticsComponent } from '../Tactics';
+import { TacticsComponent } from '../Tactics';
 
 process.env.TEST_SUITE = 'component-test-Tactics';
 
