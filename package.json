@@ -17,13 +17,16 @@
     "test": "NODE_ENV=test jest",
     "dev": "micro-dev --watch server",
     "build": "next build",
-    "db:import": "node scripts/replaceDbData.js",
-    "start": "NODE_ENV=production micro"
+    "db:import:dev": "node scripts/replaceDbData.js",
+    "db:import": "NODE_ENV=production node scripts/importData.js",
+    "start": "NODE_ENV=production micro",
+    "heroku-postbuild": "yarn build"
   },
   "dependencies": {
     "@material-ui/core": "^3.2.0",
     "@material-ui/icons": "^3.0.1",
     "classnames": "^2.2.6",
+    "isomorphic-fetch": "^2.2.1",
     "jss": "^9.8.7",
     "lodash.isequal": "^4.5.0",
     "lodash.isstring": "^4.0.1",
