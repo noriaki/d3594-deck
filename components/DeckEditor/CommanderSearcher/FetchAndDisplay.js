@@ -82,7 +82,7 @@ const buildGridListTile = classes => c => (
   <GridListTile key={c._id} classes={{ root: classes.tileRoot }}>
     <img src={c.imageURL} alt={c.id} />
     <GridListTileBar
-      title={c.name}
+      title={`${c.name}${c.special || ''}`}
       titlePosition="bottom"
       classes={{ root: classes.tileBarRoot }} />
   </GridListTile>
