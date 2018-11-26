@@ -7,7 +7,7 @@ import Commander from '../../server/models/Commander';
 import Tactics from '../../server/models/Tactics';
 import Formation from '../../server/models/Formation';
 
-import { CommanderImage as CommanderImageComponent } from '../CommanderImage';
+import { CommanderImageComponent } from '../CommanderImage';
 
 process.env.TEST_SUITE = 'component-test-CommanderImage';
 
