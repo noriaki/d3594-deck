@@ -38,7 +38,7 @@ const styles = theme => ({
   },
 });
 
-export const CommanderImage = ({ commander, classes }) => {
+export const CommanderImageComponent = ({ commander, classes }) => {
   if (commander == null) {
     // eslint-disable-next-line no-param-reassign
     commander = {
@@ -66,4 +66,4 @@ export const CommanderImage = ({ commander, classes }) => {
   );
 };
 
-export default withStyles(styles)(CommanderImage);
+export default withStyles(styles)(CommanderImageComponent);

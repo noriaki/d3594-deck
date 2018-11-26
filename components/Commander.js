@@ -29,7 +29,7 @@ const styles = theme => ({
 
 const defaultCommander = { additionalTactics: [] };
 
-export const Commander = ({ commander, position, classes }) => {
+export const CommanderComponent = ({ commander, position, classes }) => {
   const finalCommander = commander || defaultCommander;
   const { tactics, additionalTactics } = finalCommander;
   return (
@@ -55,4 +55,4 @@ export const Commander = ({ commander, position, classes }) => {
   );
 };
 
-export default withStyles(styles)(Commander);
+export default withStyles(styles)(CommanderComponent);

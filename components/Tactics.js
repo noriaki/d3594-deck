@@ -15,7 +15,7 @@ const styles = () => ({
   },
 });
 
-export const Tactics = ({ tactics, classes }) => {
+export const TacticsComponent = ({ tactics, classes }) => {
   if (tactics == null) {
     const srcset = [
       '/static/images/default-tactics.png',
@@ -46,4 +46,4 @@ export const Tactics = ({ tactics, classes }) => {
   );
 };
 
-export default withStyles(styles)(Tactics);
+export default withStyles(styles)(TacticsComponent);
