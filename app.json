@@ -1,0 +1,31 @@
+{
+  "name": "d3594-deck",
+  "scripts": {
+    "postdeploy": "yarn db:import"
+  },
+  "env": {
+    "DATA_REPO": {
+      "required": true
+    },
+    "MONGODB_URI": {
+      "required": true
+    },
+    "PAPERTRAIL_API_TOKEN": {
+      "required": true
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1
+    }
+  },
+  "addons": [
+    "mongolab",
+    "papertrail"
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
+}
