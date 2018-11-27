@@ -1,9 +1,27 @@
 import React from 'react';
 import App, { Container } from 'next/app';
-import { MuiThemeProvider } from '@material-ui/core/styles';
+import { MuiThemeProvider, withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import JssProvider from 'react-jss/lib/JssProvider';
+import EventListener from 'react-event-listener';
+import debounce from 'lodash.debounce';
 import getPageContext from '../contexts/getPageContext';
+
+const globalStyles = theme => ({
+  '@global': {
+    html: { height: '100%' },
+    body: { height: '100%' },
+  },
+});
+
+const StyledCssBaseline = withStyles(globalStyles)(CssBaseline);
+
+const setDimensionVars = () => {
+  const ivh = window.innerHeight * 0.01;
+  const ivw = window.innerWidth * 0.01;
+  document.documentElement.style.setProperty('--ivh', `${ivh}px`);
+  document.documentElement.style.setProperty('--ivw', `${ivw}px`);
+};
 
 class D3594DeckApp extends App {
   constructor(props) {
@@ -11,32 +29,31 @@ class D3594DeckApp extends App {
     this.pageContext = getPageContext();
   }
 
+  handleResize = () => setDimensionVars();
+
   componentDidMount() {
-    // Remove the server-side injected CSS.
     const jssStyles = document.querySelector('#jss-server-side');
     if (jssStyles && jssStyles.parentNode) {
       jssStyles.parentNode.removeChild(jssStyles);
     }
+    setDimensionVars();
   }
 
   render() {
     const { Component, pageProps } = this.props;
     return (
       <Container>
-        {/* Wrap every page in Jss and Theme providers */}
         <JssProvider
           registry={this.pageContext.sheetsRegistry}
           generateClassName={this.pageContext.generateClassName}>
-          {/* MuiThemeProvider makes the theme available down the React
-              tree thanks to React context. */}
           <MuiThemeProvider
             theme={this.pageContext.theme}
             sheetsManager={this.pageContext.sheetsManager}>
-            {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-            <CssBaseline />
-            {/* Pass pageContext to the _document though the renderPage enhancer
-                to render collected styles on server side. */}
+            <StyledCssBaseline />
             <Component pageContext={this.pageContext} {...pageProps} />
+            <EventListener
+              target="window"
+              onResize={debounce(this.handleResize)} />
           </MuiThemeProvider>
         </JssProvider>
       </Container>

@@ -16,8 +16,10 @@ const styles = theme => ({
     justifyContent: 'center',
   },
   paper: {
-    height: '80vh',
-    width: '96vw',
+    height: '80%',
+    height: 'calc(var(--ivh, 1vh) * 80)', // eslint-disable-line no-dupe-keys
+    width: '96%',
+    width: 'calc(var(--ivw, 1vw) * 96)', // eslint-disable-line no-dupe-keys
     left: 'auto',
     right: 'auto',
     padding: [

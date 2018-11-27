@@ -29,7 +29,7 @@ export const TeamFilterComponent = ({
   onChange: handleChange,
 }) => (
   <FormControl margin="dense" className={classes.formControl}>
-    <InputLabel htmlFor="select-team">兵種</InputLabel>
+    <InputLabel htmlFor="select-team">陣営</InputLabel>
     <Select
       MenuProps={menuProps}
       multiple
