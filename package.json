@@ -28,6 +28,7 @@
     "classnames": "^2.2.6",
     "isomorphic-fetch": "^2.2.1",
     "jss": "^9.8.7",
+    "lodash.debounce": "^4.0.8",
     "lodash.isequal": "^4.5.0",
     "lodash.isstring": "^4.0.1",
     "lodash.merge": "^4.6.1",
@@ -40,6 +41,7 @@
     "qs": "^6.5.2",
     "react": "^16.6.1",
     "react-dom": "^16.6.1",
+    "react-event-listener": "^0.6.4",
     "react-jss": "^8.6.1"
   },
   "devDependencies": {
