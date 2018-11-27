@@ -12,7 +12,8 @@ const styles = theme => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    height: '20vh',
+    height: '20%',
+    height: 'calc(var(--ivh, 1vh) * 20)', // eslint-disable-line no-dupe-keys
   },
 });
 
