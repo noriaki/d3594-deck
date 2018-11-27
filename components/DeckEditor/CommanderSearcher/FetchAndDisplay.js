@@ -10,14 +10,7 @@ import GridListTileBar from '@material-ui/core/GridListTileBar';
 
 const styles = theme => ({
   root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-    overflow: 'hidden',
-    backgroundColor: theme.palette.background.paper,
-  },
-  tileRoot: {
-    height: 'auto',
+    height: '100%',
   },
   tileBarRoot: {
     height: theme.spacing.unit * 3,
@@ -56,10 +49,10 @@ export class FetchAndDisplayComponent extends Component {
     const { commanders } = this.state;
     const { classes } = this.props;
     if (commanders === null) {
-      return <div className={classes.root}>Loading...</div>;
+      return <div>Loading...</div>;
     }
     return (
-      <GridList cols={3} spacing={2} cellHeight={120}>
+      <GridList cols={3} spacing={2} cellHeight="auto" className={classes.root}>
         {commanders.map(buildGridListTile(classes))}
       </GridList>
     );
@@ -79,7 +72,7 @@ export class FetchAndDisplayComponent extends Component {
 export default withStyles(styles)(FetchAndDisplayComponent);
 
 const buildGridListTile = classes => c => (
-  <GridListTile key={c._id} classes={{ root: classes.tileRoot }}>
+  <GridListTile key={c._id} style={{ height: '38%' }}>
     <img src={c.imageURL} alt={c.id} />
     <GridListTileBar
       title={`${c.name}${c.special || ''}`}
