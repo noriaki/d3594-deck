@@ -4,7 +4,7 @@ import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 
 const cssCardWidth = 'calc(calc(calc(100vw - 64px) / 13) * 4)';
-const cssCardHeight = `calc(${cssCardWidth} / 0.729211087420043)`;
+const cssCardHeight = `calc(${cssCardWidth} * 1.371345029239765)`;
 
 const styles = theme => ({
   root: {
