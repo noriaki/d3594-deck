@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import qs from 'qs';
 import isEqual from 'lodash.isequal';
+import EventListener from 'react-event-listener';
+import debounce from 'lodash.debounce';
 
 // material-ui components
 import { withStyles } from '@material-ui/core/styles';
@@ -33,6 +35,10 @@ export class FetchAndDisplayComponent extends Component {
     return null;
   };
 
+  handleResize = () => {
+    this.setDimensionVars(this.gridListRef);
+  }
+
   componentDidMount = () => {
     const { query } = this.props;
     this.fetch(query);
@@ -61,6 +67,9 @@ export class FetchAndDisplayComponent extends Component {
           cellHeight="auto"
           className={classes.root}>
           {commanders.map(buildGridListTile(classes))}
+          <EventListener
+            target="window"
+            onResize={debounce(this.handleResize)} />
         </GridList>
       </RootRef>
     );
