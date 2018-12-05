@@ -4,6 +4,9 @@ import React, { Fragment, Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 
+// stores
+import Store from '../../stores';
+
 // components
 import CommanderSearcher from './CommanderSearcher';
 
@@ -43,19 +46,21 @@ export class DeckEditorComponent extends Component {
     const { classes } = this.props;
     const { mode } = this.state;
     return (
-      <Fragment>
-        <div className={classes.container}>
-          <Button
-            variant="outlined"
-            onClick={this.toggleCommanderSearcher()}>
-            {mode === SEARCH_COMMANDER_MODE ? 'Close' : 'Open'}
-          </Button>
-        </div>
-        <CommanderSearcher
-          open={mode === SEARCH_COMMANDER_MODE}
-          onClose={this.toggleCommanderSearcher(false)}
-          onOpen={this.toggleCommanderSearcher(true)} />
-      </Fragment>
+      <Store.Container>
+        <Fragment>
+          <div className={classes.container}>
+            <Button
+              variant="outlined"
+              onClick={this.toggleCommanderSearcher()}>
+              {mode === SEARCH_COMMANDER_MODE ? 'Close' : 'Open'}
+            </Button>
+          </div>
+          <CommanderSearcher
+            open={mode === SEARCH_COMMANDER_MODE}
+            onClose={this.toggleCommanderSearcher(false)}
+            onOpen={this.toggleCommanderSearcher(true)} />
+        </Fragment>
+      </Store.Container>
     );
   }
 }

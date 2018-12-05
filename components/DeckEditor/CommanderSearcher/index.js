@@ -8,7 +8,13 @@ import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import HalfModalCloseIcon from '../../HalfModalCloseIcon';
 import SearchField from './SearchField';
 import Filter from './Filter';
-import FetchAndDisplay from './FetchAndDisplay';
+import Results from './Results';
+
+// stores
+import Store from '../../../stores';
+
+// actions
+import { commanderSearchActions } from '../../../actions';
 
 const styles = theme => ({
   modal: {
@@ -37,25 +43,15 @@ const styles = theme => ({
 });
 
 export class CommanderSearcherComponent extends Component {
-  state = {
-    searchText: '',
-    filter: {
-      rarity: [5, 4],
-      army: ['弓'/*, '歩', '騎'*/],
-      team: ['群', '漢', '魏', '蜀', '呉'],
-    },
-  }
+  componentDidMount = () => {
+    const { commanderSearcher } = this.props;
+    commanderSearcher.set('init')(true);
+  };
 
-  updateSearchText = (value) => {
-    const { searchText, ...other } = this.state;
-    this.setState({ ...other, searchText: value });
-  }
-
-  updateFilter = target => (event) => {
-    const { value } = event.target;
-    const { filter, ...other } = this.state;
-    this.setState({ ...other, filter: { ...filter, [target]: value } });
-  }
+  componentWillUnmount = () => {
+    const { commanderSearcher } = this.props;
+    commanderSearcher.set('init')(false);
+  };
 
   render() {
     const {
@@ -63,11 +59,14 @@ export class CommanderSearcherComponent extends Component {
       onOpen: handleOpen,
       onClose: handleClose,
       classes,
+      commanderSearcher,
     } = this.props;
     const {
-      filter,
-      searchText: text,
-    } = this.state;
+      updateText,
+      updateFilter,
+    } = commanderSearchActions(commanderSearcher);
+    const { filter } = commanderSearcher.get('query');
+    const commanders = commanderSearcher.get('results');
     return (
       <SwipeableDrawer
         anchor="bottom"
@@ -80,15 +79,17 @@ export class CommanderSearcherComponent extends Component {
           <HalfModalCloseIcon onClick={handleClose} />
         </div>
         <div>
-          <SearchField onChange={this.updateSearchText} />
+          <SearchField onChange={updateText} />
         </div>
         <div>
-          <Filter filter={filter} onChange={this.updateFilter} />
+          <Filter filter={filter} onChange={updateFilter} />
         </div>
-        <FetchAndDisplay query={{ text, filter }} />
+        <Results commanders={commanders} />
       </SwipeableDrawer>
     );
   }
 }
 
-export default withStyles(styles)(CommanderSearcherComponent);
+export default Store.withStores(
+  withStyles(styles)(CommanderSearcherComponent)
+);
