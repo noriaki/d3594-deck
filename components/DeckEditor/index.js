@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button';
 import Store from '../../stores';
 
 // components
+import Stage from './Stage';
 import CommanderSearcher from './CommanderSearcher';
 
 const styles = theme => ({
@@ -43,11 +44,15 @@ export class DeckEditorComponent extends Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, formation } = this.props;
     const { mode } = this.state;
     return (
       <Store.Container>
         <Fragment>
+          <Stage
+            formation={formation}
+            edit
+            search={mode !== null} />
           <div className={classes.container}>
             <Button
               variant="outlined"
