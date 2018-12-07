@@ -18,8 +18,9 @@ const Commander = ({
     tactics,
     additionalTactics,
   } = (propCommander || defaultCommander);
+  const { container } = classes;
   return (
-    <div className={classes.root}>
+    <div className={container}>
       <PositionImage
         classes={classes}
         position={position}

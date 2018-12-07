@@ -31,7 +31,7 @@ const Tactics = ({
   const { name, imageURL, imageSrcSet } = (propTactics || defaultTactics);
 
   return (
-    <Card elevation={0} className={tacticsRoot}>
+    <Card elevation={0} square className={tacticsRoot}>
       <CardMedia
         component="img"
         alt={name}
@@ -40,7 +40,7 @@ const Tactics = ({
         title={name}
         className={tacticsImage} />
       <CardContent className={tacticsCaptionContainer}>
-        <Typography gutterBottom variant="caption">
+        <Typography gutterBottom variant="body2">
           {name}
         </Typography>
       </CardContent>
