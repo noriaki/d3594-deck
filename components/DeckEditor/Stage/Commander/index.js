@@ -31,7 +31,6 @@ const Commander = ({
         classes={classes} />
       <Tactics
         tactics={tactics}
-        removable={editable && tactics != null}
         classes={classes} />
       <Tactics
         tactics={additionalTactics[0]}

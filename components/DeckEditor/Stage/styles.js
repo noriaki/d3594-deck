@@ -74,6 +74,10 @@ export const baseStyles = theme => merge({}, styles(theme), {
   commanderImageTitleInner: {
     lineHeight: 'unset',
   },
+  tacticsRoot: {
+    overflow: 'unset',
+    position: 'relative',
+  },
   tacticsCaptionContainer: {
     padding: 0,
     '&:last-child': { paddingBottom: 0 },

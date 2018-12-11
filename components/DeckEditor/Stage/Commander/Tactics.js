@@ -5,6 +5,7 @@ import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
+import RemoveIcon from './RemoveIcon';
 
 const defaultSrcSet = [
   '/static/images/default-tactics.png',
@@ -39,6 +40,7 @@ const Tactics = ({
         srcSet={imageSrcSet.join(', ')}
         title={name}
         className={tacticsImage} />
+      {removable && <RemoveIcon onClick={handleClick} />}
       <CardContent className={tacticsCaptionContainer}>
         <Typography align="center" variant="body2">
           {name}
