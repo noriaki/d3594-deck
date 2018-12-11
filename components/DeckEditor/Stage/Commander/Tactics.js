@@ -40,7 +40,7 @@ const Tactics = ({
         title={name}
         className={tacticsImage} />
       <CardContent className={tacticsCaptionContainer}>
-        <Typography gutterBottom variant="body2">
+        <Typography align="center" variant="body2">
           {name}
         </Typography>
       </CardContent>

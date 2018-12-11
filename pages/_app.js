@@ -9,7 +9,10 @@ import getPageContext from '../contexts/getPageContext';
 
 const globalStyles = theme => ({
   '@global': {
-    html: { height: '100%' },
+    html: {
+      height: '100%',
+      fontSize: '5vmin',
+    },
     body: { height: '100%' },
   },
 });
