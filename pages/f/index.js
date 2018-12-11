@@ -6,7 +6,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
-import Formation from '../../components/Formation';
+import Stage from '../../components/DeckEditor/Stage';
 
 const styles = theme => ({
   paper: {
@@ -25,7 +25,7 @@ const FormationDetailPage = ({ classes, formation }) => (
       </Toolbar>
     </AppBar>
     <Paper className={classes.paper}>
-      <Formation commanders={formation.commanders} />
+      <Stage formation={formation} />
     </Paper>
     <Paper className={classes.paper}>
       <Typography variant="h5" component="h3">コスト</Typography>

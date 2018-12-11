@@ -26,8 +26,8 @@ const SEARCH_TACTICS_MODE = 'searchTactics';
 
 export class DeckEditorComponent extends Component {
   state = {
-    // mode: null, // enum [null, SEARCH_COMMANDER_MODE, SEARCH_TACTICS_MODE]
-    mode: SEARCH_COMMANDER_MODE,
+    mode: null, // enum [null, SEARCH_COMMANDER_MODE, SEARCH_TACTICS_MODE]
+    // mode: SEARCH_COMMANDER_MODE,
   }
 
   toggleCommanderSearcher = toOpen => () => {

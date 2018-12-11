@@ -50,7 +50,7 @@ export const baseStyles = theme => merge({}, styles(theme), {
     height: '100%',
     display: 'block',
     position: 'relative',
-    overflow: 'hidden',
+    overflow: 'unset',
     '& img': {
       top: '50%',
       width: '100%',
