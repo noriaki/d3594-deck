@@ -27,6 +27,7 @@ const Commander = ({
         horizontal={!!search} />
       <CommanderImage
         commander={commander}
+        editable={editable}
         removable={editable && commander != null}
         classes={classes} />
       <Tactics
@@ -34,10 +35,12 @@ const Commander = ({
         classes={classes} />
       <Tactics
         tactics={additionalTactics[0]}
+        editable={editable}
         removable={editable && additionalTactics[0] != null}
         classes={classes} />
       <Tactics
         tactics={additionalTactics[1]}
+        editable={editable}
         removable={editable && additionalTactics[1] != null}
         classes={classes} />
     </div>

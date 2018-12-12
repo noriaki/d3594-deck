@@ -3,6 +3,7 @@ import React from 'react';
 // componentns
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import RemoveIcon from './RemoveIcon';
+import AddCommander from './AddCommander';
 
 const defaultCommander = {
   id: '未配置',
@@ -13,6 +14,7 @@ const defaultCommander = {
 const CommanderImage = ({
   classes,
   commander: propCommander,
+  editable,
   removable,
   onClick: handleClick,
 }) => {
@@ -39,6 +41,7 @@ const CommanderImage = ({
           titlePosition="bottom"
           classes={{ root, titleWrap, title }} />
         {removable && <RemoveIcon onClick={handleClick} />}
+        {editable && propCommander == null && <AddCommander onClick={handleClick} />}
       </div>
     </div>
   );

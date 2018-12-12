@@ -6,6 +6,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import RemoveIcon from './RemoveIcon';
+import AddTactics from './AddTactics';
 
 const defaultSrcSet = [
   '/static/images/default-tactics.png',
@@ -21,6 +22,7 @@ const defaultTactics = {
 const Tactics = ({
   classes,
   tactics: propTactics,
+  editable,
   removable,
   onClick: handleClick,
 }) => {
@@ -41,6 +43,7 @@ const Tactics = ({
         title={name}
         className={tacticsImage} />
       {removable && <RemoveIcon onClick={handleClick} />}
+      {editable && propTactics == null && <AddTactics onClick={handleClick} />}
       <CardContent className={tacticsCaptionContainer}>
         <Typography align="center" variant="body2">
           {name}
