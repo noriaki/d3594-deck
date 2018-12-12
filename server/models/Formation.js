@@ -9,11 +9,14 @@ const { Schema } = mongoose;
 const formationSchema = new Schema({
   _id: { type: String, required: true },
   name: { type: String },
-  commanders: [{
-    type: String,
-    ref: 'LearnedCommander',
-    autopopulate: { options: { retainNullValues: true } },
-  }],
+  commanders: {
+    type: [{
+      type: String,
+      ref: 'LearnedCommander',
+      autopopulate: { options: { retainNullValues: true } },
+    }],
+    default: [null, null, null],
+  },
 });
 
 const identify = (commanderIdsOrInstances) => {

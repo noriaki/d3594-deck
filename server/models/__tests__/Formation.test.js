@@ -9,6 +9,14 @@ import { md5 } from '../concerns/identify';
 process.env.TEST_SUITE = 'model-test-Formation';
 
 describe('Formation association model', () => {
+  describe('initialize', () => {
+    it('instance has 3 initial commanders', () => {
+      const { commanders: subjects } = new Formation();
+      expect(subjects).toHaveLength(3);
+      subjects.forEach(subject => expect(subject).toBeNull());
+    });
+  });
+
   describe('create associate', () => {
     beforeEach(async () => {
       const files = [
