@@ -1,8 +1,12 @@
-import { createConnectedStoreAs } from 'undux';
+import { createConnectedStoreAs, withReduxDevtools } from 'undux';
 
 import effects from '../effects';
 
-const initialCommanderSearcher = {
+export const initialFormation = {
+  commanders: [null, null, null],
+};
+
+export const initialCommanderSearcher = {
   init: false,
   query: {
     text: '',
@@ -17,6 +21,21 @@ const initialCommanderSearcher = {
 
 const { Container, withStores } = createConnectedStoreAs({
   commanderSearcher: initialCommanderSearcher,
-}, effects);
+  formation: initialFormation,
+}, (stores) => {
+  if (typeof window === 'undefined') {
+    return effects(stores);
+  }
+  return effects(Object.entries(stores).reduce((ret, [name, store]) => ({
+    ...ret, [name]: withReduxDevtools(store),
+  }), {}));
+});
 
-export default { Container, withStores };
+export default {
+  Container,
+  withStores,
+  initialStates: {
+    formation: initialFormation,
+    commanderSearcher: initialCommanderSearcher,
+  },
+};

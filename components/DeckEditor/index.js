@@ -28,7 +28,7 @@ export class DeckEditorComponent extends Component {
   state = {
     mode: null, // enum [null, SEARCH_COMMANDER_MODE, SEARCH_TACTICS_MODE]
     // mode: SEARCH_COMMANDER_MODE,
-  }
+  };
 
   toggleCommanderSearcher = toOpen => () => {
     let nextMode = toOpen;
@@ -41,16 +41,16 @@ export class DeckEditorComponent extends Component {
       nextMode = (toOpen === true ? SEARCH_COMMANDER_MODE : null);
     }
     this.setState({ mode: nextMode });
-  }
+  };
 
   render() {
+    const { initialStates } = Store;
     const { classes, formation } = this.props;
     const { mode } = this.state;
     return (
-      <Store.Container>
+      <Store.Container initialStates={{ ...initialStates, formation }}>
         <Fragment>
           <Stage
-            formation={formation}
             edit
             search={mode !== null} />
           <div className={classes.container}>

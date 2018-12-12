@@ -6,6 +6,9 @@ import Commander from './Commander';
 // styles
 import { withBaseStyles, withSearchStyles } from './styles';
 
+// stores
+import Store from '../../../stores';
+
 const positions = ['honei', 'chuei', 'zenei'];
 
 const Stage = ({
@@ -15,7 +18,7 @@ const Stage = ({
 }) => {
   const withStyles = search ? withSearchStyles : withBaseStyles;
   const editable = !search && edit;
-  const commanders = formation.commanders.map((commander, i) => (
+  const commanders = formation.get('commanders').map((commander, i) => (
     <Commander
       key={positions[i]}
       commander={commander}
@@ -27,7 +30,7 @@ const Stage = ({
   return <StyledWrapper>{commanders}</StyledWrapper>;
 };
 
-export default Stage;
+export default Store.withStores(Stage);
 
 const Wrapper = ({ classes, children, ...props }) => {
   const childProps = { classes, ...props };
