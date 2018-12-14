@@ -1,5 +1,8 @@
 import React from 'react';
 
+// material-ui components
+import Button from '@material-ui/core/Button';
+
 // componentns
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import RemoveIcon from './RemoveIcon';
@@ -16,7 +19,7 @@ const CommanderImage = ({
   commander: propCommander,
   editable,
   removable,
-  onClick: handleClick,
+  onClick: handleClickTo,
 }) => {
   const {
     commanderImageRoot,
@@ -27,6 +30,7 @@ const CommanderImage = ({
   } = classes;
   const {
     id,
+    identifier,
     name,
     special,
     imageURL,
@@ -34,15 +38,18 @@ const CommanderImage = ({
 
   return (
     <div className={commanderImageRoot}>
-      <div className={commanderImageContainer}>
+      <Button
+        component="a"
+        onClick={handleClickTo('edit', identifier)}
+        className={commanderImageContainer}>
         <img src={imageURL} alt={id} />
         <GridListTileBar
           title={`${name}${special || ''}`}
           titlePosition="bottom"
           classes={{ root, titleWrap, title }} />
-        {removable && <RemoveIcon onClick={handleClick} />}
-        {editable && propCommander == null && <AddCommander onClick={handleClick} />}
-      </div>
+        {removable && <RemoveIcon onClick={handleClickTo('remove', identifier)} />}
+        {editable && propCommander == null && <AddCommander onClick={handleClickTo('add')} />}
+      </Button>
     </div>
   );
 };

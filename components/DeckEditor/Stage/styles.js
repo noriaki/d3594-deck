@@ -7,7 +7,18 @@ const styles = theme => ({
   positionRoot: {},
   positionImage: {},
   commanderImageRoot: {},
-  commanderImageContainer: {},
+  commanderImageContainer: {
+    padding: 0,
+    borderRadius: 'unset',
+    fontSize: 'inherit',
+    fontWeight: 'unset',
+    letterSpacing: 'unset',
+    lineHeight: 'inherit',
+    textTransform: 'unset',
+    '& img': {
+      width: '100%',
+    },
+  },
   commanderImageTitleRoot: {},
   commanderImageTitleWrap: {},
   commanderImageTitleInner: {},
@@ -51,12 +62,6 @@ export const baseStyles = theme => merge({}, styles(theme), {
     display: 'block',
     position: 'relative',
     overflow: 'unset',
-    '& img': {
-      top: '50%',
-      width: '100%',
-      position: 'relative',
-      transform: 'translateY(-50%)',
-    },
   },
   commanderImageTitleRoot: {
     height: '2rem',
@@ -113,9 +118,8 @@ export const searchStyles = theme => merge({}, styles(theme), {
     gridRow: '2 / -1',
   },
   commanderImageContainer: {
-    '& img': {
-      width: '100%',
-    },
+    display: 'inline',
+    position: 'unset',
   },
   commanderImageTitleRoot: {
     display: 'none',

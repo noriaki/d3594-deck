@@ -14,7 +14,8 @@ const positions = ['honei', 'chuei', 'zenei'];
 const Stage = ({
   search,
   edit,
-  formation,
+  commanderSearchHandler,
+  formation, // from undux stores
 }) => {
   const withStyles = search ? withSearchStyles : withBaseStyles;
   const editable = !search && edit;
@@ -24,7 +25,8 @@ const Stage = ({
       commander={commander}
       search={search}
       editable={editable}
-      position={positions[i]} />
+      position={positions[i]}
+      commanderSearchHandler={commanderSearchHandler} />
   ));
   const StyledWrapper = withStyles(Wrapper);
   return <StyledWrapper>{commanders}</StyledWrapper>;

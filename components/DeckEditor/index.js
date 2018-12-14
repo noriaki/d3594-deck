@@ -1,9 +1,5 @@
 import React, { Fragment, Component } from 'react';
 
-// material-ui components
-import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-
 // stores
 import Store from '../../stores';
 
@@ -11,20 +7,10 @@ import Store from '../../stores';
 import Stage from './Stage';
 import CommanderSearcher from './CommanderSearcher';
 
-const styles = theme => ({
-  container: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '20%',
-    height: 'calc(var(--ivh, 1vh) * 20)', // eslint-disable-line no-dupe-keys
-  },
-});
-
 const SEARCH_COMMANDER_MODE = 'searchCommander';
 const SEARCH_TACTICS_MODE = 'searchTactics';
 
-export class DeckEditorComponent extends Component {
+class DeckEditor extends Component {
   state = {
     mode: null, // enum [null, SEARCH_COMMANDER_MODE, SEARCH_TACTICS_MODE]
     // mode: SEARCH_COMMANDER_MODE,
@@ -45,21 +31,15 @@ export class DeckEditorComponent extends Component {
 
   render() {
     const { initialStates } = Store;
-    const { classes, formation } = this.props;
+    const { formation } = this.props;
     const { mode } = this.state;
     return (
       <Store.Container initialStates={{ ...initialStates, formation }}>
         <Fragment>
           <Stage
             edit
-            search={mode !== null} />
-          <div className={classes.container}>
-            <Button
-              variant="outlined"
-              onClick={this.toggleCommanderSearcher()}>
-              {mode === SEARCH_COMMANDER_MODE ? 'Close' : 'Open'}
-            </Button>
-          </div>
+            search={mode !== null}
+            commanderSearchHandler={this.toggleCommanderSearcher} />
           <CommanderSearcher
             open={mode === SEARCH_COMMANDER_MODE}
             onClose={this.toggleCommanderSearcher(false)}
@@ -70,4 +50,4 @@ export class DeckEditorComponent extends Component {
   }
 }
 
-export default withStyles(styles)(DeckEditorComponent);
+export default DeckEditor;
