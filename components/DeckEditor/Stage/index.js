@@ -7,7 +7,7 @@ import Commander from './Commander';
 import { withBaseStyles, withSearchStyles } from './styles';
 
 // stores
-import Store from '../../../stores';
+import { withStores } from '../../../stores';
 
 const positions = ['honei', 'chuei', 'zenei'];
 
@@ -32,7 +32,7 @@ const Stage = ({
   return <StyledWrapper>{commanders}</StyledWrapper>;
 };
 
-export default Store.withStores(Stage);
+export default withStores(Stage);
 
 const Wrapper = ({ classes, children, ...props }) => {
   const childProps = { classes, ...props };
