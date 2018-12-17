@@ -8,6 +8,7 @@ const { Schema } = mongoose;
 
 const formationSchema = new Schema({
   _id: { type: String, required: true },
+  identifier: { type: String, required: true },
   name: { type: String },
   commanders: {
     type: [{
@@ -22,6 +23,7 @@ const formationSchema = new Schema({
 function setIdentifier() {
   const identifier = FormationClass.identify(this.commanders);
   this._id = identifier;
+  this.identifier = identifier;
 }
 
 function fillCommanders() {
