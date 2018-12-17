@@ -33,14 +33,14 @@ const create = async (req, res) => {
     lc && LearnedCommander.identify(lc.cId, lc.tIds)
   ));
   const formationId = Formation.identify(lcIds);
-  let formation = await Formation.findById(formationId);
+  const formation = await Formation.findById(formationId);
   if (formation == null) {
-    const LearnedCommanders = await Promise.all(lcIds.map((lcId, i) => {
+    const learnedCommanders = await Promise.all(lcIds.map((lcId, i) => {
       if (lcId === null) { return null; }
       return LearnedCommander.createAssociation(ids[i].cId, ids[i].tIds);
     }));
-    formation = await Formation.createAssociation(LearnedCommanders);
-    return send(res, 201, formation);
+    const { id } = await Formation.createAssociation(learnedCommanders);
+    return send(res, 201, await Formation.findById(id));
   }
   return formation;
 };
