@@ -16,8 +16,8 @@ const show = async (req, res) => {
 };
 
 /* pass data[] format:
- { commander: { identifier }, additionalTactics: [identifier, identifier] }
- { commander: { identifier }, additionalTactics: [identifier, null] }
+ { commander: { identifier }, additionalTactics: [{ identifier }, { identifier }] }
+ { commander: { identifier }, additionalTactics: [{ identifier }, null] }
  null
  */
 const create = async (req, res) => {
@@ -40,6 +40,7 @@ const create = async (req, res) => {
       return LearnedCommander.createAssociation(ids[i].cId, ids[i].tIds);
     }));
     formation = await Formation.createAssociation(LearnedCommanders);
+    return send(res, 201, formation);
   }
   return formation;
 };

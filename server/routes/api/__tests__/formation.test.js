@@ -89,29 +89,41 @@ describe('Routes: `/f`', () => {
 
     it('a formation in new commanders who has tactics', async () => {
       const expectedId = '43e0f069ab00049908ab34390a9c45ca';
-      const results = await server.post('/f', { json: true, body: payload });
-      expect(results).toHaveProperty('identifier', expectedId);
+      const results = await server.post('/f', {
+        json: true, resolveWithFullResponse: true, body: payload,
+      });
+      expect(results).toHaveProperty('statusCode', 201);
+      expect(results).toHaveProperty('body.identifier', expectedId);
     });
 
     it('a formation in exists commanders who has tactics', async () => {
       const expectedId = '43e0f069ab00049908ab34390a9c45ca';
-      const results = await server.post('/f', { json: true, body: payload });
-      expect(results).toHaveProperty('identifier', expectedId);
-    });
-
-    it('return exist formation when already saved', async () => {
-      await Formation.importSampleData();
-      const expectedId = '43e0f069ab00049908ab34390a9c45ca';
-      const results = await server.post('/f', { json: true, body: payload });
-      expect(results).toHaveProperty('identifier', expectedId);
+      const results = await server.post('/f', {
+        json: true, resolveWithFullResponse: true, body: payload,
+      });
+      expect(results).toHaveProperty('statusCode', 201);
+      expect(results).toHaveProperty('body.identifier', expectedId);
     });
 
     it('a formation in one less commander, one less tactics', async () => {
       payload = [payload[0], null, payload[1]];
       payload[2].additionalTactics[0] = null;
       const expectedId = '688d618a2fd4261edb5b972681873209';
-      const results = await server.post('/f', { json: true, body: payload });
-      expect(results).toHaveProperty('identifier', expectedId);
+      const results = await server.post('/f', {
+        json: true, resolveWithFullResponse: true, body: payload,
+      });
+      expect(results).toHaveProperty('statusCode', 201);
+      expect(results).toHaveProperty('body.identifier', expectedId);
+    });
+
+    it('nothing, returning exist formation when already saved', async () => {
+      await Formation.importSampleData();
+      const expectedId = '43e0f069ab00049908ab34390a9c45ca';
+      const results = await server.post('/f', {
+        json: true, resolveWithFullResponse: true, body: payload,
+      });
+      expect(results).toHaveProperty('statusCode', 200);
+      expect(results).toHaveProperty('body.identifier', expectedId);
     });
   });
 });
