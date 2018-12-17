@@ -1,3 +1,5 @@
+const { md5, toIdFromInstance } = require('../concerns/identify');
+
 const positions = ['本営', '中衛', '前衛'];
 
 const stringId = commanders => positions.map((position, index) => {
@@ -8,6 +10,11 @@ const stringId = commanders => positions.map((position, index) => {
 
 class Formation {
   static get positions() { return positions; }
+
+  static identify = (cIdsOrInses) => {
+    const cIds = cIdsOrInses.map(toIdFromInstance);
+    return md5(cIds.join());
+  };
 
   get humanize() { return stringId(this.commanders); }
 
