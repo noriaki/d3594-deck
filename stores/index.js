@@ -6,6 +6,12 @@ export const initialFormation = {
   commanders: [null, null, null],
 };
 
+export const initialSearcher = {
+  pathToIds: {},
+  idToPaths: {},
+  target: null,
+};
+
 export const initialCommanderSearcher = {
   init: false,
   query: {
@@ -42,8 +48,9 @@ const withLoggers = (stores) => {
 };
 
 export const { Container, withStores } = createConnectedStoreAs({
-  commanderSearcher: initialCommanderSearcher,
   formation: initialFormation,
+  searcher: initialSearcher,
+  commanderSearcher: initialCommanderSearcher,
 }, compose(withLoggers, effects));
 
 export default {
@@ -51,6 +58,7 @@ export default {
   withStores,
   initialStates: {
     formation: initialFormation,
+    searcher: initialSearcher,
     commanderSearcher: initialCommanderSearcher,
   },
 };

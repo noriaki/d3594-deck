@@ -4,6 +4,8 @@ import get from 'lodash.get';
 import set from 'lodash.set';
 import Router from 'next/router';
 
+import mapIds from './concerns/mapIds';
+
 export const fetchData = (store, path) => async (query) => {
   if (store.get('results') !== null) { store.set('results')(null); }
   const uri = `/api/v1/${path}?${qs.stringify(query)}`;
@@ -15,7 +17,7 @@ export const fetchData = (store, path) => async (query) => {
   store.set('results')(results);
 };
 
-const effects = ({ commanderSearcher, formation }) => {
+const effects = ({ formation, searcher, commanderSearcher }) => {
   commanderSearcher
     .on('query')
     .subscribe(fetchData(commanderSearcher, 'c'));
@@ -29,15 +31,20 @@ const effects = ({ commanderSearcher, formation }) => {
       fetchData(commanderSearcher, 'c')(commanderSearcher.get('query'))
     ));
 
+  const validCommanders = cs => (cs.length === 3 && !cs.every(c => c == null));
   formation
     .on('commanders')
-    .pipe(
-      filter(commanders => (
-        commanders.length === 3 && !commanders.every(c => c == null)
-      ))
-    )
+    .pipe(filter(validCommanders))
+    .subscribe((commanders) => {
+      const { pathToIds, idToPaths } = mapIds(commanders);
+      searcher.set('pathToIds')(pathToIds);
+      searcher.set('idToPaths')(idToPaths);
+    });
+
+  formation
+    .on('commanders')
+    .pipe(filter(validCommanders))
     .subscribe(async (commanders) => {
-      console.log(commanders);
       const query = commanders.map((c) => {
         if (c === null) { return null; }
         const commanderId = get(c, 'commander.identifier', null);

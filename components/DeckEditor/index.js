@@ -2,6 +2,7 @@ import React, { Fragment, Component } from 'react';
 
 // stores
 import Store from '../../stores';
+import mapIds from '../../effects/concerns/mapIds';
 
 // components
 import Stage from './Stage';
@@ -32,9 +33,11 @@ class DeckEditor extends Component {
   render() {
     const { initialStates } = Store;
     const { formation } = this.props;
+    const searcher = mapIds(formation, initialStates.searcher);
+    const states = { ...initialStates, formation, searcher };
     const { mode } = this.state;
     return (
-      <Store.Container initialStates={{ ...initialStates, formation }}>
+      <Store.Container initialStates={states}>
         <Fragment>
           <Stage
             edit

@@ -1,3 +1,14 @@
+export const searchActions = (store) => {
+  const setTargetByIdentifier = (identifier) => {
+    const path = store.get('idToPaths')[identifier];
+    store.set('target')(path);
+  };
+
+  return {
+    setTargetByIdentifier,
+  };
+};
+
 export const commanderSearchActions = (store) => {
   const updateText = (value) => {
     const { text, ...other } = store.get('query');
@@ -53,6 +64,7 @@ export const formationActions = (store) => {
 };
 
 export default {
+  searchActions,
   commanderSearchActions,
   formationActions,
 };

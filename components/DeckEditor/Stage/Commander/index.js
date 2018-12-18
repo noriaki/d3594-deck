@@ -9,13 +9,14 @@ import Tactics from './Tactics';
 import { withStores } from '../../../../stores';
 
 // actions
-import { formationActions } from '../../../../actions';
+import { searchActions, formationActions } from '../../../../actions';
 
 const defaultCommander = { additionalTactics: [] };
 
 const Commander = ({
   classes,
-  formation: store, // from undux stores
+  searcher: searcherStore, // from undux stores
+  formation: formationStore, // from undux stores
   commander: propCommander,
   search,
   editable,
@@ -28,13 +29,16 @@ const Commander = ({
     additionalTactics,
   } = (propCommander || defaultCommander);
   const { container } = classes;
-  const { removeCommander, removeTactics } = formationActions(store);
+  const { setTargetByIdentifier } = searchActions(searcherStore);
+  const { removeCommander, removeTactics } = formationActions(formationStore);
   const handleCommanderClick = (operation, identifier) => () => {
     switch (operation) {
     case 'add':
+      setTargetByIdentifier(identifier);
       commanderSearchHandler(true)();
       break;
     case 'edit':
+      setTargetByIdentifier(identifier);
       commanderSearchHandler(true)();
       break;
     case 'remove':
@@ -45,6 +49,14 @@ const Commander = ({
   };
   const handleTacticsClick = (operation, identifier) => () => {
     switch (operation) {
+    case 'add':
+      setTargetByIdentifier(identifier);
+      console.log('tacitcs.add');
+      break;
+    case 'edit':
+      setTargetByIdentifier(identifier);
+      console.log(`tacitcs.edit: ${identifier}`);
+      break;
     case 'remove':
       removeTactics(identifier);
       break;

@@ -46,6 +46,7 @@ const Tactics = ({
         src={imageURL}
         srcSet={imageSrcSet.join(', ')}
         title={name}
+        onClick={propTactics && handleClickTo('edit', identifier)}
         className={tacticsImage} />
       {removable && <RemoveIcon onClick={handleClickTo('remove', identifier)} />}
       {editable && propTactics == null && <AddTactics onClick={handleClickTo('add')} />}
