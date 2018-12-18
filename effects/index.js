@@ -2,6 +2,7 @@ import qs from 'qs';
 import { filter } from 'rxjs/operators';
 import get from 'lodash.get';
 import set from 'lodash.set';
+import Router from 'next/router';
 
 export const fetchData = (store, path) => async (query) => {
   if (store.get('results') !== null) { store.set('results')(null); }
@@ -52,8 +53,11 @@ const effects = ({ commanderSearcher, formation }) => {
         headers: { 'Content-Type': 'application/json; charset=utf-8' },
         body: JSON.stringify(query),
       });
-      const results = await response.json();
-      console.log(response, results);
+      if (response.ok && [200, 201].includes(response.status)) {
+        const { identifier } = await response.json();
+        const path = `/f/${identifier}/edit`;
+        Router.push(path, undefined, { shallow: true });
+      }
     });
 
   return { commanderSearcher, formation };
