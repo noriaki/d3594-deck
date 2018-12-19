@@ -11,6 +11,7 @@ module.exports = app => ([
   get(`${apiNamespace}/f/:id`, formationApiRouter.show),
   post(`${apiNamespace}/f`, formationApiRouter.create),
   get(`${apiNamespace}/c`, commanderApiRouter.search),
+  get(`${apiNamespace}/c/:id`, commanderApiRouter.fetch),
   // pages
   get('/f/new', formationRouter.edit(app)),
   get('/f/:id', formationRouter.show(app)),

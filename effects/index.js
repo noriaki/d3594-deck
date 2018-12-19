@@ -39,6 +39,7 @@ const effects = ({ formation, searcher, commanderSearcher }) => {
       const { pathToIds, idToPaths } = mapIds(commanders);
       searcher.set('pathToIds')(pathToIds);
       searcher.set('idToPaths')(idToPaths);
+      searcher.set('target')(null);
     });
 
   formation
@@ -62,12 +63,33 @@ const effects = ({ formation, searcher, commanderSearcher }) => {
       });
       if (response.ok && [200, 201].includes(response.status)) {
         const { identifier } = await response.json();
-        const path = `/f/${identifier}/edit`;
-        Router.push(path, undefined, { shallow: true });
+        const path = `/f/edit?id=${identifier}`;
+        const as = `/f/${identifier}/edit`;
+        Router.push(path, as, { shallow: true });
       }
     });
 
-  return { commanderSearcher, formation };
+  searcher
+    .on('select')
+    .pipe(filter(s => s !== null))
+    .subscribe(async (identifier) => {
+      const path = searcher.get('target');
+      if (path == null) { return; }
+      // case: commander
+      const response = await fetch(`/api/v1/c/${identifier}`, {
+        credentials: 'same-origin',
+        headers: { 'Content-Type': 'application/json; charset=utf-8' },
+      });
+      if (response.ok && response.status === 200) {
+        const commander = await response.json();
+        const commanders = formation.get('commanders');
+        set(commanders, path, commander);
+        formation.set('commanders')(commanders);
+      }
+      searcher.set('select')(null);
+    });
+
+  return { commanderSearcher, searcher, formation };
 };
 
 export default effects;

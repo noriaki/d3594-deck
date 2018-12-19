@@ -1,3 +1,4 @@
+const { send } = require('micro');
 const qs = require('qs');
 
 const setApiHeaders = require('../helpers/setApiHeaders');
@@ -25,6 +26,18 @@ const search = (req, res) => {
     .find();
 };
 
+const fetch = async (req, res) => {
+  setApiHeaders(res);
+  const commander = await Commander.findById(req.params.id);
+  if (commander === null) {
+    return send(res, 404, {
+      error: { code: 404, message: 'Commander not found' },
+    });
+  }
+  return commander;
+};
+
 module.exports = {
   search,
+  fetch,
 };

@@ -4,8 +4,11 @@ export const searchActions = (store) => {
     store.set('target')(path);
   };
 
+  const selectIdentifier = identifier => store.set('select')(identifier);
+
   return {
     setTargetByIdentifier,
+    selectIdentifier,
   };
 };
 

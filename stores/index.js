@@ -10,6 +10,7 @@ export const initialSearcher = {
   pathToIds: {},
   idToPaths: {},
   target: null,
+  select: null,
 };
 
 export const initialCommanderSearcher = {

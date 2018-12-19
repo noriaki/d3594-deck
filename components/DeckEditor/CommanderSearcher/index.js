@@ -14,7 +14,7 @@ import Results from './Results';
 import Store from '../../../stores';
 
 // actions
-import { commanderSearchActions } from '../../../actions';
+import { searchActions, commanderSearchActions } from '../../../actions';
 
 const styles = theme => ({
   modal: {
@@ -59,8 +59,10 @@ export class CommanderSearcherComponent extends Component {
       onOpen: handleOpen,
       onClose: handleClose,
       classes,
-      commanderSearcher,
+      searcher, // from undux stores
+      commanderSearcher, // from undux stores
     } = this.props;
+    const { selectIdentifier } = searchActions(searcher);
     const {
       updateText,
       updateFilter,
@@ -84,7 +86,7 @@ export class CommanderSearcherComponent extends Component {
         <div>
           <Filter filter={filter} onChange={updateFilter} />
         </div>
-        <Results commanders={commanders} />
+        <Results commanders={commanders} onClick={selectIdentifier} />
       </SwipeableDrawer>
     );
   }

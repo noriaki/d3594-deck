@@ -28,10 +28,15 @@ export class ResultsComponent extends Component {
   };
 
   render = () => {
-    const { commanders, classes } = this.props;
+    const {
+      commanders,
+      onClick,
+      classes,
+    } = this.props;
     if (commanders === null) {
       return <div>Loading...</div>;
     }
+    const handleClick = identifier => () => onClick(identifier);
     return (
       <RootRef rootRef={this.setGridListRef}>
         <GridList
@@ -39,7 +44,7 @@ export class ResultsComponent extends Component {
           spacing={2}
           cellHeight="auto"
           className={classes.root}>
-          {commanders.map(buildGridListTile(classes))}
+          {commanders.map(buildGridListTile(classes, handleClick))}
           <EventListener
             target="window"
             onResize={debounce(this.handleResize)} />
@@ -70,8 +75,11 @@ export class ResultsComponent extends Component {
 
 export default withStyles(styles)(ResultsComponent);
 
-const buildGridListTile = classes => c => (
-  <GridListTile key={c._id} style={{ height: 'var(--ch)' }}>
+const buildGridListTile = (classes, handleClick) => c => (
+  <GridListTile
+    key={c._id}
+    onClick={handleClick(c.identifier)}
+    style={{ height: 'var(--ch)' }}>
     <img src={c.imageURL} alt={c.id} />
     <GridListTileBar
       title={`${c.name}${c.special || ''}`}
