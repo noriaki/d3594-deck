@@ -34,7 +34,8 @@ const fetch = async (req, res) => {
       error: { code: 404, message: 'Commander not found' },
     });
   }
-  return commander;
+  const tactics = await commander.specificTactics();
+  return { commander, tactics };
 };
 
 module.exports = {

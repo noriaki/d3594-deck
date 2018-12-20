@@ -75,16 +75,20 @@ const effects = ({ formation, searcher, commanderSearcher }) => {
     .subscribe(async (identifier) => {
       const path = searcher.get('target');
       if (path == null) { return; }
-      // case: commander
-      const response = await fetch(`/api/v1/c/${identifier}`, {
-        credentials: 'same-origin',
-        headers: { 'Content-Type': 'application/json; charset=utf-8' },
-      });
-      if (response.ok && response.status === 200) {
-        const commander = await response.json();
-        const commanders = formation.get('commanders');
-        set(commanders, path, commander);
-        formation.set('commanders')(commanders);
+      const [posIndex, type] = path.split('.');
+      if (type === 'commander') { // case: commander
+        const response = await fetch(`/api/v1/c/${identifier}`, {
+          credentials: 'same-origin',
+          headers: { 'Content-Type': 'application/json; charset=utf-8' },
+        });
+        if (response.ok && response.status === 200) {
+          const { commander, tactics } = await response.json();
+          const commanders = formation.get('commanders');
+          set(commanders, path, commander);
+          set(commanders, `${posIndex}.tactics`, tactics);
+          set(commanders, `${posIndex}.additionalTactics`, [null, null]);
+          formation.set('commanders')(commanders);
+        }
       }
       searcher.set('select')(null);
     });
