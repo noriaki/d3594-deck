@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Head from 'next/head';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -25,6 +26,12 @@ const FormationDetailPage = ({ classes, formation }) => {
   const { initialStates } = Store;
   return (
     <div>
+      <Head>
+        <title>
+          {formation.name != null ? `${formation.name} | ` : ''}
+          {formation.humanize}
+        </title>
+      </Head>
       <AppBar position="sticky">
         <Toolbar>
           <Typography variant="h6" color="inherit">{formation.name}</Typography>

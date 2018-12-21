@@ -10,7 +10,6 @@ class MyDocument extends Document {
     return (
       <html lang="en" dir="ltr">
         <Head>
-          <title>My page</title>
           <meta charSet="utf-8" />
           {/* Use minimum-scale=1 to enable GPU rasterization */}
           <meta
@@ -63,7 +62,7 @@ MyDocument.getInitialProps = (ctx) => {
     };
 
     WrappedComponent.propTypes = {
-      pageContext: PropTypes.object.isRequired,
+      pageContext: PropTypes.objectOf(PropTypes.string).isRequired,
     };
 
     return WrappedComponent;
