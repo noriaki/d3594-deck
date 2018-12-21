@@ -5,6 +5,9 @@ import set from 'lodash.set';
 import Router from 'next/router';
 
 import mapIds from './concerns/mapIds';
+import compose from './concerns/compose';
+
+import withLoggers from './withLoggers';
 
 export const fetchData = (store, path) => async (query) => {
   if (store.get('results') !== null) { store.set('results')(null); }
@@ -96,4 +99,4 @@ const effects = ({ formation, searcher, commanderSearcher }) => {
   return { commanderSearcher, searcher, formation };
 };
 
-export default effects;
+export default compose(withLoggers, effects);

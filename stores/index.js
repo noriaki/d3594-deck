@@ -11,6 +11,7 @@ export const initialSearcher = {
   idToPaths: {},
   target: null,
   select: null,
+  mode: null,
 };
 
 export const initialCommanderSearcher = {
@@ -26,33 +27,11 @@ export const initialCommanderSearcher = {
   results: null,
 };
 
-const compose = (...funcs) => (
-  funcs.reduce((a, b) => (...args) => a(b(...args)), arg => arg)
-);
-
-const withLoggers = (stores) => {
-  if (typeof window === 'undefined') {
-    return stores;
-  }
-  return Object.entries(stores).reduce((ret, [name, store]) => {
-    store.onAll().subscribe(({ key, previousValue, value }) => {
-      console.info(
-        `%c \u2941 ${name}.${key}`,
-        'background-color: rgb(96, 125, 139); color: #fff; padding: 2px 8px 2px 0;',
-        previousValue,
-        '\u2192',
-        value
-      );
-    });
-    return { ...ret, [name]: store };
-  }, {});
-};
-
 export const { Container, withStores } = createConnectedStoreAs({
   formation: initialFormation,
   searcher: initialSearcher,
   commanderSearcher: initialCommanderSearcher,
-}, compose(withLoggers, effects));
+}, effects);
 
 export default {
   Container,
