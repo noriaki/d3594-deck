@@ -27,18 +27,18 @@ export const initialCommanderSearcher = {
   results: null,
 };
 
-export const { Container, withStores } = createConnectedStoreAs({
+export const initialStates = {
   formation: initialFormation,
   searcher: initialSearcher,
   commanderSearcher: initialCommanderSearcher,
-}, effects);
+};
+
+export const { Container, withStores } = createConnectedStoreAs(
+  initialStates, effects
+);
 
 export default {
   Container,
   withStores,
-  initialStates: {
-    formation: initialFormation,
-    searcher: initialSearcher,
-    commanderSearcher: initialCommanderSearcher,
-  },
+  initialStates,
 };

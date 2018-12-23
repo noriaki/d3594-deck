@@ -1,16 +1,9 @@
 import React from 'react';
-import Head from 'next/head';
 
 import DeckEditor from '../../components/DeckEditor';
 
 const FormationEditPage = ({ formation }) => (
   <div>
-    <Head>
-      <title>
-        {formation.name != null ? `${formation.name} | ` : ''}
-        {formation.humanize}
-      </title>
-    </Head>
     <DeckEditor formation={formation} />
   </div>
 );

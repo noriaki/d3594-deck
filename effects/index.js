@@ -96,6 +96,21 @@ const effects = ({ formation, searcher, commanderSearcher }) => {
       searcher.set('select')(null);
     });
 
+  const SEARCH_COMMANDER_MODE = 'searchCommander';
+
+  searcher
+    .on('target')
+    .subscribe((target) => {
+      if (target == null) {
+        searcher.set('mode')(null);
+      } else {
+        const [, type] = target.split('.');
+        if (type === 'commander') { // case: commander
+          searcher.set('mode')(SEARCH_COMMANDER_MODE);
+        }
+      }
+    });
+
   return { commanderSearcher, searcher, formation };
 };
 

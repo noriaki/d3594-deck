@@ -13,6 +13,8 @@ import { searchActions, formationActions } from '../../../../actions';
 
 const defaultCommander = { additionalTactics: [] };
 
+const SEARCH_COMMANDER_MODE = 'searchCommander';
+
 const Commander = ({
   classes,
   searcher: searcherStore, // from undux stores
@@ -21,7 +23,7 @@ const Commander = ({
   search,
   editable,
   position,
-  commanderSearchHandler,
+  // commanderSearchHandler,
 }) => {
   const {
     commander,
@@ -35,11 +37,13 @@ const Commander = ({
     switch (operation) {
     case 'add':
       setTargetByIdentifier(identifier);
-      commanderSearchHandler(true)();
+      // commanderSearchHandler(true)();
+      searcherStore.set('mode')(SEARCH_COMMANDER_MODE);
       break;
     case 'edit':
       setTargetByIdentifier(identifier);
-      commanderSearchHandler(true)();
+      // commanderSearchHandler(true)();
+      searcherStore.set('mode')(SEARCH_COMMANDER_MODE);
       break;
     case 'remove':
       removeCommander(identifier);

@@ -12,11 +12,13 @@ import { withStores } from '../../../stores';
 const positions = ['honei', 'chuei', 'zenei'];
 
 const Stage = ({
-  search,
+  // search,
   edit,
   commanderSearchHandler,
+  searcher, // from undux stores
   formation, // from undux stores
 }) => {
+  const search = searcher.get('mode') !== null;
   const withStyles = search ? withSearchStyles : withBaseStyles;
   const editable = !search && edit;
   const commanders = formation.get('commanders').map((commander, i) => (

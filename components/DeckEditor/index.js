@@ -1,10 +1,11 @@
 import React, { Fragment, Component } from 'react';
 
 // stores
-import Store from '../../stores';
+import { Container, initialStates } from '../../stores';
 import mapIds from '../../effects/concerns/mapIds';
 
 // components
+import Title from '../Title';
 import Stage from './Stage';
 import CommanderSearcher from './CommanderSearcher';
 
@@ -31,14 +32,14 @@ class DeckEditor extends Component {
   };
 
   render() {
-    const { initialStates } = Store;
     const { formation } = this.props;
     const searcher = mapIds(formation, initialStates.searcher);
     const states = { ...initialStates, formation, searcher };
     const { mode } = this.state;
     return (
-      <Store.Container initialStates={states}>
+      <Container initialStates={states}>
         <Fragment>
+          <Title />
           <Stage
             edit
             search={mode !== null}
@@ -48,7 +49,7 @@ class DeckEditor extends Component {
             onClose={this.toggleCommanderSearcher(false)}
             onOpen={this.toggleCommanderSearcher(true)} />
         </Fragment>
-      </Store.Container>
+      </Container>
     );
   }
 }

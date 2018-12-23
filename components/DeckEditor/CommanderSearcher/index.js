@@ -11,10 +11,12 @@ import Filter from './Filter';
 import Results from './Results';
 
 // stores
-import Store from '../../../stores';
+import { withStores } from '../../../stores';
 
 // actions
 import { searchActions, commanderSearchActions } from '../../../actions';
+
+const SEARCH_COMMANDER_MODE = 'searchCommander';
 
 const styles = theme => ({
   modal: {
@@ -53,16 +55,27 @@ export class CommanderSearcherComponent extends Component {
     commanderSearcher.set('init')(false);
   };
 
+  handleOpen = () => {
+    const { searcher } = this.props;
+    searcher.set('mode')(SEARCH_COMMANDER_MODE);
+  };
+
+  handleClose = () => {
+    const { searcher } = this.props;
+    searcher.set('mode')(null);
+  };
+
   render() {
     const {
-      open,
-      onOpen: handleOpen,
-      onClose: handleClose,
+      // open,
+      // onOpen: handleOpen,
+      // onClose: handleClose,
       classes,
       searcher, // from undux stores
       commanderSearcher, // from undux stores
     } = this.props;
     const { selectIdentifier } = searchActions(searcher);
+    const open = searcher.get('mode') === SEARCH_COMMANDER_MODE;
     const {
       updateText,
       updateFilter,
@@ -73,12 +86,12 @@ export class CommanderSearcherComponent extends Component {
       <SwipeableDrawer
         anchor="bottom"
         open={open}
-        onOpen={handleOpen}
-        onClose={handleClose}
+        onOpen={this.handleOpen}
+        onClose={this.handleClose}
         ModalProps={{ keepMounted: true }}
         classes={{ modal: classes.modal, paper: classes.paper }}>
         <div className={classes.closeIcon}>
-          <HalfModalCloseIcon onClick={handleClose} />
+          <HalfModalCloseIcon onClick={this.handleClose} />
         </div>
         <div>
           <SearchField onChange={updateText} />
@@ -92,6 +105,6 @@ export class CommanderSearcherComponent extends Component {
   }
 }
 
-export default Store.withStores(
+export default withStores(
   withStyles(styles)(CommanderSearcherComponent)
 );
