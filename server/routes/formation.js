@@ -13,11 +13,9 @@ const show = app => async (req, res) => {
 
 const edit = app => async (req, res) => {
   const { id } = req.params;
-  let formation;
-  if (id != null) {
-    formation = await Formation.fetchById(id);
-  } else {
-    formation = new Formation();
+  const formation = await Formation.fetchById(id);
+  if (formation === null) {
+    return app.getRequestHandler()(req, res, parse(req.url, true));
   }
   return app.render(req, res, '/f/edit', { formation, id });
 };
