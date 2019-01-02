@@ -32,7 +32,6 @@ const Tactics = ({
     tacticsCaptionContainer,
   } = classes;
   const {
-    identifier,
     name,
     imageURL,
     imageSrcSet,
@@ -46,9 +45,9 @@ const Tactics = ({
         src={imageURL}
         srcSet={imageSrcSet.join(', ')}
         title={name}
-        onClick={propTactics && handleClickTo('edit', identifier)}
+        onClick={propTactics && handleClickTo('edit')}
         className={tacticsImage} />
-      {removable && <RemoveIcon onClick={handleClickTo('remove', identifier)} />}
+      {removable && <RemoveIcon onClick={handleClickTo('remove')} />}
       {editable && propTactics == null && <AddTactics onClick={handleClickTo('add')} />}
       <CardContent className={tacticsCaptionContainer}>
         <Typography align="center" variant="body2">

@@ -30,7 +30,6 @@ const CommanderImage = ({
   } = classes;
   const {
     id,
-    identifier,
     name,
     special,
     imageURL,
@@ -40,14 +39,14 @@ const CommanderImage = ({
     <div className={commanderImageRoot}>
       <Button
         component="a"
-        onClick={handleClickTo('edit', identifier)}
+        onClick={handleClickTo('edit')}
         className={commanderImageContainer}>
         <img src={imageURL} alt={id} />
         <GridListTileBar
           title={`${name}${special || ''}`}
           titlePosition="bottom"
           classes={{ root, titleWrap, title }} />
-        {removable && <RemoveIcon onClick={handleClickTo('remove', identifier)} />}
+        {removable && <RemoveIcon onClick={handleClickTo('remove')} />}
         {editable && propCommander == null && <AddCommander onClick={handleClickTo('add')} />}
       </Button>
     </div>

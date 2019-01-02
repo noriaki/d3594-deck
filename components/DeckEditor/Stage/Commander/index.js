@@ -9,21 +9,20 @@ import Tactics from './Tactics';
 import { withStores } from '../../../../stores';
 
 // actions
-import { searchActions, formationActions } from '../../../../actions';
+import { formationActions } from '../../../../actions';
 
 const defaultCommander = { additionalTactics: [] };
 
-const SEARCH_COMMANDER_MODE = 'searchCommander';
+const positions = ['honei', 'chuei', 'zenei'];
 
 const Commander = ({
   classes,
-  searcher: searcherStore, // from undux stores
-  formation: formationStore, // from undux stores
+  formation, // from undux stores
+  searcher, // from undux stores
   commander: propCommander,
   search,
   editable,
   position,
-  // commanderSearchHandler,
 }) => {
   const {
     commander,
@@ -31,47 +30,50 @@ const Commander = ({
     additionalTactics,
   } = (propCommander || defaultCommander);
   const { container } = classes;
-  const { setTargetByIdentifier } = searchActions(searcherStore);
-  const { removeCommander, removeTactics } = formationActions(formationStore);
-  const handleCommanderClick = (operation, identifier) => () => {
-    switch (operation) {
-    case 'add':
-      setTargetByIdentifier(identifier);
-      // commanderSearchHandler(true)();
-      searcherStore.set('mode')(SEARCH_COMMANDER_MODE);
-      break;
-    case 'edit':
-      setTargetByIdentifier(identifier);
-      // commanderSearchHandler(true)();
-      searcherStore.set('mode')(SEARCH_COMMANDER_MODE);
-      break;
-    case 'remove':
-      removeCommander(identifier);
-      break;
-    default:
-    }
+  const { removeCommander, removeTactics } = formationActions(formation);
+  const targets = {
+    index: `[${position}]`,
+    commander: `[${position}].commander`,
+    tactics: [
+      `[${position}].additionalTactics[0]`,
+      `[${position}].additionalTactics[1]`,
+    ],
   };
-  const handleTacticsClick = (operation, identifier) => () => {
+  const handleCommanderClick = operation => (event) => {
     switch (operation) {
     case 'add':
-      setTargetByIdentifier(identifier);
-      console.log('tacitcs.add');
-      break;
     case 'edit':
-      setTargetByIdentifier(identifier);
-      console.log(`tacitcs.edit: ${identifier}`);
+      searcher.set('target')(targets.commander);
       break;
     case 'remove':
-      removeTactics(identifier);
+      removeCommander(targets.index);
       break;
     default:
     }
+    event.stopPropagation();
+  };
+  const handleTacticsClick = pos => operation => (event) => {
+    switch (operation) {
+    case 'add':
+      console.log('tacitcs.add', targets.tactics[pos]);
+      searcher.set('target')(targets.tactics[pos]);
+      break;
+    case 'edit':
+      console.log('tacitcs.edit', targets.tactics[pos]);
+      searcher.set('target')(targets.tactics[pos]);
+      break;
+    case 'remove':
+      removeTactics(targets.tactics[pos]);
+      break;
+    default:
+    }
+    event.stopPropagation();
   };
   return (
     <div className={container}>
       <PositionImage
         classes={classes}
-        position={position}
+        position={positions[position]}
         horizontal={!!search} />
       <CommanderImage
         commander={commander}
@@ -84,15 +86,15 @@ const Commander = ({
         classes={classes} />
       <Tactics
         tactics={additionalTactics[0]}
-        editable={editable}
+        editable={editable && commander != null}
         removable={editable && additionalTactics[0] != null}
-        onClick={handleTacticsClick}
+        onClick={handleTacticsClick(0)}
         classes={classes} />
       <Tactics
         tactics={additionalTactics[1]}
-        editable={editable}
+        editable={editable && commander != null}
         removable={editable && additionalTactics[1] != null}
-        onClick={handleTacticsClick}
+        onClick={handleTacticsClick(1)}
         classes={classes} />
     </div>
   );

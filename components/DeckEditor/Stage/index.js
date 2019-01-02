@@ -9,27 +9,25 @@ import { withBaseStyles, withSearchStyles } from './styles';
 // stores
 import { withStores } from '../../../stores';
 
-const positions = ['honei', 'chuei', 'zenei'];
-
 const Stage = ({
-  // search,
   edit,
-  commanderSearchHandler,
-  searcher, // from undux stores
   formation, // from undux stores
+  searcher, // from undux stores
 }) => {
-  const search = searcher.get('mode') !== null;
+  const search = searcher.get('target') !== null;
   const withStyles = search ? withSearchStyles : withBaseStyles;
   const editable = !search && edit;
-  const commanders = formation.get('commanders').map((commander, i) => (
-    <Commander
-      key={positions[i]}
-      commander={commander}
-      search={search}
-      editable={editable}
-      position={positions[i]}
-      commanderSearchHandler={commanderSearchHandler} />
-  ));
+  const commanders = formation.get('commanders').map((commander, index) => {
+    const key = `${index}:${commander != null ? commander.identifier : ''}`;
+    return (
+      <Commander
+        key={key}
+        commander={commander}
+        search={search}
+        editable={editable}
+        position={index} />
+    );
+  });
   const StyledWrapper = withStyles(Wrapper);
   return <StyledWrapper>{commanders}</StyledWrapper>;
 };

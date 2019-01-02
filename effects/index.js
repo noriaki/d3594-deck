@@ -1,26 +1,52 @@
+import { combineLatest } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
+import Router from 'next/router';
 import qs from 'qs';
-import { filter } from 'rxjs/operators';
 import get from 'lodash.get';
 import set from 'lodash.set';
-import Router from 'next/router';
+import has from 'lodash.has';
 
-import mapIds from './concerns/mapIds';
+import { typeOf, indexOf } from './concerns/target';
 import compose from './concerns/compose';
 
 import withLoggers from './withLoggers';
 
+const headersForAPI = {
+  credentials: 'same-origin',
+  headers: { 'Content-Type': 'application/json; charset=utf-8' },
+};
+
 export const fetchData = (store, path) => async (query) => {
   if (store.get('results') !== null) { store.set('results')(null); }
   const uri = `/api/v1/${path}?${qs.stringify(query)}`;
-  const response = await fetch(uri, {
-    credentials: 'same-origin',
-    headers: { 'Content-Type': 'application/json; charset=utf-8' },
-  });
+  const response = await fetch(uri, headersForAPI);
   const results = await response.json();
   store.set('results')(results);
 };
 
-const effects = ({ formation, searcher, commanderSearcher }) => {
+const effects = (stores) => {
+  const { formation, searcher, commanderSearcher } = stores;
+
+  searcher
+    .on('target')
+    .pipe(map(typeOf))
+    .subscribe((target) => {
+      switch (target) {
+      case 'commander':
+        commanderSearcher.set('open')(true);
+        break;
+
+      case 'tactics':
+        // tacticsSearcher.set('open')(true);
+        break;
+
+      default:
+        commanderSearcher.set('open')(false);
+        // tacticsSearcher.set('open')(false);
+        break;
+      }
+    });
+
   commanderSearcher
     .on('query')
     .subscribe(fetchData(commanderSearcher, 'c'));
@@ -34,35 +60,59 @@ const effects = ({ formation, searcher, commanderSearcher }) => {
       fetchData(commanderSearcher, 'c')(commanderSearcher.get('query'))
     ));
 
-  const validCommanders = cs => (cs.length === 3 && !cs.every(c => c == null));
-  formation
-    .on('commanders')
-    .pipe(filter(validCommanders))
-    .subscribe((commanders) => {
-      const { pathToIds, idToPaths } = mapIds(commanders);
-      searcher.set('pathToIds')(pathToIds);
-      searcher.set('idToPaths')(idToPaths);
-      searcher.set('target')(null);
+  const notNull = item => item !== null;
+  const haveTactics = data => has(data, 'tactics');
+  const buildCommander = ({ commander, tactics = null }) => ({
+    commander,
+    tactics,
+    additionalTactics: [null, null],
+  });
+  const indexOfTargetStream = searcher.on('target').pipe(
+    filter(notNull), map(indexOf)
+  );
+  const commanderSearcherSelectStream = commanderSearcher.on('select');
+  const commanderSelectionStream = combineLatest(
+    indexOfTargetStream,
+    commanderSearcherSelectStream
+  );
+
+  commanderSelectionStream
+    .subscribe(([target, data]) => {
+      if (data != null) {
+        const commanders = formation.get('commanders');
+        const commander = buildCommander(data);
+        set(commanders, target, commander);
+        formation.set('commanders')(commanders);
+        if (haveTactics(data)) { commanderSearcher.set('select')(null); }
+      }
     });
 
-  formation
-    .on('commanders')
-    .pipe(filter(validCommanders))
-    .subscribe(async (commanders) => {
-      const query = commanders.map((c) => {
-        if (c === null) { return null; }
-        const commanderId = get(c, 'commander.identifier', null);
-        const commander = { identifier: commanderId };
-        const additionalTactics = c.additionalTactics.map(
-          t => (t && t.identifier && { identifier: t.identifier })
-        );
-        return { commander, additionalTactics };
-      });
+  const notHaveTactics = data => !haveTactics(data);
+  const validCommanders = f => (f.length === 3 && f.some(c => c != null));
+  const allHaveSpecificTactics = items => !items.some(notHaveTactics);
+  const toQuery = commanders => commanders.map((c) => {
+    if (c === null) { return null; }
+    const commanderId = get(c, 'commander.identifier');
+    const commander = { identifier: commanderId };
+    const additionalTactics = c.additionalTactics.map(
+      t => (t && t.identifier && { identifier: t.identifier })
+    );
+    return { commander, additionalTactics };
+  });
+
+  combineLatest(
+    formation.on('commanders').pipe(filter(validCommanders)),
+    commanderSearcherSelectStream
+  )
+    .pipe(
+      filter(([, select]) => select === null),
+      filter(([commanders]) => allHaveSpecificTactics(commanders)),
+      map(([commanders]) => toQuery(commanders))
+    )
+    .subscribe(async (query) => {
+      if (commanderSearcher.get('select') != null) { return; }
       const response = await fetch('/api/v1/f', {
-        method: 'POST',
-        credentials: 'same-origin',
-        headers: { 'Content-Type': 'application/json; charset=utf-8' },
-        body: JSON.stringify(query),
+        ...headersForAPI, method: 'POST', body: JSON.stringify(query),
       });
       if (response.ok && [200, 201].includes(response.status)) {
         const { identifier } = await response.json();
@@ -72,46 +122,19 @@ const effects = ({ formation, searcher, commanderSearcher }) => {
       }
     });
 
-  searcher
-    .on('select')
-    .pipe(filter(s => s !== null))
+  const toCommanderIdentifier = d => get(d, 'commander.identifier');
+  commanderSearcherSelectStream
+    .pipe(filter(notNull), filter(notHaveTactics), map(toCommanderIdentifier))
     .subscribe(async (identifier) => {
-      const path = searcher.get('target');
-      if (path == null) { return; }
-      const [posIndex, type] = path.split('.');
-      if (type === 'commander') { // case: commander
-        const response = await fetch(`/api/v1/c/${identifier}`, {
-          credentials: 'same-origin',
-          headers: { 'Content-Type': 'application/json; charset=utf-8' },
-        });
-        if (response.ok && response.status === 200) {
-          const { commander, tactics } = await response.json();
-          const commanders = formation.get('commanders');
-          set(commanders, path, commander);
-          set(commanders, `${posIndex}.tactics`, tactics);
-          set(commanders, `${posIndex}.additionalTactics`, [null, null]);
-          formation.set('commanders')(commanders);
-        }
+      const response = await fetch(`/api/v1/c/${identifier}`, headersForAPI);
+      if (response.ok && response.status === 200) {
+        const data = await response.json();
+        commanderSearcher.set('select')(data);
       }
-      searcher.set('select')(null);
+      searcher.set('target')(null);
     });
 
-  const SEARCH_COMMANDER_MODE = 'searchCommander';
-
-  searcher
-    .on('target')
-    .subscribe((target) => {
-      if (target == null) {
-        searcher.set('mode')(null);
-      } else {
-        const [, type] = target.split('.');
-        if (type === 'commander') { // case: commander
-          searcher.set('mode')(SEARCH_COMMANDER_MODE);
-        }
-      }
-    });
-
-  return { commanderSearcher, searcher, formation };
+  return stores;
 };
 
 export default compose(withLoggers, effects);
