@@ -79,7 +79,7 @@ const effects = (stores) => {
   commanderSelectionStream
     .subscribe(([target, data]) => {
       if (data != null) {
-        const commanders = formation.get('commanders');
+        const commanders = [...formation.get('commanders')];
         const commander = buildCommander(data);
         set(commanders, target, commander);
         formation.set('commanders')(commanders);
