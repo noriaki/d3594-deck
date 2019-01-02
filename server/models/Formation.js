@@ -9,7 +9,7 @@ const { Schema } = mongoose;
 const formationSchema = new Schema({
   _id: { type: String, required: true },
   identifier: { type: String, required: true },
-  name: { type: String },
+  name: { type: String, default: null },
   commanders: {
     type: [{
       type: String,
