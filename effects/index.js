@@ -1,5 +1,5 @@
 import { combineLatest } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { filter, map, startWith } from 'rxjs/operators';
 import Router from 'next/router';
 import qs from 'qs';
 import get from 'lodash.get';
@@ -70,7 +70,9 @@ const effects = (stores) => {
   const indexOfTargetStream = searcher.on('target').pipe(
     filter(notNull), map(indexOf)
   );
-  const commanderSearcherSelectStream = commanderSearcher.on('select');
+  const commanderSearcherSelectStream = commanderSearcher.on('select').pipe(
+    startWith(null)
+  );
   const commanderSelectionStream = combineLatest(
     indexOfTargetStream,
     commanderSearcherSelectStream
@@ -87,9 +89,12 @@ const effects = (stores) => {
       }
     });
 
+  // TODO: case Honei is null => not save but pushState
+  const validCommanders = f => (f.length === 3 && f[0] != null);
   const notHaveTactics = data => !haveTactics(data);
-  const validCommanders = f => (f.length === 3 && f.some(c => c != null));
-  const allHaveSpecificTactics = items => !items.some(notHaveTactics);
+  const allExistsHaveSpecificTactics = items => !items.some(
+    item => (notNull(item) && notHaveTactics(item))
+  );
   const toQuery = commanders => commanders.map((c) => {
     if (c === null) { return null; }
     const commanderId = get(c, 'commander.identifier');
@@ -106,7 +111,7 @@ const effects = (stores) => {
   )
     .pipe(
       filter(([, select]) => select === null),
-      filter(([commanders]) => allHaveSpecificTactics(commanders)),
+      filter(([commanders]) => allExistsHaveSpecificTactics(commanders)),
       map(([commanders]) => toQuery(commanders))
     )
     .subscribe(async (query) => {
