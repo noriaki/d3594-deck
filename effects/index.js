@@ -9,7 +9,7 @@ import has from 'lodash.has';
 import { typeOf, indexOf } from './concerns/target';
 import compose from './concerns/compose';
 
-import withLoggers from './withLoggers';
+import withLoggers from './plugins/withLoggers';
 
 const headersForAPI = {
   credentials: 'same-origin',
