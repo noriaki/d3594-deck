@@ -4,7 +4,6 @@ import Router from 'next/router';
 import qs from 'qs';
 
 // utils
-import get from 'lodash.get';
 import set from 'lodash.set';
 import isNull from 'lodash.isnull';
 
@@ -19,6 +18,13 @@ import {
   notHaveTactics,
   allExistsHaveTactics,
 } from './filters/commanders';
+
+// mappers
+import {
+  buildCommander,
+  toCommanderIdentifier,
+  toQueryForCreateFormationAPI,
+} from './mappers/commanders';
 
 import withLoggers from './plugins/withLoggers';
 
@@ -69,11 +75,6 @@ const effects = (stores) => {
       fetchData(commanderSearcher, 'c')(commanderSearcher.get('query'))
     ));
 
-  const buildCommander = ({ commander, tactics = null }) => ({
-    commander,
-    tactics,
-    additionalTactics: [null, null],
-  });
   const indexOfTargetStream = searcher.on('target').pipe(
     filter(notNull), map(indexOf)
   );
@@ -97,16 +98,6 @@ const effects = (stores) => {
     });
 
   // TODO: case Honei is null => not save but pushState
-  const toQuery = commanders => commanders.map((c) => {
-    if (isNull(c)) { return null; }
-    const commanderId = get(c, 'commander.identifier');
-    const commander = { identifier: commanderId };
-    const additionalTactics = c.additionalTactics.map(
-      t => (t && t.identifier && { identifier: t.identifier })
-    );
-    return { commander, additionalTactics };
-  });
-
   combineLatest(
     formation.on('commanders').pipe(filter(validCommanders)),
     commanderSearcherSelectStream
@@ -114,7 +105,7 @@ const effects = (stores) => {
     .pipe(
       filter(([, select]) => isNull(select)),
       filter(([commanders]) => allExistsHaveTactics(commanders)),
-      map(([commanders]) => toQuery(commanders))
+      map(([commanders]) => toQueryForCreateFormationAPI(commanders))
     )
     .subscribe(async (query) => {
       if (notNil(commanderSearcher.get('select'))) { return; }
@@ -131,9 +122,12 @@ const effects = (stores) => {
       }
     });
 
-  const toCommanderIdentifier = d => get(d, 'commander.identifier');
   commanderSearcherSelectStream
-    .pipe(filter(notNull), filter(notHaveTactics), map(toCommanderIdentifier))
+    .pipe(
+      filter(notNull),
+      filter(notHaveTactics),
+      map(toCommanderIdentifier)
+    )
     .subscribe(async (identifier) => {
       const response = await fetch(`/api/v1/c/${identifier}`, headersForAPI);
       if (response.ok && response.status === 200) {
