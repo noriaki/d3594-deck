@@ -2,12 +2,23 @@ import { combineLatest } from 'rxjs';
 import { filter, map, startWith } from 'rxjs/operators';
 import Router from 'next/router';
 import qs from 'qs';
+
+// utils
 import get from 'lodash.get';
 import set from 'lodash.set';
-import has from 'lodash.has';
+import isNull from 'lodash.isnull';
 
 import { typeOf, indexOf } from './concerns/target';
 import compose from './concerns/compose';
+
+// filters
+import { notNull, notNil, isTrue } from './filters/existance';
+import {
+  validCommanders,
+  haveTactics,
+  notHaveTactics,
+  allExistsHaveTactics,
+} from './filters/commanders';
 
 import withLoggers from './plugins/withLoggers';
 
@@ -53,15 +64,11 @@ const effects = (stores) => {
 
   commanderSearcher
     .on('init')
-    .pipe(
-      filter(init => init)
-    )
+    .pipe(filter(isTrue))
     .subscribe(() => (
       fetchData(commanderSearcher, 'c')(commanderSearcher.get('query'))
     ));
 
-  const notNull = item => item !== null;
-  const haveTactics = data => has(data, 'tactics');
   const buildCommander = ({ commander, tactics = null }) => ({
     commander,
     tactics,
@@ -80,7 +87,7 @@ const effects = (stores) => {
 
   commanderSelectionStream
     .subscribe(([target, data]) => {
-      if (data != null) {
+      if (notNil(data)) {
         const commanders = [...formation.get('commanders')];
         const commander = buildCommander(data);
         set(commanders, target, commander);
@@ -90,13 +97,8 @@ const effects = (stores) => {
     });
 
   // TODO: case Honei is null => not save but pushState
-  const validCommanders = f => (f.length === 3 && f[0] != null);
-  const notHaveTactics = data => !haveTactics(data);
-  const allExistsHaveSpecificTactics = items => !items.some(
-    item => (notNull(item) && notHaveTactics(item))
-  );
   const toQuery = commanders => commanders.map((c) => {
-    if (c === null) { return null; }
+    if (isNull(c)) { return null; }
     const commanderId = get(c, 'commander.identifier');
     const commander = { identifier: commanderId };
     const additionalTactics = c.additionalTactics.map(
@@ -110,12 +112,12 @@ const effects = (stores) => {
     commanderSearcherSelectStream
   )
     .pipe(
-      filter(([, select]) => select === null),
-      filter(([commanders]) => allExistsHaveSpecificTactics(commanders)),
+      filter(([, select]) => isNull(select)),
+      filter(([commanders]) => allExistsHaveTactics(commanders)),
       map(([commanders]) => toQuery(commanders))
     )
     .subscribe(async (query) => {
-      if (commanderSearcher.get('select') != null) { return; }
+      if (notNil(commanderSearcher.get('select'))) { return; }
       const response = await fetch('/api/v1/f', {
         ...headersForAPI, method: 'POST', body: JSON.stringify(query),
       });
