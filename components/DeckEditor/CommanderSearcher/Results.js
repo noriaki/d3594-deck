@@ -30,13 +30,12 @@ export class ResultsComponent extends Component {
   render = () => {
     const {
       commanders,
-      onClick,
+      onClick: handleClick,
       classes,
     } = this.props;
     if (commanders === null) {
       return <div>Loading...</div>;
     }
-    const handleClick = identifier => () => onClick(identifier);
     return (
       <RootRef rootRef={this.setGridListRef}>
         <GridList
@@ -75,14 +74,14 @@ export class ResultsComponent extends Component {
 
 export default withStyles(styles)(ResultsComponent);
 
-const buildGridListTile = (classes, handleClick) => c => (
+const buildGridListTile = (classes, handleClick) => commander => (
   <GridListTile
-    key={c._id}
-    onClick={handleClick(c.identifier)}
+    key={commander._id}
+    onClick={handleClick({ commander })}
     style={{ height: 'var(--ch)' }}>
-    <img src={c.imageURL} alt={c.id} />
+    <img src={commander.imageURL} alt={commander.id} />
     <GridListTileBar
-      title={`${c.name}${c.special || ''}`}
+      title={`${commander.name}${commander.special || ''}`}
       titlePosition="bottom"
       classes={{ root: classes.tileBarRoot }} />
   </GridListTile>

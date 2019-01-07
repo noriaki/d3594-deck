@@ -1,14 +1,12 @@
+import set from 'lodash.set';
+
 export const searchActions = (store) => {
-  const setTargetByIdentifier = (identifier) => {
-    const path = store.get('idToPaths')[identifier];
+  const setTarget = (path) => {
     store.set('target')(path);
   };
 
-  const selectIdentifier = identifier => store.set('select')(identifier);
-
   return {
-    setTargetByIdentifier,
-    selectIdentifier,
+    setTarget,
   };
 };
 
@@ -24,26 +22,25 @@ export const commanderSearchActions = (store) => {
     store.set('query')({ ...other, filter: nextFilter });
   };
 
+  const selectData = data => () => {
+    store.set('select')(data);
+  };
+
   return {
     updateText,
     updateFilter,
+    selectData,
   };
 };
 
 export const formationActions = (store) => {
-  const removeCommander = (identifier) => {
+  const removeCommander = (path) => {
     const commanders = store.get('commanders');
-    const targetIndex = commanders.findIndex((c) => {
-      if (c === null) { return false; }
-      return c.commander.identifier === identifier;
-    });
-    if (targetIndex > -1) {
-      commanders[targetIndex] = null;
-      store.set('commanders')(commanders);
-    }
+    set(commanders, path, null);
+    store.set('commanders')(commanders);
   };
 
-  const removeTactics = (identifier) => {
+  const removeTactics = (identifier) => {/*
     const commanders = store.get('commanders');
     let isChange = false;
     const nextCommanders = commanders.map((commander) => {
@@ -58,7 +55,7 @@ export const formationActions = (store) => {
       return commander;
     });
     if (isChange) { store.set('commanders')(nextCommanders); }
-  };
+  */};
 
   return {
     removeCommander,

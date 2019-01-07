@@ -3,19 +3,18 @@ import { createConnectedStoreAs } from 'undux';
 import effects from '../effects';
 
 export const initialFormation = {
+  name: null,
+  humanize: null,
   commanders: [null, null, null],
 };
 
 export const initialSearcher = {
-  pathToIds: {},
-  idToPaths: {},
   target: null,
-  select: null,
-  mode: null,
 };
 
 export const initialCommanderSearcher = {
   init: false,
+  open: false,
   query: {
     text: '',
     filter: {
@@ -25,6 +24,7 @@ export const initialCommanderSearcher = {
     },
   },
   results: null,
+  select: null,
 };
 
 export const initialStates = {

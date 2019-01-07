@@ -14,9 +14,7 @@ import Results from './Results';
 import { withStores } from '../../../stores';
 
 // actions
-import { searchActions, commanderSearchActions } from '../../../actions';
-
-const SEARCH_COMMANDER_MODE = 'searchCommander';
+import { commanderSearchActions } from '../../../actions';
 
 const styles = theme => ({
   modal: {
@@ -55,30 +53,23 @@ export class CommanderSearcherComponent extends Component {
     commanderSearcher.set('init')(false);
   };
 
-  handleOpen = () => {
-    const { searcher } = this.props;
-    searcher.set('mode')(SEARCH_COMMANDER_MODE);
-  };
+  handleOpen = () => {};
 
   handleClose = () => {
     const { searcher } = this.props;
-    searcher.set('mode')(null);
+    searcher.set('target')(null);
   };
 
   render() {
     const {
-      // open,
-      // onOpen: handleOpen,
-      // onClose: handleClose,
       classes,
-      searcher, // from undux stores
       commanderSearcher, // from undux stores
     } = this.props;
-    const { selectIdentifier } = searchActions(searcher);
-    const open = searcher.get('mode') === SEARCH_COMMANDER_MODE;
+    const open = commanderSearcher.get('open');
     const {
       updateText,
       updateFilter,
+      selectData,
     } = commanderSearchActions(commanderSearcher);
     const { filter } = commanderSearcher.get('query');
     const commanders = commanderSearcher.get('results');
@@ -99,7 +90,7 @@ export class CommanderSearcherComponent extends Component {
         <div>
           <Filter filter={filter} onChange={updateFilter} />
         </div>
-        <Results commanders={commanders} onClick={selectIdentifier} />
+        <Results commanders={commanders} onClick={selectData} />
       </SwipeableDrawer>
     );
   }
