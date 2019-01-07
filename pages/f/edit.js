@@ -4,7 +4,7 @@ import DeckEditor from '../../components/DeckEditor';
 
 const FormationEditPage = ({ formation }) => (
   <div>
-    <DeckEditor />
+    <DeckEditor formation={formation} />
   </div>
 );
 

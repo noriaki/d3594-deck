@@ -8,7 +8,13 @@ import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import HalfModalCloseIcon from '../../HalfModalCloseIcon';
 import SearchField from './SearchField';
 import Filter from './Filter';
-import FetchAndDisplay from './FetchAndDisplay';
+import Results from './Results';
+
+// stores
+import { withStores } from '../../../stores';
+
+// actions
+import { commanderSearchActions } from '../../../actions';
 
 const styles = theme => ({
   modal: {
@@ -37,58 +43,59 @@ const styles = theme => ({
 });
 
 export class CommanderSearcherComponent extends Component {
-  state = {
-    searchText: '',
-    filter: {
-      rarity: [5, 4],
-      army: ['弓'/*, '歩', '騎'*/],
-      team: ['群', '漢', '魏', '蜀', '呉'],
-    },
-  }
+  componentDidMount = () => {
+    const { commanderSearcher } = this.props;
+    commanderSearcher.set('init')(true);
+  };
 
-  updateSearchText = (value) => {
-    const { searchText, ...other } = this.state;
-    this.setState({ ...other, searchText: value });
-  }
+  componentWillUnmount = () => {
+    const { commanderSearcher } = this.props;
+    commanderSearcher.set('init')(false);
+  };
 
-  updateFilter = target => (event) => {
-    const { value } = event.target;
-    const { filter, ...other } = this.state;
-    this.setState({ ...other, filter: { ...filter, [target]: value } });
-  }
+  handleOpen = () => {};
+
+  handleClose = () => {
+    const { searcher } = this.props;
+    searcher.set('target')(null);
+  };
 
   render() {
     const {
-      open,
-      onOpen: handleOpen,
-      onClose: handleClose,
       classes,
+      commanderSearcher, // from undux stores
     } = this.props;
+    const open = commanderSearcher.get('open');
     const {
-      filter,
-      searchText: text,
-    } = this.state;
+      updateText,
+      updateFilter,
+      selectData,
+    } = commanderSearchActions(commanderSearcher);
+    const { filter } = commanderSearcher.get('query');
+    const commanders = commanderSearcher.get('results');
     return (
       <SwipeableDrawer
         anchor="bottom"
         open={open}
-        onOpen={handleOpen}
-        onClose={handleClose}
+        onOpen={this.handleOpen}
+        onClose={this.handleClose}
         ModalProps={{ keepMounted: true }}
         classes={{ modal: classes.modal, paper: classes.paper }}>
         <div className={classes.closeIcon}>
-          <HalfModalCloseIcon onClick={handleClose} />
+          <HalfModalCloseIcon onClick={this.handleClose} />
         </div>
         <div>
-          <SearchField onChange={this.updateSearchText} />
+          <SearchField onChange={updateText} />
         </div>
         <div>
-          <Filter filter={filter} onChange={this.updateFilter} />
+          <Filter filter={filter} onChange={updateFilter} />
         </div>
-        <FetchAndDisplay query={{ text, filter }} />
+        <Results commanders={commanders} onClick={selectData} />
       </SwipeableDrawer>
     );
   }
 }
 
-export default withStyles(styles)(CommanderSearcherComponent);
+export default withStores(
+  withStyles(styles)(CommanderSearcherComponent)
+);

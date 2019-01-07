@@ -6,7 +6,14 @@ import purple from '@material-ui/core/colors/purple';
 import green from '@material-ui/core/colors/green';
 
 // default theme variables
-const { unit } = createMuiTheme().spacing;
+/*
+const { spacing, typography } = createMuiTheme({
+  typography: {
+    useNextVariants: true,
+    fontSize: 12,
+  },
+});
+*/
 
 // A theme with custom primary and secondary color.
 // It's optional.
@@ -31,14 +38,33 @@ const theme = createMuiTheme({
     MuiInputLabel: {
       outlined: {
         '&$marginDense': {
-          transform: `translate(14px, ${unit}px) scale(1)`,
+          transform: 'translate(14px, .5rem) scale(1)',
+        },
+        '&$shrink': {
+          transform: 'translate(14px, -.175rem) scale(.75)',
         },
       },
     },
     MuiOutlinedInput: {
       inputMarginDense: {
-        paddingTop: unit,
-        paddingBottom: unit,
+        paddingTop: '.5rem',
+        paddingBottom: '.5rem',
+      },
+      focused: {
+        '& legend': {
+          lineHeight: '.725rem',
+        },
+      },
+    },
+    MuiFormControl: {
+      marginDense: {
+        marginTop: '.5rem',
+        marginBottom: '.25rem',
+      },
+    },
+    MuiSelect: {
+      select: {
+        paddingTop: '.5rem',
       },
     },
   },

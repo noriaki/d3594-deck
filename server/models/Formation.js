@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const mongooseAutoPopulatePlugin = require('mongoose-autopopulate');
-const { md5, toIdFromInstance } = require('./concerns/identify');
+const { toIdFromInstance } = require('./concerns/identify');
 const LearnedCommander = require('./LearnedCommander');
 const FormationClass = require('./classes/Formation');
 
@@ -8,22 +8,22 @@ const { Schema } = mongoose;
 
 const formationSchema = new Schema({
   _id: { type: String, required: true },
-  name: { type: String },
-  commanders: [{
-    type: String,
-    ref: 'LearnedCommander',
-    autopopulate: { options: { retainNullValues: true } },
-  }],
+  identifier: { type: String, required: true },
+  name: { type: String, default: null },
+  commanders: {
+    type: [{
+      type: String,
+      ref: 'LearnedCommander',
+      autopopulate: { options: { retainNullValues: true } },
+    }],
+    default: [null, null, null],
+  },
 });
 
-const identify = (commanderIdsOrInstances) => {
-  const commanderIds = commanderIdsOrInstances.map(toIdFromInstance);
-  return md5(commanderIds.join());
-};
-
 function setIdentifier() {
-  const identifier = identify(this.commanders);
+  const identifier = FormationClass.identify(this.commanders);
   this._id = identifier;
+  this.identifier = identifier;
 }
 
 function fillCommanders() {
@@ -33,7 +33,7 @@ function fillCommanders() {
 }
 
 async function createAssociation(commanders, name) {
-  const identifier = identify(commanders);
+  const identifier = FormationClass.identify(commanders);
   let formation = await this.findById(identifier);
   if (formation == null) {
     const commanderIds = commanders.map(toIdFromInstance);

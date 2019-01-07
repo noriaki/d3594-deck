@@ -71,7 +71,7 @@ const labelStyles = {
 
 const LabelComponent = withStyles(labelStyles)(({ classes }) => (
   <span className={classes.container}>
-    <SearchIcon fontSize="small" />
+    <SearchIcon fontSize="inherit" />
     検索
   </span>
 ));

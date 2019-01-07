@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const mongooseAutoPopulatePlugin = require('mongoose-autopopulate');
-const { md5, toIdFromInstance } = require('./concerns/identify');
+const { toIdFromInstance } = require('./concerns/identify');
 const TacticsModel = require('./Tactics');
 const LearnedCommanderClass = require('./classes/LearnedCommander');
 
@@ -26,16 +26,10 @@ const learnedCommanderSchema = new Schema({
   }],
 });
 
-const identify = (commanderIdOrInstance, additionalTacticsIdsOrInstances) => {
-  const commanderId = toIdFromInstance(commanderIdOrInstance);
-  const additionalTacticsIds = additionalTacticsIdsOrInstances.map(
-    toIdFromInstance
-  );
-  return md5(`${commanderId}(${additionalTacticsIds.join()})`);
-};
-
 function setIdentifier() {
-  const identifier = identify(this.commander, this.additionalTactics);
+  const identifier = LearnedCommanderClass.identify(
+    this.commander, this.additionalTactics
+  );
   this._id = identifier;
   this.identifier = identifier;
 }
@@ -53,7 +47,9 @@ function fillAdditionalTactics() {
 }
 
 async function createAssociation(commander, additionalTactics = []) {
-  const identifier = identify(commander, additionalTactics);
+  const identifier = LearnedCommanderClass.identify(
+    commander, additionalTactics
+  );
   const commanderId = toIdFromInstance(commander);
   const additionalTacticsIds = additionalTactics.map(toIdFromInstance);
   let lc = await this.findById(identifier);

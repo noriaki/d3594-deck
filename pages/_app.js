@@ -5,11 +5,15 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import JssProvider from 'react-jss/lib/JssProvider';
 import EventListener from 'react-event-listener';
 import debounce from 'lodash.debounce';
+
 import getPageContext from '../contexts/getPageContext';
 
 const globalStyles = theme => ({
   '@global': {
-    html: { height: '100%' },
+    html: {
+      height: '100%',
+      fontSize: '5vmin',
+    },
     body: { height: '100%' },
   },
 });
@@ -24,10 +28,7 @@ const setDimensionVars = () => {
 };
 
 class D3594DeckApp extends App {
-  constructor(props) {
-    super(props);
-    this.pageContext = getPageContext();
-  }
+  pageContext = getPageContext();
 
   handleResize = () => setDimensionVars();
 

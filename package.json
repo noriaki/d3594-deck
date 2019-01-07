@@ -29,9 +29,16 @@
     "isomorphic-fetch": "^2.2.1",
     "jss": "^9.8.7",
     "lodash.debounce": "^4.0.8",
+    "lodash.get": "^4.4.2",
+    "lodash.has": "^4.5.2",
     "lodash.isequal": "^4.5.0",
+    "lodash.isnil": "^4.0.0",
+    "lodash.isnull": "^3.0.0",
     "lodash.isstring": "^4.0.1",
     "lodash.merge": "^4.6.1",
+    "lodash.negate": "^3.0.2",
+    "lodash.pick": "^4.4.0",
+    "lodash.set": "^4.3.2",
     "micro": "^9.3.3",
     "microrouter": "^2.2.3",
     "mongoose": "^5.3.2",
@@ -42,7 +49,9 @@
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
     "react-event-listener": "^0.6.4",
-    "react-jss": "^8.6.1"
+    "react-jss": "^8.6.1",
+    "rxjs": "^6.3.3",
+    "undux": "^5.0.0-beta.18"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",

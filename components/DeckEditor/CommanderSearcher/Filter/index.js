@@ -16,12 +16,18 @@ const styles = {
   },
 };
 
-export const FilterComponent = ({ classes, filter, onChange }) => (
-  <div className={classes.root}>
-    <RarityFilter rarity={filter.rarity} onChange={onChange} />
-    <ArmyFilter army={filter.army} onChange={onChange} />
-    <TeamFilter team={filter.team} onChange={onChange} />
-  </div>
-);
+export const FilterComponent = ({ classes, filter, onChange }) => {
+  const handleChange = target => (event) => {
+    const { value } = event.target;
+    onChange(target, value);
+  };
+  return (
+    <div className={classes.root}>
+      <RarityFilter rarity={filter.rarity} onChange={handleChange} />
+      <ArmyFilter army={filter.army} onChange={handleChange} />
+      <TeamFilter team={filter.team} onChange={handleChange} />
+    </div>
+  );
+};
 
 export default withStyles(styles)(FilterComponent);
