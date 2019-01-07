@@ -116,7 +116,7 @@ const effects = (stores) => {
         const { identifier, name, humanize } = await response.json();
         const path = `/f/edit?id=${identifier}`;
         const as = `/f/${identifier}/edit`;
-        Router.push(path, as, { shallow: true });
+        Router.push(path, as);
         formation.set('name')(name);
         formation.set('humanize')(humanize);
       }
