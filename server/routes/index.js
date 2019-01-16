@@ -13,7 +13,7 @@ module.exports = app => ([
   get(`${apiNamespace}/c`, commanderApiRouter.search),
   get(`${apiNamespace}/c/:id`, commanderApiRouter.fetch),
   // pages
-  get('/f/new', formationRouter.edit(app)),
+  get('/f/new', formationRouter.initialize(app)),
   get('/f/:id', formationRouter.show(app)),
   get('/f/:id/edit', formationRouter.edit(app)),
 ]);

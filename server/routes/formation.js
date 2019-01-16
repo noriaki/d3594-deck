@@ -20,7 +20,13 @@ const edit = app => async (req, res) => {
   return app.render(req, res, '/f/edit', { formation, id });
 };
 
+const initialize = app => (req, res) => {
+  const formation = new Formation();
+  return app.render(req, res, '/f/edit', { formation });
+};
+
 module.exports = {
   show,
   edit,
+  initialize,
 };
