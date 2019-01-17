@@ -23,10 +23,6 @@ export class ResultsComponent extends Component {
     this.setDimensionVars(this.gridListRef);
   }
 
-  componentDidMount = () => {
-    this.listenTouchStart();
-  };
-
   componentDidUpdate = () => {
     this.setDimensionVars(this.gridListRef);
   };
@@ -90,7 +86,10 @@ export class ResultsComponent extends Component {
     );
   };
 
-  setGridListRef = (node) => { this.gridListRef = node; };
+  setGridListRef = (node) => {
+    this.gridListRef = node;
+    this.listenTouchStart();
+  };
 
   setDimensionVars = (element) => {
     if (element != null) {
