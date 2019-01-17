@@ -23,8 +23,46 @@ export class ResultsComponent extends Component {
     this.setDimensionVars(this.gridListRef);
   }
 
+  componentDidMount = () => {
+    this.listenTouchStart();
+  };
+
   componentDidUpdate = () => {
     this.setDimensionVars(this.gridListRef);
+  };
+
+  componentWillUnmount = () => {
+    this.removeTouchStart();
+  };
+
+  listenTouchStart = () => {
+    this.gridListRef.addEventListener('touchstart', this.handleTouchStart);
+  };
+
+  removeTouchStart = () => {
+    this.gridListRef.removeEventListener('touchstart', this.handleTouchStart);
+  };
+
+  handleTouchStart = () => {
+    this.gridListRef.addEventListener(
+      'touchmove', this.handleTouchMove, { passive: false }
+    );
+    this.gridListRef.addEventListener('touchend', this.handleTouchEnd);
+    this.gridListRef.addEventListener('touchcancel', this.handleTouchEnd);
+  };
+
+  handleTouchMove = (event) => { event.preventDefault(); };
+
+  handleTouchEnd = () => {
+    this.removeTouchListeners();
+  };
+
+  removeTouchListeners = () => {
+    this.gridListRef.removeEventListener(
+      'touchmove', this.handleTouchMove, { passive: false }
+    );
+    this.gridListRef.removeEventListener('touchend', this.handleTouchEnd);
+    this.gridListRef.removeEventListener('touchcancel', this.handleTouchEnd);
   };
 
   render = () => {
