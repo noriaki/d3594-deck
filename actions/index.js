@@ -5,12 +5,6 @@ export const searchActions = (store) => {
     store.set('target')(path);
   };
 
-  return {
-    setTarget,
-  };
-};
-
-export const commanderSearchActions = (store) => {
   const updateText = (value) => {
     const { text, ...other } = store.get('query');
     store.set('query')({ ...other, text: value });
@@ -27,6 +21,7 @@ export const commanderSearchActions = (store) => {
   };
 
   return {
+    setTarget,
     updateText,
     updateFilter,
     selectData,
@@ -65,6 +60,5 @@ export const formationActions = (store) => {
 
 export default {
   searchActions,
-  commanderSearchActions,
   formationActions,
 };

@@ -14,7 +14,7 @@ import Results from './Results';
 import { withStores } from '../../../stores';
 
 // actions
-import { commanderSearchActions } from '../../../actions';
+import { searchActions } from '../../../actions';
 
 const styles = theme => ({
   modal: {
@@ -70,7 +70,7 @@ export class CommanderSearcherComponent extends Component {
       updateText,
       updateFilter,
       selectData,
-    } = commanderSearchActions(commanderSearcher);
+    } = searchActions(commanderSearcher);
     const { filter } = commanderSearcher.get('query');
     const commanders = commanderSearcher.get('results');
     return (

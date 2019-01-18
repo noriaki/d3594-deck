@@ -9,7 +9,7 @@ import Tactics from './Tactics';
 import { withStores } from '../../../../stores';
 
 // actions
-import { formationActions } from '../../../../actions';
+import { searchActions, formationActions } from '../../../../actions';
 
 const defaultCommander = { additionalTactics: [] };
 
@@ -30,6 +30,7 @@ const Commander = ({
     additionalTactics,
   } = (propCommander || defaultCommander);
   const { container } = classes;
+  const { setTarget } = searchActions(searcher);
   const { removeCommander, removeTactics } = formationActions(formation);
   const targets = {
     index: `[${position}]`,
@@ -43,7 +44,7 @@ const Commander = ({
     switch (operation) {
     case 'add':
     case 'edit':
-      searcher.set('target')(targets.commander);
+      setTarget(targets.commander);
       break;
     case 'remove':
       removeCommander(targets.index);
@@ -56,11 +57,11 @@ const Commander = ({
     switch (operation) {
     case 'add':
       console.log('tacitcs.add', targets.tactics[pos]);
-      searcher.set('target')(targets.tactics[pos]);
+      setTarget(targets.tactics[pos]);
       break;
     case 'edit':
       console.log('tacitcs.edit', targets.tactics[pos]);
-      searcher.set('target')(targets.tactics[pos]);
+      setTarget(targets.tactics[pos]);
       break;
     case 'remove':
       removeTactics(targets.tactics[pos]);
