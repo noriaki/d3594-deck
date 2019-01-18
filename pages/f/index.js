@@ -11,6 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import { Container as StoreContainer, initialStates } from '../../stores';
 
 // components
+import Title from '../../components/Title';
 import Stage from '../../components/Stage';
 
 const styles = theme => ({
@@ -24,12 +25,6 @@ const styles = theme => ({
 
 const FormationDetailPage = ({ classes, formation }) => (
   <div>
-    <Head>
-      <title>
-        {formation.name != null ? `${formation.name} | ` : ''}
-        {formation.humanize}
-      </title>
-    </Head>
     <AppBar position="sticky">
       <Toolbar>
         <Typography variant="h6" color="inherit">{formation.name}</Typography>
@@ -37,6 +32,7 @@ const FormationDetailPage = ({ classes, formation }) => (
     </AppBar>
     <Paper className={classes.paper}>
       <StoreContainer initialStates={{ ...initialStates, formation }}>
+        <Title />
         <Stage />
       </StoreContainer>
     </Paper>
