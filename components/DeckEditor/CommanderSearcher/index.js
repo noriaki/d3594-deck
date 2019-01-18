@@ -6,7 +6,7 @@ import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 
 // components
 import HalfModalCloseIcon from '../../HalfModalCloseIcon';
-import SearchField from './SearchField';
+import SearchField from '../SearchField';
 import Filter from './Filter';
 import Results from './Results';
 
