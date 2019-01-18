@@ -59,7 +59,10 @@ export class ResultsComponent extends Component {
     }
   };
 
-  handleTouchMove = (event) => { event.preventDefault(); };
+  handleTouchMove = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+  };
 
   handleTouchEnd = () => {
     this.removeTouchListeners();
