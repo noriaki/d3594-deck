@@ -5,7 +5,7 @@ import { Container as StoreContainer, initialStates } from '../../stores';
 
 // components
 import Title from '../Title';
-import Stage from './Stage';
+import Stage from '../Stage';
 import CommanderSearcher from './CommanderSearcher';
 
 const DeckEditor = (props) => {

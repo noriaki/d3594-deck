@@ -8,10 +8,10 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
 // stores
-import Store from '../../stores';
+import { Container as StoreContainer, initialStates } from '../../stores';
 
 // components
-import Stage from '../../components/DeckEditor/Stage';
+import Stage from '../../components/Stage';
 
 const styles = theme => ({
   paper: {
@@ -22,38 +22,35 @@ const styles = theme => ({
   },
 });
 
-const FormationDetailPage = ({ classes, formation }) => {
-  const { initialStates } = Store;
-  return (
-    <div>
-      <Head>
-        <title>
-          {formation.name != null ? `${formation.name} | ` : ''}
-          {formation.humanize}
-        </title>
-      </Head>
-      <AppBar position="sticky">
-        <Toolbar>
-          <Typography variant="h6" color="inherit">{formation.name}</Typography>
-        </Toolbar>
-      </AppBar>
-      <Paper className={classes.paper}>
-        <Store.Container initialStates={{ ...initialStates, formation }}>
-          <Stage />
-        </Store.Container>
-      </Paper>
-      <Paper className={classes.paper}>
-        <Typography variant="h5" component="h3">コスト</Typography>
-        <Typography>{formation.cost}</Typography>
-        <Typography variant="h5" component="h3">速度</Typography>
-        <Typography>{formation.velocity}</Typography>
-        <Typography variant="h5" component="h3">攻城</Typography>
-        <Typography>{formation.siege}</Typography>
-        <pre>{formation.humanize}</pre>
-      </Paper>
-    </div>
-  );
-};
+const FormationDetailPage = ({ classes, formation }) => (
+  <div>
+    <Head>
+      <title>
+        {formation.name != null ? `${formation.name} | ` : ''}
+        {formation.humanize}
+      </title>
+    </Head>
+    <AppBar position="sticky">
+      <Toolbar>
+        <Typography variant="h6" color="inherit">{formation.name}</Typography>
+      </Toolbar>
+    </AppBar>
+    <Paper className={classes.paper}>
+      <StoreContainer initialStates={{ ...initialStates, formation }}>
+        <Stage />
+      </StoreContainer>
+    </Paper>
+    <Paper className={classes.paper}>
+      <Typography variant="h5" component="h3">コスト</Typography>
+      <Typography>{formation.cost}</Typography>
+      <Typography variant="h5" component="h3">速度</Typography>
+      <Typography>{formation.velocity}</Typography>
+      <Typography variant="h5" component="h3">攻城</Typography>
+      <Typography>{formation.siege}</Typography>
+      <pre>{formation.humanize}</pre>
+    </Paper>
+  </div>
+);
 
 FormationDetailPage.getInitialProps = async ({ req, query }) => {
   const isServer = !!req;

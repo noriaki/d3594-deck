@@ -6,10 +6,10 @@ import CommanderImage from './CommanderImage';
 import Tactics from './Tactics';
 
 // stores
-import { withStores } from '../../../../stores';
+import { withStores } from '../../../stores';
 
 // actions
-import { searchActions, formationActions } from '../../../../actions';
+import { searchActions, formationActions } from '../../../actions';
 
 const defaultCommander = { additionalTactics: [] };
 
