@@ -61,7 +61,9 @@ export class ResultsComponent extends Component {
 
   handleTouchMove = (event) => {
     event.preventDefault();
-    event.stopPropagation();
+    if (this.gridListRef != null && this.gridListRef.scrollTop !== 0) {
+      event.stopPropagation();
+    }
   };
 
   handleTouchEnd = () => {
