@@ -27,10 +27,25 @@ export const initialCommanderSearcher = {
   select: null,
 };
 
+export const initialTacticsSearcher = {
+  init: false,
+  open: false,
+  query: {
+    text: '',
+    filter: {
+      type: ['指揮', '主動', '追撃', '受動'],
+      permissions: ['弓', '歩', '騎'],
+    },
+  },
+  results: null,
+  select: null,
+};
+
 export const initialStates = {
   formation: initialFormation,
   searcher: initialSearcher,
   commanderSearcher: initialCommanderSearcher,
+  tacticsSearcher: initialTacticsSearcher,
 };
 
 export const { Container, withStores } = createConnectedStoreAs(
