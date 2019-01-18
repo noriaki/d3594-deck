@@ -11,7 +11,7 @@ const tacticsSchema = new Schema({
   stage: { type: Number },
   origin: {
     type: String,
-    enum: ['固有(初期)', '分析', '典籍', '特有(擁立)', '特有(割拠)'],
+    enum: ['固有(初期)', '分析', '典蔵', '典籍', '特有(擁立)', '特有(割拠)'],
   },
   type: { type: String, enum: ['指揮', '主動', '追撃', '受動'] },
   permissions: [{ type: String, enum: ['弓', '歩', '騎'] }],
