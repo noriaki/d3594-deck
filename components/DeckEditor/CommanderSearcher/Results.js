@@ -32,19 +32,31 @@ export class ResultsComponent extends Component {
   };
 
   listenTouchStart = () => {
-    this.gridListRef.addEventListener('touchstart', this.handleTouchStart);
+    if (this.gridListRef != null) {
+      this.gridListRef.addEventListener('touchstart', this.handleTouchStart);
+    }
   };
 
   removeTouchStart = () => {
-    this.gridListRef.removeEventListener('touchstart', this.handleTouchStart);
+    if (this.gridListRef != null) {
+      this.gridListRef.removeEventListener(
+        'touchstart', this.handleTouchStart
+      );
+    }
   };
 
   handleTouchStart = () => {
-    this.gridListRef.addEventListener(
-      'touchmove', this.handleTouchMove, { passive: false }
-    );
-    this.gridListRef.addEventListener('touchend', this.handleTouchEnd);
-    this.gridListRef.addEventListener('touchcancel', this.handleTouchEnd);
+    if (this.gridListRef != null) {
+      this.gridListRef.addEventListener(
+        'touchmove', this.handleTouchMove, { passive: false }
+      );
+      this.gridListRef.addEventListener(
+        'touchend', this.handleTouchEnd
+      );
+      this.gridListRef.addEventListener(
+        'touchcancel', this.handleTouchEnd
+      );
+    }
   };
 
   handleTouchMove = (event) => { event.preventDefault(); };
@@ -54,11 +66,17 @@ export class ResultsComponent extends Component {
   };
 
   removeTouchListeners = () => {
-    this.gridListRef.removeEventListener(
-      'touchmove', this.handleTouchMove, { passive: false }
-    );
-    this.gridListRef.removeEventListener('touchend', this.handleTouchEnd);
-    this.gridListRef.removeEventListener('touchcancel', this.handleTouchEnd);
+    if (this.gridListRef != null) {
+      this.gridListRef.removeEventListener(
+        'touchmove', this.handleTouchMove, { passive: false }
+      );
+      this.gridListRef.removeEventListener(
+        'touchend', this.handleTouchEnd
+      );
+      this.gridListRef.removeEventListener(
+        'touchcancel', this.handleTouchEnd
+      );
+    }
   };
 
   render = () => {
@@ -87,6 +105,7 @@ export class ResultsComponent extends Component {
   };
 
   setGridListRef = (node) => {
+    this.removeTouchStart();
     this.gridListRef = node;
     this.listenTouchStart();
   };
