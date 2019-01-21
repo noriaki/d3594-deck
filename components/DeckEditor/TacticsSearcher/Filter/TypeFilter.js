@@ -19,15 +19,31 @@ const styles = {
   },
 };
 
+const DenseCheckbox = withStyles({
+  root: {
+    padding: '.2rem',
+    marginLeft: '-.4rem',
+  },
+})(Checkbox);
+
+const DenseFormControlLabel = withStyles({
+  root: {
+    marginLeft: 0,
+    marginRight: '1rem',
+  },
+})(FormControlLabel);
+
 const buildCheckboxes = (checkedTypes, handleChangeOf) => (
   map(baseTypes, (key, value) => {
     const checkbox = (
-      <Checkbox
+      <DenseCheckbox
         checked={checkedTypes.includes(value)}
         onChange={handleChangeOf(value)}
         value={key} />
     );
-    return <FormControlLabel key={key} control={checkbox} label={value} />;
+    return (
+      <DenseFormControlLabel key={key} control={checkbox} label={value} />
+    );
   })
 );
 
@@ -43,9 +59,13 @@ export const TypeFilterComponent = ({
     handleChange('type', nextTypes);
   };
   return (
-    <FormControl margin="dense" className={classes.formControl}>
-      <FormLabel htmlFor="select-army">種別</FormLabel>
-      <FormGroup>
+    <FormControl
+      component="fieldset"
+      margin="dense"
+      fullWidth
+      className={classes.formControl}>
+      <FormLabel component="legend">種別</FormLabel>
+      <FormGroup row style={{ justifyContent: 'space-between' }}>
         {buildCheckboxes(type, onCheckboxChange)}
       </FormGroup>
     </FormControl>
