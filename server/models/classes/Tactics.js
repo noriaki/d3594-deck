@@ -6,6 +6,7 @@ const fileMap = {
   追撃: 'tsuigeki',
   受動: 'judo',
 };
+const baseOrigin = ['固有(初期)', '分析', '典蔵', '典籍', '季専用'];
 
 class Tactics {
   buildImageURL(density) {
@@ -25,5 +26,7 @@ class Tactics {
   }
 }
 
-Tactics.baseTypes = fileMap;
+Tactics.baseTypesMap = fileMap;
+Tactics.baseTypes = Object.keys(fileMap);
+Tactics.baseOrigin = baseOrigin;
 module.exports = Tactics;

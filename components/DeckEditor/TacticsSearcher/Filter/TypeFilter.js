@@ -9,7 +9,10 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
-import { baseTypes } from '../../../../server/models/classes/Tactics';
+import {
+  baseTypes,
+  baseTypesMap,
+} from '../../../../server/models/classes/Tactics';
 
 const styles = {
   formControl: {
@@ -34,7 +37,7 @@ const DenseFormControlLabel = withStyles({
 })(FormControlLabel);
 
 const buildCheckboxes = (checkedTypes, handleChangeOf) => (
-  map(baseTypes, (key, value) => {
+  map(baseTypesMap, (key, value) => {
     const checkbox = (
       <DenseCheckbox
         checked={checkedTypes.includes(value)}
@@ -53,7 +56,7 @@ export const TypeFilterComponent = ({
   onChange: handleChange,
 }) => {
   const onCheckboxChange = value => (event) => {
-    const nextTypes = Object.keys(baseTypes).filter(t => (
+    const nextTypes = baseTypes.filter(t => (
       t === value ? event.target.checked : type.includes(t)
     ));
     handleChange('type', nextTypes);

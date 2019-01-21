@@ -1,20 +1,19 @@
 const mongoose = require('mongoose');
 const { identify, md5 } = require('./concerns/identify');
 const TacticsClass = require('./classes/Tactics');
+const { baseArmy } = require('./classes/Commander');
 
 const { Schema } = mongoose;
+const { baseTypes, baseOrigin } = TacticsClass;
 
 const tacticsSchema = new Schema({
   _id: { type: String, required: true },
   identifier: { type: String, required: true },
   name: { type: String, required: true },
   stage: [Number],
-  origin: {
-    type: String,
-    enum: ['固有(初期)', '分析', '典蔵', '典籍', '季専用'],
-  },
-  type: { type: String, enum: ['指揮', '主動', '追撃', '受動'] },
-  permissions: [{ type: String, enum: ['弓', '歩', '騎'] }],
+  origin: { type: String, enum: baseOrigin },
+  type: { type: String, enum: baseTypes },
+  permissions: [{ type: String, enum: baseArmy }],
   rate: { type: String },
   distance: { type: String },
   target: { type: String },
