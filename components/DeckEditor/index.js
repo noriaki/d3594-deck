@@ -7,6 +7,7 @@ import { Container as StoreContainer, initialStates } from '../../stores';
 import Title from '../Title';
 import Stage from '../Stage';
 import CommanderSearcher from './CommanderSearcher';
+import TacticsSearcher from './TacticsSearcher';
 
 const DeckEditor = (props) => {
   const { formation } = props;
@@ -16,6 +17,7 @@ const DeckEditor = (props) => {
       <Title />
       <Stage edit />
       <CommanderSearcher />
+      <TacticsSearcher />
     </StoreContainer>
   );
 };

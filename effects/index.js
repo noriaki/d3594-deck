@@ -42,7 +42,12 @@ export const fetchData = (store, path) => async (query) => {
 };
 
 const effects = (stores) => {
-  const { formation, searcher, commanderSearcher } = stores;
+  const {
+    formation,
+    searcher,
+    commanderSearcher,
+    tacticsSearcher,
+  } = stores;
 
   searcher
     .on('target')
@@ -54,12 +59,12 @@ const effects = (stores) => {
         break;
 
       case 'tactics':
-        // tacticsSearcher.set('open')(true);
+        tacticsSearcher.set('open')(true);
         break;
 
       default:
         commanderSearcher.set('open')(false);
-        // tacticsSearcher.set('open')(false);
+        tacticsSearcher.set('open')(false);
         break;
       }
     });

@@ -25,4 +25,5 @@ class Tactics {
   }
 }
 
+Tactics.baseTypes = fileMap;
 module.exports = Tactics;
