@@ -1,14 +1,29 @@
-import { resolve } from 'path';
-import { readFileSync } from 'fs';
 import { get } from 'microrouter';
 import { createServer } from 'microrouter-test-server';
 
 import commanderRouters from '../commander';
 import Commander from '../../../models/Commander';
 
+import { setupDB, teardownDB } from '../../../../jest.helpers';
+
 process.env.TEST_SUITE = 'route-test-api-commander';
 
 describe('Routes: `/c`', () => {
+  beforeEach(setupDB);
+  afterEach(teardownDB);
+
+  beforeEach(async () => {
+    const commanderIds = [
+      '30f401ff9134eb74663697174aa3ff10', // 周瑜,呉,弓,5
+      'e0f015ef64ca6eef2ed4ad5debcd3fde', // 陸遜(S2),呉,歩,5
+      'a9f7deacd67d08a2ea7ff2d4255b4171', // 張角,群,騎,5
+      'c78a48266ec5166844c7df427834a520', // 張春華,魏,弓,5
+      '5abed51fa17562728f0b54288c547c56', // 朱儁,漢,弓,4
+      '0022cae0ffb0ee3d8fce63d6d8cdc69f', // 蒋琬,蜀,歩,3
+    ];
+    await Commander.where('identifier').nin(commanderIds).deleteMany();
+  });
+
   let server;
   const routes = [
     get('/c', commanderRouters.search),
@@ -24,23 +39,7 @@ describe('Routes: `/c`', () => {
 
   describe('search', () => {
     let query;
-    beforeEach(async () => {
-      const files = [
-        '0022cae0ffb0ee3d8fce63d6d8cdc69f', // 蒋琬,蜀,歩,3
-        '30f401ff9134eb74663697174aa3ff10', // 周瑜,呉,弓,5
-        '5abed51fa17562728f0b54288c547c56', // 朱儁,漢,弓,4
-        'a9f7deacd67d08a2ea7ff2d4255b4171', // 張角,群,騎,5
-        'c78a48266ec5166844c7df427834a520', // 張春華,魏,弓,5
-        'e0f015ef64ca6eef2ed4ad5debcd3fde', // 陸遜(S2),呉,歩,5
-      ];
-      const data = files.map((basename) => {
-        const file = `${basename}.json`;
-        const dataPath = resolve(
-          __dirname, '../../../models/__factories__', file
-        );
-        return JSON.parse(readFileSync(dataPath));
-      });
-      await Commander.importAll(data);
+    beforeEach(() => {
       query = {
         text: '',
         filter: {

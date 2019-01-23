@@ -1,31 +1,36 @@
-import { resolve } from 'path';
-import { readFileSync } from 'fs';
 import LearnedCommander from '../LearnedCommander';
 import Commander from '../Commander';
 import Tactics from '../Tactics';
+
+import { setupDB, teardownDB } from '../../../jest.helpers';
 
 process.env.TEST_SUITE = 'model-test-LearnedCommander';
 
 describe('LearnedCommander association model', () => {
   describe('create associate', () => {
+    beforeEach(setupDB);
+    afterEach(teardownDB);
+
+    let commander;
+    let additionalTactics;
     beforeEach(async () => {
-      const file = '0022cae0ffb0ee3d8fce63d6d8cdc69f.json';
-      const dataPath = resolve(__dirname, '../__factories__', file);
-      const data = JSON.parse(readFileSync(dataPath));
-      await Commander.importData(data);
-      await Tactics.importAll([data]);
+      const commanderId = '0022cae0ffb0ee3d8fce63d6d8cdc69f'; // 蒋琬
+      const tacticsIds = [
+        'b77da2245a0a101d91471ef95bef8f35', // 駆逐
+        '2d3a4d3d6f2385138f5369e4e39f185e', // 回避
+      ];
+      commander = await Commander.findById(commanderId);
+      additionalTactics = await Tactics.where('_id').in(tacticsIds);
     });
 
     it('commander has associates commander, tactics, additionalTactics', async () => {
-      const commander = await Commander.findById('0022cae0ffb0ee3d8fce63d6d8cdc69f');
-      const additionalTactics = await Tactics.find({ origin: '分析' }).sort('_id');
-      await LearnedCommander.createAssociation(
+      const identifier = await LearnedCommander.createAssociation(
         commander, additionalTactics
       );
-      const subject = await LearnedCommander.findById(
-        'a7a476ff14e40130b89ba17a3d59b56a'
-      );
+      const subject = await LearnedCommander.findById(identifier);
       expect(subject).not.toBeNull();
+      expect(subject).toHaveProperty(
+        'identifier', 'a7a476ff14e40130b89ba17a3d59b56a');
       expect(subject.commander).toBeInstanceOf(Commander);
       expect(subject.commander).toHaveProperty(
         '_id', '0022cae0ffb0ee3d8fce63d6d8cdc69f');
@@ -45,16 +50,6 @@ describe('LearnedCommander association model', () => {
     });
 
     describe('`.humanize` returning pretty text human friendly', () => {
-      let commander;
-      let additionalTactics;
-
-      beforeEach(async () => {
-        commander = await Commander.findById(
-          '0022cae0ffb0ee3d8fce63d6d8cdc69f');
-        additionalTactics = await Tactics.find(
-          { origin: '分析' }).sort('_id');
-      });
-
       it('basic case, complete learned commander', async () => {
         await LearnedCommander.createAssociation(
           commander, additionalTactics
