@@ -15,9 +15,10 @@
   },
   "scripts": {
     "test": "NODE_ENV=test jest",
+    "test:factories:build": "NODE_ENV=test node scripts/buildFactories.js",
     "dev": "micro-dev --watch server",
     "build": "next build",
-    "db:import:dev": "node scripts/replaceDbData.js",
+    "db:import:dev": "NODE_ENV=development node scripts/importData.js",
     "db:import": "NODE_ENV=production node scripts/importData.js",
     "start": "NODE_ENV=production micro -l tcp://0.0.0.0:$PORT",
     "heroku-postbuild": "yarn build"

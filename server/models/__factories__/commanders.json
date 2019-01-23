@@ -1,0 +1,836 @@
+[
+  {
+    "id": "★5・荀彧・荀攸・魏・歩",
+    "name": "荀彧・荀攸",
+    "special": null,
+    "stage": "S2, S3, XP",
+    "description": "叔父と甥のふたりで曹魏に仕え、曹操に大いに重用される。ふたりはいずれも天下を治められるほどの才能を持ち、軍事と政治の両面で傑出した貢献を果たす",
+    "rarity": 5,
+    "cost": 4,
+    "team": "魏",
+    "army": "歩",
+    "distance": 3,
+    "status": {
+      "min": {
+        "attack": 35,
+        "defense": 88,
+        "intelligence": 105,
+        "siege": 17,
+        "velocity": 30
+      },
+      "max": {
+        "attack": 63,
+        "defense": 179,
+        "intelligence": 232,
+        "siege": 109,
+        "velocity": 56
+      },
+      "delta": {
+        "attack": 0.57,
+        "defense": 1.85,
+        "intelligence": 2.59,
+        "siege": 1.88,
+        "velocity": 0.53
+      }
+    },
+    "crawledAt": "2019/01/23",
+    "image": "a083468786c98194d8955d0aa7085a56.png",
+    "identifier": "a083468786c98194d8955d0aa7085a56",
+    "tactics": {
+      "init": {
+        "name": "輔王抑寇",
+        "type": "指揮",
+        "stage": "S2, S3, XP",
+        "origin": "固有(初期)",
+        "distance": 6,
+        "permissions": [
+          "歩"
+        ],
+        "rate": null,
+        "target": "自軍複数(3)",
+        "description": "戦闘中、自軍武将が主動戦法を発動するごとに、対象の攻撃が5.5/11.0、知略が6.5/13.0上昇。敵軍が主動戦法を発動するごとに、対象の防御と速度が3.5/7.0低下（知略の影響を受ける）。この効果は最大5回スタック。さらに戦闘開始後2ターン、自軍前衛と中衛が主動戦法で受けるダメージが9.9%/19.8%減少（知略の影響を受ける）。",
+        "identifier": "2e1fed3df93ab10f7820b1ecc360dbc8"
+      },
+      "analyzables": [
+        {
+          "name": "掎角之勢",
+          "type": "主動",
+          "stage": "S1, S2, S3, XP",
+          "origin": "分析",
+          "distance": 3,
+          "permissions": [
+            "弓",
+            "歩",
+            "騎"
+          ],
+          "rate": "40%",
+          "target": "敵軍単体",
+          "stock": 1,
+          "description": "敵軍単体に物理系攻撃(ダメージ率90.0%/180.0%)と、策略系攻撃(71.5%/143.0%、知略の影響を受ける)を行う。攻撃対象の判定は、それぞれの攻撃系統で個別に行われる。",
+          "identifier": "967e6d8582235fe4682e46708c6f0752"
+        },
+        null
+      ]
+    }
+  },
+  {
+    "id": "★5・孫堅・呉・歩",
+    "name": "孫堅",
+    "special": null,
+    "stage": "S1, S2, S3, XP",
+    "description": "孫策と孫権の父。「反董卓連合の十八鎮諸侯」のうちの1鎮。ひときわ抜きんでた活躍を見せる。 後に董卓の長安遷都により、孫堅は洛陽に進駐し、井戸の中から玉璽を発見する。それにより自分が天下の覇者となることを確信するも、黄祖との戦いにおいて流れ矢に当たって命を落とす。",
+    "rarity": 5,
+    "cost": 3.5,
+    "team": "呉",
+    "army": "歩",
+    "distance": 3,
+    "status": {
+      "min": {
+        "attack": 90,
+        "defense": 100,
+        "intelligence": 72,
+        "siege": 20,
+        "velocity": 36
+      },
+      "max": {
+        "attack": 182,
+        "defense": 202,
+        "intelligence": 111,
+        "siege": 123,
+        "velocity": 63
+      },
+      "delta": {
+        "attack": 1.89,
+        "defense": 2.09,
+        "intelligence": 0.8,
+        "siege": 2.11,
+        "velocity": 0.57
+      }
+    },
+    "crawledAt": "2019/01/23",
+    "image": "6709e590857413afa7934777258e9d2f.jpg",
+    "identifier": "6709e590857413afa7934777258e9d2f",
+    "tactics": {
+      "init": {
+        "name": "遺志",
+        "type": "指揮",
+        "stage": "S1, S2, S3, XP",
+        "origin": "固有(初期)",
+        "distance": 6,
+        "permissions": [
+          "歩"
+        ],
+        "rate": null,
+        "target": "自軍単体",
+        "description": "戦闘開始後3ターン目から、自軍前衛の歩兵または弓兵の兵力が大量に回復。その後、通常攻撃を受けると反撃を行う(ダメージ率42.5%/85.0%)。同時に兵力を回復できなくなる。戦闘終了後まで持続。",
+        "identifier": "1d3f1bf9b92901083ab87bb79c336745"
+      },
+      "analyzables": [
+        {
+          "name": "戦必断金",
+          "type": "指揮",
+          "stage": "S1, S2, S3, XP",
+          "origin": "分析",
+          "distance": 4,
+          "permissions": [
+            "弓",
+            "歩",
+            "騎"
+          ],
+          "rate": null,
+          "target": "敵軍複数(2)",
+          "stock": 1,
+          "description": "戦闘開始後3ターン、敵軍複数が毎ターン45.0%/90.0%の確率で臆病状態になり、通常攻撃が行えなくなる。",
+          "identifier": "b7f524a87084af9715720d1c7e506e28"
+        },
+        null
+      ]
+    }
+  },
+  {
+    "id": "★5・呂蒙・呉・弓",
+    "name": "呂蒙",
+    "special": null,
+    "stage": "S1, S2, S3, XP",
+    "description": "孫呉の重臣。若い頃は貧しい出自もあって武勇一辺倒であったが、孫権の助言を受け学問に励んで学識を深め、ついには知性を兼ね備えた大将となり、「士別れて三日ならば、即ち刮目して相待つべし」の言葉で知られる。 逍遙津の戦いでは張遼軍の追撃に勇敢に立ち向かい、濡須口において何度も魏軍の攻撃を防いだ。さらに荊州奪取を企て関羽を撃破するなど、数々の戦功をあげた。",
+    "rarity": 5,
+    "cost": 3.5,
+    "team": "呉",
+    "army": "弓",
+    "distance": 4,
+    "status": {
+      "min": {
+        "attack": 86,
+        "defense": 92,
+        "intelligence": 93,
+        "siege": 9,
+        "velocity": 54
+      },
+      "max": {
+        "attack": 167,
+        "defense": 201,
+        "intelligence": 173,
+        "siege": 51,
+        "velocity": 96
+      },
+      "delta": {
+        "attack": 1.66,
+        "defense": 2.23,
+        "intelligence": 1.64,
+        "siege": 0.87,
+        "velocity": 0.87
+      }
+    },
+    "crawledAt": "2019/01/23",
+    "image": "29fb183da598388eee0cd2f73832de8e.jpg",
+    "identifier": "29fb183da598388eee0cd2f73832de8e",
+    "tactics": {
+      "init": {
+        "name": "白衣渡江",
+        "type": "指揮",
+        "stage": "S1, S2, S3, XP",
+        "origin": "固有(初期)",
+        "distance": 5,
+        "permissions": [
+          "弓"
+        ],
+        "rate": null,
+        "target": "敵軍複数(2)",
+        "description": "戦闘後開始後2ターン、敵軍複数が通常攻撃を行えなくなる。効果が終了すると、敵軍全体に強力な策略系攻撃を行う(ダメージ率107.5%/215.0%、知略の影響を受ける)。与えるダメージは回避を無視。",
+        "identifier": "ebadb445697c38ee8dba553691fc9611"
+      },
+      "analyzables": [
+        {
+          "name": "神兵天降",
+          "type": "指揮",
+          "stage": "S1, S2, S3, XP",
+          "origin": "分析",
+          "distance": 4,
+          "permissions": [
+            "弓",
+            "歩",
+            "騎"
+          ],
+          "rate": null,
+          "target": "敵軍複数(2)",
+          "stock": 1,
+          "description": "戦闘開始後3ターン、敵軍複数が物理系攻撃と策略系攻撃で受けるダメージが15.0%/30.0%増加(知略の影響を受ける)。",
+          "identifier": "454130376dfce33068b504a3d59de0bf"
+        },
+        null
+      ]
+    }
+  },
+  {
+    "id": "★5・陸遜(S2)・呉・歩",
+    "name": "陸遜",
+    "special": "S2",
+    "stage": "S2, S3, XP",
+    "description": "武勇と才知を兼ね備え、呂蒙とともに荊州で関羽を打ち破り、夷陵の戦いでは計略により蜀の大軍を大敗させる。さらに魏による呉への侵攻をほぼすべて撃退し、呉の大都督、上大将軍、丞相を歴任した。",
+    "rarity": 5,
+    "cost": 3,
+    "team": "呉",
+    "army": "歩",
+    "distance": 2,
+    "status": {
+      "min": {
+        "attack": 63,
+        "defense": 95,
+        "intelligence": 95,
+        "siege": 17,
+        "velocity": 40
+      },
+      "max": {
+        "attack": 126,
+        "defense": 197,
+        "intelligence": 197,
+        "siege": 82,
+        "velocity": 62
+      },
+      "delta": {
+        "attack": 1.3,
+        "defense": 2.09,
+        "intelligence": 2.09,
+        "siege": 1.33,
+        "velocity": 0.46
+      }
+    },
+    "crawledAt": "2019/01/23",
+    "image": "e0f015ef64ca6eef2ed4ad5debcd3fde.png",
+    "identifier": "e0f015ef64ca6eef2ed4ad5debcd3fde",
+    "tactics": {
+      "init": {
+        "name": "火勢風威",
+        "type": "主動",
+        "stage": "S2, S3, XP",
+        "origin": "固有(初期)",
+        "distance": 5,
+        "permissions": [
+          "歩"
+        ],
+        "rate": "40%",
+        "target": "敵軍複数(3)",
+        "description": "準備1ターンの後、敵軍全体に策略系攻撃を行う（ダメージ率55.5%/111.0%、知略の影響をうける）。さらに次にダメージを受けた時、追加で猛烈な火攻効果が発生（ダメージ率110.5%/221.0%、知略の影響をうける）。",
+        "identifier": "8da625a091e0d45c208904177209f2eb"
+      },
+      "analyzables": [
+        {
+          "name": "十面埋伏",
+          "type": "主動",
+          "stage": "S2, S3, XP",
+          "origin": "分析",
+          "distance": 5,
+          "permissions": [
+            "弓",
+            "歩",
+            "騎"
+          ],
+          "rate": "40%",
+          "target": "敵軍複数(3)",
+          "stock": 1,
+          "description": "準備1ターンの後、敵軍全体に策略系攻撃を行う(ダメージ率65.0%/130.0%、知略の影響をうける)。さらにランダムで敵軍単体が、次ターンの全ての攻撃で与えるダメージが大幅に減少(知略の影響をうける)。",
+          "identifier": "57ab3a19350045df5dfcf65ed187792a"
+        },
+        null
+      ]
+    }
+  },
+  {
+    "id": "★5・周瑜・呉・弓",
+    "name": "周瑜",
+    "special": null,
+    "stage": "S1, S2, S3, XP",
+    "description": "孫策の義兄弟にして「美周郎」の二つ名で知られる孫呉の名将。知略・武略に優れ、天下を納められるほどの才能を持ち合わせる。赤壁の戦いにおいて決定的な役割を果たし曹軍を大敗させる。これにより天下三分の基礎を築く。",
+    "rarity": 5,
+    "cost": 3,
+    "team": "呉",
+    "army": "弓",
+    "distance": 4,
+    "status": {
+      "min": {
+        "attack": 70,
+        "defense": 92,
+        "intelligence": 98,
+        "siege": 12,
+        "velocity": 53
+      },
+      "max": {
+        "attack": 130,
+        "defense": 157,
+        "intelligence": 210,
+        "siege": 63,
+        "velocity": 98
+      },
+      "delta": {
+        "attack": 1.23,
+        "defense": 1.34,
+        "intelligence": 2.3,
+        "siege": 1.05,
+        "velocity": 0.93
+      }
+    },
+    "crawledAt": "2019/01/23",
+    "image": "30f401ff9134eb74663697174aa3ff10.jpg",
+    "identifier": "30f401ff9134eb74663697174aa3ff10",
+    "tactics": {
+      "init": {
+        "name": "玄武洰流",
+        "type": "主動",
+        "stage": "S1, S2, S3, XP",
+        "origin": "固有(初期)",
+        "distance": 5,
+        "permissions": [
+          "弓"
+        ],
+        "rate": "30%",
+        "target": "敵軍複数(3)",
+        "description": "準備1ターンの後、敵軍複数に策略系攻撃を行う(ダメージ率75.0%/150.0%、知略の影響を受ける)。さらに対象は臆病状態になり、通常攻撃を行えなくなる。2ターン持続。",
+        "identifier": "1617ccca94cd115e65151be547bc030a"
+      },
+      "analyzables": [
+        {
+          "name": "不攻",
+          "type": "指揮",
+          "stage": "S1, S2, S3, XP",
+          "origin": "分析",
+          "distance": 1,
+          "permissions": [
+            "弓",
+            "歩",
+            "騎"
+          ],
+          "rate": null,
+          "target": "自身",
+          "stock": 1,
+          "description": "戦闘中、通常攻撃が行えないのと引き換えに、自身の策略系攻撃で与えるダメージが12.5%/25.0%増加。さらに毎ターン有効距離5以内の敵軍単体に策略系攻撃を行う(ダメージ率41.5%/83.0%、知略の影響を受ける)。",
+          "identifier": "3f5a7a77ecd8df99438d1faf9221d5e0"
+        },
+        null
+      ]
+    }
+  },
+  {
+    "id": "★5・張春華・魏・弓",
+    "name": "張春華",
+    "special": null,
+    "stage": "S1, S2, S3, XP",
+    "description": "司馬懿の妻。当初、司馬懿は曹操の招聘に対して中風を理由に断る。この偽りが下女に知られたため、曹操に露見し災いを招くことを恐れた張春華は、自ら下女を殺めて口を封じる。このことにより司馬懿から大切に扱われるようになる。",
+    "rarity": 5,
+    "cost": 2.5,
+    "team": "魏",
+    "army": "弓",
+    "distance": 3,
+    "status": {
+      "min": {
+        "attack": 77,
+        "defense": 56,
+        "intelligence": 82,
+        "siege": 9,
+        "velocity": 55
+      },
+      "max": {
+        "attack": 137,
+        "defense": 92,
+        "intelligence": 157,
+        "siege": 58,
+        "velocity": 105
+      },
+      "delta": {
+        "attack": 1.24,
+        "defense": 0.75,
+        "intelligence": 1.55,
+        "siege": 1.02,
+        "velocity": 1.04
+      }
+    },
+    "crawledAt": "2019/01/23",
+    "image": "c78a48266ec5166844c7df427834a520.jpg",
+    "identifier": "c78a48266ec5166844c7df427834a520",
+    "tactics": {
+      "init": {
+        "name": "強勢",
+        "type": "主動",
+        "stage": "S1, S2, S3, XP",
+        "origin": "固有(初期)",
+        "distance": 5,
+        "permissions": [
+          "弓"
+        ],
+        "rate": "35%",
+        "target": "敵軍複数(2)",
+        "description": "敵軍複数が物理系攻撃で与えるダメージが16.0%/32.0%減少(知略の影響を受ける)。さらに猶予状態になり、主動戦法を発動できなくなる。2ターン持続。",
+        "identifier": "58319a4fc885806c9f0d694b13d1e9ce"
+      },
+      "analyzables": [
+        {
+          "name": "渾水摸魚",
+          "type": "主動",
+          "stage": "S1, S2, S3, XP",
+          "origin": "分析",
+          "distance": 4,
+          "permissions": [
+            "弓",
+            "歩",
+            "騎"
+          ],
+          "rate": "25%/35%",
+          "target": "敵軍複数(2)",
+          "stock": 1,
+          "description": "準備1ターン後、敵軍複数を混乱状態にする。2ターン持続。",
+          "identifier": "e4dedbfa9c3109173f166c83c4f8e5d6"
+        },
+        null
+      ]
+    }
+  },
+  {
+    "id": "★5・張角・群・騎",
+    "name": "張角",
+    "special": null,
+    "stage": "S1, S2, S3, XP",
+    "description": "黄巾軍の領袖。太平道の創始者。南華老仙の教えを受けて「太平要術」を授けられ、神力を持つと自ら称する。 「天公将軍」の名で数百万の信徒を従え、漢王朝の統治を覆すべく企む。蜂起から数か月後、最後には鎮圧されたものの、漢王朝滅亡の引き金を引くこととなった。",
+    "rarity": 5,
+    "cost": 2.5,
+    "team": "群",
+    "army": "騎",
+    "distance": 2,
+    "status": {
+      "min": {
+        "attack": 21,
+        "defense": 67,
+        "intelligence": 93,
+        "siege": 3,
+        "velocity": 85
+      },
+      "max": {
+        "attack": 35,
+        "defense": 112,
+        "intelligence": 198,
+        "siege": 15,
+        "velocity": 161
+      },
+      "delta": {
+        "attack": 0.29,
+        "defense": 0.92,
+        "intelligence": 2.15,
+        "siege": 0.25,
+        "velocity": 1.57
+      }
+    },
+    "crawledAt": "2019/01/23",
+    "image": "a9f7deacd67d08a2ea7ff2d4255b4171.jpg",
+    "identifier": "a9f7deacd67d08a2ea7ff2d4255b4171",
+    "tactics": {
+      "init": {
+        "name": "黄天当立",
+        "type": "主動",
+        "stage": "S3, XP",
+        "origin": "固有(初期)",
+        "distance": 5,
+        "permissions": [
+          "騎"
+        ],
+        "rate": "35%",
+        "target": "敵複数(3)",
+        "description": "準備1ターンの後、敵軍複数に策略系攻撃を行う(ダメージ率88.0%/176.0%、知略の影響を受ける)。さらに対象は呪詛状態になり、毎ターン一定の兵力が減少(ダメージ率48.5%/97.0%、知略の影響を受ける)。2ターン持続。",
+        "identifier": "9da142f1c314c6c8b887a8c25ea7287b"
+      },
+      "analyzables": [
+        {
+          "name": "反計之策",
+          "type": "指揮",
+          "stage": "S1, S2, S3, XP",
+          "origin": "分析",
+          "distance": 4,
+          "permissions": [
+            "弓",
+            "歩",
+            "騎"
+          ],
+          "rate": null,
+          "target": "敵軍複数(2)",
+          "stock": 1,
+          "description": "戦闘開始後3ターン、敵軍複数が主動戦法で与えるダメージが大幅に減少。さらに対象は最初のターンで50.0%/100.0%の確率で猶予状態になり、主動戦法を発動できない。",
+          "identifier": "c44f950c80d01601ec8bf31f75d89a40"
+        },
+        null
+      ]
+    }
+  },
+  {
+    "id": "★4・龐統・蜀・歩",
+    "name": "龐統",
+    "special": null,
+    "stage": "S1, S2, S3, XP",
+    "description": "「鳳雛」と称され、諸葛亮と並ぶ二大軍師の一人。劉備の二大軍師の一人である。劉備の劉璋討伐に協力し、輝かしい功績を立てる。しかし、蜀侵攻の途中、落鳳坡で伏兵の矢を受け命を落とす。",
+    "rarity": 4,
+    "cost": 2.5,
+    "team": "蜀",
+    "army": "歩",
+    "distance": 3,
+    "status": {
+      "min": {
+        "attack": 59,
+        "defense": 71,
+        "intelligence": 98,
+        "siege": 18,
+        "velocity": 23
+      },
+      "max": {
+        "attack": 93,
+        "defense": 112,
+        "intelligence": 167,
+        "siege": 74,
+        "velocity": 35
+      },
+      "delta": {
+        "attack": 0.71,
+        "defense": 0.85,
+        "intelligence": 1.42,
+        "siege": 1.15,
+        "velocity": 0.25
+      }
+    },
+    "crawledAt": "2019/01/23",
+    "image": "9daf2ffe7eec142b9231445a8ee7d831.png",
+    "identifier": "9daf2ffe7eec142b9231445a8ee7d831",
+    "tactics": {
+      "init": {
+        "name": "索命連環",
+        "type": "主動",
+        "stage": "S1, S2, S3, XP",
+        "origin": "固有(初期)",
+        "distance": 4,
+        "permissions": [
+          "歩"
+        ],
+        "rate": "35%",
+        "target": "敵軍単体",
+        "description": "敵軍単体の強化効果を解除。対象は策略系攻撃で受けるダメージが17%上昇(知力の影響を受ける)。さらに呪詛状態になり、毎ターン50%の確率で兵力が大幅に低下(ダメージ率72.5%、知略の影響を受ける)。2ターン持続。",
+        "identifier": "dff9f977876946b5c52c7483a6b13032"
+      },
+      "analyzables": [
+        {
+          "name": "水淹七軍",
+          "type": "主動",
+          "stage": "S1, S2, S3, XP",
+          "origin": "分析",
+          "distance": 3,
+          "permissions": [
+            "弓",
+            "歩",
+            "騎"
+          ],
+          "rate": "50%",
+          "target": "敵軍複数(2)",
+          "stock": 1,
+          "description": "準備1ターンの後、敵軍複数に強力な策略系攻撃を行う(ダメージ率102.5%/205.0%、知略の影響を受ける)。さらに対象は攻撃が5低下(知略の影響を受ける)。2ターン持続。",
+          "identifier": "270f3fbedde0140b6c679b17d79df385"
+        },
+        null
+      ]
+    }
+  },
+  {
+    "id": "★4・朱儁・漢・弓",
+    "name": "朱儁",
+    "special": null,
+    "stage": "S1, S2, S3, XP",
+    "description": "皇甫嵩とともに各地の黄巾軍の蜂起を鎮圧し、その功績により車騎将軍の職を与えられる。後に董卓の残党の李傕、郭汜の乱世により公卿を奪われ、朱儁は漢王室が衰退する状況を悲しみ、病没した。",
+    "rarity": 4,
+    "cost": 2.5,
+    "team": "漢",
+    "army": "弓",
+    "distance": 4,
+    "status": {
+      "min": {
+        "attack": 89,
+        "defense": 83,
+        "intelligence": 75,
+        "siege": 12,
+        "velocity": 48
+      },
+      "max": {
+        "attack": 136,
+        "defense": 127,
+        "intelligence": 106,
+        "siege": 46,
+        "velocity": 73
+      },
+      "delta": {
+        "attack": 0.96,
+        "defense": 0.9,
+        "intelligence": 0.65,
+        "siege": 0.7,
+        "velocity": 0.52
+      }
+    },
+    "crawledAt": "2019/01/23",
+    "image": "5abed51fa17562728f0b54288c547c56.jpg",
+    "identifier": "5abed51fa17562728f0b54288c547c56",
+    "tactics": {
+      "init": {
+        "name": "節鎮関東",
+        "type": "指揮",
+        "stage": "S1, S2, S3, XP",
+        "origin": "固有(初期)",
+        "distance": 5,
+        "permissions": [
+          "弓"
+        ],
+        "rate": null,
+        "target": "自軍複数(2)",
+        "description": "戦闘開始後2ターン、自軍複数が毎ターン先行効果を獲得。その間、敵軍複数が動揺状態になり、毎ターン一定の兵力が減少(ダメージ率60.0%/120.0%)。動揺状態によるダメージは回避を無視。",
+        "identifier": "0f3ac2604ee2b6f52d5e8a57671c76d5"
+      },
+      "analyzables": [
+        {
+          "name": "長駆直入",
+          "type": "指揮",
+          "stage": "S1, S2, S3, XP",
+          "origin": "分析",
+          "distance": 3,
+          "permissions": [
+            "弓",
+            "歩",
+            "騎"
+          ],
+          "rate": null,
+          "target": "自軍複数(2)",
+          "stock": 2,
+          "description": "戦闘開始後3ターン、自軍複数が毎ターン35.0%/70.0%の確率で先行効果を獲得。さらに対象は防御が11.5/23.0上昇(知略の影響を受ける)。",
+          "identifier": "901103448ce8b2757c588a497f9fd66e"
+        },
+        null
+      ]
+    }
+  },
+  {
+    "id": "★3・董荼那・群・騎",
+    "name": "董荼那",
+    "special": null,
+    "stage": "S1, S2, S3, XP",
+    "description": "南蛮の王・孟獲の配下で三洞元帥の1人。第二洞元帥。阿会喃らとともに孟獲の援軍として出陣したが、蜀軍に捕えられた。諸葛亮によって釈放されたが、孟獲に反乱の疑いをかけられて殺された。",
+    "rarity": 3,
+    "cost": 2.5,
+    "team": "群",
+    "army": "騎",
+    "distance": 2,
+    "status": {
+      "min": {
+        "attack": 71,
+        "defense": 46,
+        "intelligence": 35,
+        "siege": 2,
+        "velocity": 33
+      },
+      "max": {
+        "attack": 104,
+        "defense": 67,
+        "intelligence": 51,
+        "siege": 7,
+        "velocity": 48
+      },
+      "delta": {
+        "attack": 0.68,
+        "defense": 0.44,
+        "intelligence": 0.34,
+        "siege": 0.12,
+        "velocity": 0.32
+      }
+    },
+    "crawledAt": "2019/01/23",
+    "image": "b31f84c829733146801b5935d7891e73.jpg",
+    "identifier": "b31f84c829733146801b5935d7891e73",
+    "tactics": {
+      "init": {
+        "name": "頑抗",
+        "type": "主動",
+        "stage": "S1, S2, S3, XP",
+        "origin": "固有(初期)",
+        "distance": 2,
+        "permissions": [
+          "弓",
+          "歩",
+          "騎"
+        ],
+        "rate": "35%",
+        "target": "敵軍単体",
+        "description": "自身の弱体効果を解除。さらに敵軍単体に1回攻撃を行う(ダメージ率40.0%/80.0%)。",
+        "identifier": "e1472f6b595ab30aa828ea78b92334b5"
+      },
+      "analyzables": [
+        {
+          "name": "頑抗",
+          "type": "主動",
+          "stage": "S1, S2, S3, XP",
+          "origin": "分析",
+          "distance": 2,
+          "permissions": [
+            "弓",
+            "歩",
+            "騎"
+          ],
+          "rate": "35%",
+          "target": "敵軍単体",
+          "stock": 2,
+          "description": "自身の弱体効果を解除。さらに敵軍単体に1回攻撃を行う(ダメージ率40.0%/80.0%)。",
+          "identifier": "f299be62db77c354324a51175c49e0b0"
+        },
+        null
+      ]
+    }
+  },
+  {
+    "id": "★3・蒋琬・蜀・歩",
+    "name": "蒋琬",
+    "special": null,
+    "stage": "S1, S2, S3, XP",
+    "description": "諸葛亮、董允、費禕とともに「蜀の四相」と称される。劉備が荊州にいるときに帰順し、内政において優れた功績を残し、北伐の際には、後方で大軍を支援した。諸葛亮死後、劉禅は諸葛亮の遺言に従って蒋琬を丞相に加え、費禕とともに丞相の役目を果たした。",
+    "rarity": 3,
+    "cost": 2,
+    "team": "蜀",
+    "army": "歩",
+    "distance": 1,
+    "status": {
+      "min": {
+        "attack": 62,
+        "defense": 45,
+        "intelligence": 80,
+        "siege": 18,
+        "velocity": 29
+      },
+      "max": {
+        "attack": 85,
+        "defense": 62,
+        "intelligence": 110,
+        "siege": 58,
+        "velocity": 40
+      },
+      "delta": {
+        "attack": 0.48,
+        "defense": 0.35,
+        "intelligence": 0.62,
+        "siege": 0.83,
+        "velocity": 0.23
+      }
+    },
+    "crawledAt": "2019/01/23",
+    "image": "0022cae0ffb0ee3d8fce63d6d8cdc69f.jpg",
+    "identifier": "0022cae0ffb0ee3d8fce63d6d8cdc69f",
+    "tactics": {
+      "init": {
+        "name": "駆逐",
+        "type": "追撃",
+        "stage": "S1, S2, S3, XP",
+        "origin": "固有(初期)",
+        "distance": null,
+        "permissions": [
+          "弓",
+          "歩",
+          "騎"
+        ],
+        "rate": "40%",
+        "target": "攻撃対象",
+        "description": "通常攻撃後、対象に策略攻撃を行う(ダメージ率55.0%/110.0%、知略の影響を受ける)。さらに対象の強化効果を解除。",
+        "identifier": "fd5bad37f57c3ea79808e75b9acd64ae"
+      },
+      "analyzables": [
+        {
+          "name": "駆逐",
+          "type": "追撃",
+          "stage": "S1, S2, S3, XP",
+          "origin": "分析",
+          "distance": null,
+          "permissions": [
+            "弓",
+            "歩",
+            "騎"
+          ],
+          "rate": "40%",
+          "target": "攻撃対象",
+          "stock": 2,
+          "description": "通常攻撃後、対象に策略攻撃を行う(ダメージ率55.0%/110.0%、知略の影響を受ける)。さらに対象の強化効果を解除。",
+          "identifier": "b77da2245a0a101d91471ef95bef8f35"
+        },
+        {
+          "name": "回避",
+          "type": "主動",
+          "stage": "S1, S2, S3, XP",
+          "origin": "分析",
+          "distance": 1,
+          "permissions": [
+            "弓",
+            "歩",
+            "騎"
+          ],
+          "rate": "30%/42%",
+          "target": "自身",
+          "stock": 2,
+          "description": "自身が回避状態になる。攻撃のダメージが一回無効。",
+          "identifier": "2d3a4d3d6f2385138f5369e4e39f185e"
+        }
+      ]
+    }
+  }
+]
