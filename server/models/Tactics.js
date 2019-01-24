@@ -81,19 +81,27 @@ async function importData(json, originKey, commanderId) {
 tacticsSchema.static('importData', importData);
 
 /* eslint-disable no-restricted-syntax, no-await-in-loop */
-async function importAll(jsons) {
-  for (const data of jsons) {
-    const { tactics, ...json } = data;
+async function importAll(commanders, otherTactics) {
+  const tacticsIds = [];
+  for (const commander of commanders) {
+    const { tactics, ...json } = commander;
     const commanderId = identify(json);
     if (tactics.init != null) {
-      await this.importData(tactics.init, 'init', commanderId);
+      tacticsIds.push(
+        await this.importData(tactics.init, 'init', commanderId)
+      );
     }
-    await Promise.all(tactics.analyzables.filter(
+    tacticsIds.concat(await Promise.all(tactics.analyzables.filter(
       analyzable => (analyzable !== null)
     ).map(
       analyzable => this.importData(analyzable, 'analyzable', commanderId)
-    ));
+    )));
   }
+  await Promise.all(
+    otherTactics
+      .filter(({ identifier }) => !tacticsIds.includes(identifier))
+      .map(this.importData.bind(this))
+  );
 }
 /* eslint-enable no-restricted-syntax, no-await-in-loop */
 
