@@ -8,7 +8,7 @@ const search = (req, res) => {
   setApiHeaders(res);
   const { text, filter } = qs.parse(req.query);
   let query = Commander;
-  if (text != null) {
+  if (text != null && text !== '') {
     query = query.where('name').regex(text);
   }
   if (filter != null) {
