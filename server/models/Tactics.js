@@ -10,10 +10,11 @@ const tacticsSchema = new Schema({
   _id: { type: String, required: true },
   identifier: { type: String, required: true },
   name: { type: String, required: true },
-  stage: [Number],
+  stage: [{ type: String, enum: ['S1', 'S2', 'S3', 'XP'] }],
   origin: { type: String, enum: baseOrigin },
   type: { type: String, enum: baseTypes },
   permissions: [{ type: String, enum: baseArmy }],
+  stock: { type: Number },
   rate: { type: String },
   distance: { type: String },
   target: { type: String },
@@ -42,23 +43,27 @@ function fetchByOwnerId(id) {
 tacticsSchema.static('fetchByOwnerId', fetchByOwnerId);
 
 async function importData(json, originKey, commanderId) {
-  const origins = { init: '固有(初期)', analyzable: '分析' };
   const {
     name,
+    stage: stageText,
+    origin,
     type,
     permissions,
+    stock,
     rate,
     distance,
     target,
     description,
   } = json;
-  const origin = origins[originKey];
   const identifier = tacticsIdentify(name, origin);
+  const stage = stageText.split(/[\s,]+/);
   const tactics = await this.findById(identifier) || new this({
     name,
+    stage,
     origin,
     type,
     permissions,
+    stock,
     rate,
     distance,
     target,

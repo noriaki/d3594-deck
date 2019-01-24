@@ -12,7 +12,7 @@ const commanderSchema = new Schema({
   id: { type: String, required: true },
   identifier: { type: String, required: true },
   name: { type: String, required: true },
-  stage: { type: Number },
+  stage: [{ type: String, enum: ['S1', 'S2', 'S3', 'XP'] }],
   special: { type: String, enum: ['SE', 'JE', 'SP', 'XP', 'S2', 'S3', null] },
   description: { type: String },
   rarity: { type: Number, required: true, enum: baseRarity },
@@ -75,6 +75,7 @@ commanderSchema.method('specificTactics', specificTactics);
 function importData(json) {
   const {
     name,
+    stage: stageText,
     special,
     description,
     rarity,
@@ -85,8 +86,10 @@ function importData(json) {
     image,
     status,
   } = json;
+  const stage = stageText.split(/[\s,]+/);
   const commander = new this({
     name,
+    stage,
     special,
     description,
     rarity,
