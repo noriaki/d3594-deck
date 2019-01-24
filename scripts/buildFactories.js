@@ -39,6 +39,8 @@ const main = async () => {
     '19b519c1849ff3d5171138f205e6dbd7', // 形兵之極-典籍
     'ae8a6d9abc29bcd38ca84ec1553f8f62', // 形兵列陣-季専用
     '89e523917d80d64315b7479efee8f98b', // 桃園結義-典蔵
+    'da77fbec8ae42d646aca4e1959dc6378', // 健卒不殆-分析
+    '7f13b5ee6d3d5983e272b3a719edba2e', // 火積-分析
   ];
   const tacticsFactories = tactics.filter(
     t => tacticsIds.includes(t.identifier)
