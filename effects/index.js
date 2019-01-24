@@ -80,6 +80,17 @@ const effects = (stores) => {
       fetchData(commanderSearcher, 'c')(commanderSearcher.get('query'))
     ));
 
+  tacticsSearcher
+    .on('query')
+    .subscribe(fetchData(tacticsSearcher, 't'));
+
+  tacticsSearcher
+    .on('init')
+    .pipe(filter(isTrue))
+    .subscribe(() => (
+      fetchData(tacticsSearcher, 't')(tacticsSearcher.get('query'))
+    ));
+
   const indexOfTargetStream = searcher.on('target').pipe(
     filter(notNull), map(indexOf)
   );

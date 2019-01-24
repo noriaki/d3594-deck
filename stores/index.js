@@ -33,6 +33,7 @@ export const initialTacticsSearcher = {
   query: {
     text: '',
     filter: {
+      origin: ['典蔵', '典籍', '季専用', '分析'],
       type: ['指揮', '主動', '追撃', '受動'],
       permissions: ['弓', '歩', '騎'],
     },
