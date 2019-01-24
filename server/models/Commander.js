@@ -49,6 +49,14 @@ function setIdentifier() {
 }
 commanderSchema.pre('validate', setIdentifier);
 
+/*
+ * sort by:
+ *   1. rarity(desc)
+ *   2. cost(desc)
+ *   3. team['群', '魏', '蜀', '呉', '漢']
+ *   4. army['弓', '歩', '騎']
+ *   5. identifier(asc)
+ */
 function setSortKey() {
   const rarity = baseRarity.indexOf(this.rarity);
   const cost = 100 - Math.floor(this.cost * 10);

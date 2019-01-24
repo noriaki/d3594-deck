@@ -52,12 +52,14 @@ describe('Routes: `/c`', () => {
 
     it('returning sorted results', async () => {
       const options = { qs: query, json: true };
-      // sort by:
-      //  1. rarity(desc)
-      //  2. cost(desc)
-      //  3. team['群', '魏', '蜀', '呉', '漢']
-      //  4. army['弓', '歩', '騎']
-      //  5. identifier(asc)
+      /*
+       * sort by:
+       *   1. rarity(desc)
+       *   2. cost(desc)
+       *   3. team['群', '魏', '蜀', '呉', '漢']
+       *   4. army['弓', '歩', '騎']
+       *   5. identifier(asc)
+       */
       const expectedIds = [
         '30f401ff9134eb74663697174aa3ff10', // 周瑜,呉,弓,5
         'e0f015ef64ca6eef2ed4ad5debcd3fde', // 陸遜(S2),呉,歩,5
