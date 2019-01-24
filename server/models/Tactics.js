@@ -21,6 +21,7 @@ const tacticsSchema = new Schema({
   description: { type: String },
   ownerIds: [String],
   sourceCommanderIds: [String],
+  sortKey: { type: String, required: true },
   // effects: [EffectSchema],
 });
 
@@ -33,6 +34,24 @@ function setIdentifier() {
 }
 
 tacticsSchema.pre('validate', setIdentifier);
+
+/*
+ * sort by:
+ *   1. type['指揮', '主動', '追撃', '受動']
+ *   2. origin['典蔵', '典籍', '季専用', '分析', '固有(初期)']
+ *   3. stock(asc)
+ *   4. stage.length(desc)
+ *   5. identifier(asc)
+ */
+function setSortKey() {
+  const type = baseTypes.indexOf(this.type);
+  const origin = baseOrigin.indexOf(this.origin);
+  const stock = this.stock != null ? this.stock : 9;
+  const stage = this.stage.length;
+  const identifier = this.identifier.slice(0, 6);
+  this.sortKey = [type, origin, stock, stage, identifier].join('/');
+}
+tacticsSchema.pre('validate', setSortKey);
 
 // async
 function fetchByOwnerId(id) {
