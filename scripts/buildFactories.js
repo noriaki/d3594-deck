@@ -3,13 +3,14 @@ const { resolve } = require('path');
 
 const logAndExit = (error) => { console.error(error); process.exit(1); };
 
-const getAllDataLocal = () => {
-  const path = './data/commanders.json';
+const getAllDataLocal = (type) => {
+  const path = `./data/${type}.json`;
   return JSON.parse(readFileSync(resolve(path), 'utf8'));
 };
 
 const main = async () => {
-  const data = getAllDataLocal();
+  // commanders
+  const commanders = getAllDataLocal('commanders');
   const commanderIds = [
     '0022cae0ffb0ee3d8fce63d6d8cdc69f', // 蒋琬 (駆逐, 回避)
     '29fb183da598388eee0cd2f73832de8e', // 呂蒙
@@ -23,9 +24,30 @@ const main = async () => {
     'c78a48266ec5166844c7df427834a520', // 渾水摸魚(張春華)
     'e0f015ef64ca6eef2ed4ad5debcd3fde', // S2陸遜
   ];
-  const factories = data.filter(c => commanderIds.includes(c.identifier));
-  const path = './server/models/__factories__/commanders.json';
-  writeFileSync(resolve(path), JSON.stringify(factories, null, 2));
+  const commanderFactories = commanders.filter(
+    c => commanderIds.includes(c.identifier)
+  );
+  const commanderFactoriesPath = './server/models/__factories__/commanders.json';
+  writeFileSync(
+    resolve(commanderFactoriesPath),
+    JSON.stringify(commanderFactories, null, 2)
+  );
+
+  // tactics
+  const tactics = getAllDataLocal('tactics');
+  const tacticsIds = [
+    '19b519c1849ff3d5171138f205e6dbd7', // 形兵之極-典籍
+    'ae8a6d9abc29bcd38ca84ec1553f8f62', // 形兵列陣-季専用
+    '89e523917d80d64315b7479efee8f98b', // 桃園結義-典蔵
+  ];
+  const tacticsFactories = tactics.filter(
+    t => tacticsIds.includes(t.identifier)
+  );
+  const tacticsFactoriesPath = './server/models/__factories__/tactics.json';
+  writeFileSync(
+    resolve(tacticsFactoriesPath),
+    JSON.stringify(tacticsFactories, null, 2)
+  );
 };
 
 main().then(() => process.exit()).catch(logAndExit);

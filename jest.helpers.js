@@ -39,10 +39,13 @@ const connectAndClearDB = async () => {
 };
 
 const importFactoryData = async () => {
-  const factoriesPath = './server/models/__factories__/commanders.json';
-  const data = JSON.parse(readFileSync(resolve(factoriesPath), 'utf8'));
-  await Commander.importAll(data);
-  await Tactics.importAll(data);
+  const commanderPath = './server/models/__factories__/commanders.json';
+  const tacticsPath = './server/models/__factories__/tactics.json';
+  const commanderData = JSON.parse(
+    readFileSync(resolve(commanderPath), 'utf8'));
+  const tacticsData = JSON.parse(readFileSync(resolve(tacticsPath), 'utf8'));
+  await Commander.importAll(commanderData);
+  await Tactics.importAll(commanderData, tacticsData);
   await Formation.importSampleData();
 };
 
