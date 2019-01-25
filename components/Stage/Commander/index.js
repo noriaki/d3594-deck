@@ -56,11 +56,9 @@ const Commander = ({
   const handleTacticsClick = pos => operation => (event) => {
     switch (operation) {
     case 'add':
-      console.log('tacitcs.add', targets.tactics[pos]);
       setTarget(targets.tactics[pos]);
       break;
     case 'edit':
-      console.log('tacitcs.edit', targets.tactics[pos]);
       setTarget(targets.tactics[pos]);
       break;
     case 'remove':
