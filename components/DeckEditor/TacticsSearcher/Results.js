@@ -132,7 +132,9 @@ export class ResultsComponent extends Component {
 export default withStyles(styles)(ResultsComponent);
 
 const buildTacticsList = (tacticsList, handleClick, classes) => (type) => {
-  if (tacticsList[type].length === 0) { return null; }
+  if (tacticsList[type] == null || tacticsList[type].length === 0) {
+    return null;
+  }
   const {
     groupedTacticsListContainer,
     typeHeader,

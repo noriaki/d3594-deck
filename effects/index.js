@@ -94,6 +94,7 @@ const effects = (stores) => {
   const indexOfTargetStream = searcher.on('target').pipe(
     filter(notNull), map(indexOf)
   );
+
   const commanderSearcherSelectStream = commanderSearcher.on('select').pipe(
     startWith(null)
   );
@@ -112,6 +113,18 @@ const effects = (stores) => {
         if (haveTactics(data)) { commanderSearcher.set('select')(null); }
       }
     });
+
+  combineLatest(
+    searcher.on('target'),
+    tacticsSearcher.on('select')
+  ).pipe(
+    filter(([target, select]) => notNil(target) && notNil(select))
+  ).subscribe(([target, { tactics }]) => {
+    const commanders = [...formation.get('commanders')];
+    set(commanders, target, tactics);
+    formation.set('commanders')(commanders);
+    tacticsSearcher.set('select')(null);
+  });
 
   // TODO: case Honei is null => not save but pushState
   combineLatest(
