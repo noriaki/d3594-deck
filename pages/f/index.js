@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Head from 'next/head';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -13,6 +12,7 @@ import { Container as StoreContainer, initialStates } from '../../stores';
 // components
 import Title from '../../components/Title';
 import Stage from '../../components/Stage';
+import EditActions from '../../components/EditActions';
 
 const styles = theme => ({
   paper: {
@@ -34,6 +34,7 @@ const FormationDetailPage = ({ classes, formation }) => (
       <StoreContainer initialStates={{ ...initialStates, formation }}>
         <Title />
         <Stage />
+        <EditActions />
       </StoreContainer>
     </Paper>
     <Paper className={classes.paper}>

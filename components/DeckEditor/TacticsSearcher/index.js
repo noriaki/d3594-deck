@@ -48,11 +48,6 @@ export class TacticsSearcherComponent extends Component {
     tacticsSearcher.set('init')(true);
   };
 
-  componentWillUnmount = () => {
-    const { tacticsSearcher } = this.props;
-    tacticsSearcher.set('init')(false);
-  };
-
   handleOpen = () => {};
 
   handleClose = () => {

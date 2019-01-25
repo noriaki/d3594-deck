@@ -48,11 +48,6 @@ export class CommanderSearcherComponent extends Component {
     commanderSearcher.set('init')(true);
   };
 
-  componentWillUnmount = () => {
-    const { commanderSearcher } = this.props;
-    commanderSearcher.set('init')(false);
-  };
-
   handleOpen = () => {};
 
   handleClose = () => {
