@@ -5,6 +5,7 @@ import qs from 'qs';
 
 // utils
 import set from 'lodash.set';
+import isNil from 'lodash.isnil';
 import isNull from 'lodash.isnull';
 
 import { typeOf, indexOf } from './concerns/target';
@@ -105,26 +106,23 @@ const effects = (stores) => {
 
   commanderSelectionStream
     .subscribe(([target, data]) => {
-      if (notNil(data)) {
-        const commanders = [...formation.get('commanders')];
-        const commander = buildCommander(data);
-        set(commanders, target, commander);
-        formation.set('commanders')(commanders);
-        if (haveTactics(data)) { commanderSearcher.set('select')(null); }
-      }
+      if (isNil(data)) { return; }
+      const commanders = [...formation.get('commanders')];
+      const commander = buildCommander(data);
+      set(commanders, target, commander);
+      formation.set('commanders')(commanders);
+      if (haveTactics(data)) { commanderSearcher.set('select')(null); }
     });
 
-  combineLatest(
-    searcher.on('target'),
-    tacticsSearcher.on('select')
-  ).pipe(
-    filter(([target, select]) => notNil(target) && notNil(select))
-  ).subscribe(([target, { tactics }]) => {
-    const commanders = [...formation.get('commanders')];
-    set(commanders, target, tactics);
-    formation.set('commanders')(commanders);
-    tacticsSearcher.set('select')(null);
-  });
+  combineLatest(searcher.on('target'), tacticsSearcher.on('select'))
+    .subscribe(([target, data]) => {
+      if (isNil(target) || isNil(data)) { return; }
+      const commanders = [...formation.get('commanders')];
+      const { tactics } = data;
+      set(commanders, target, tactics);
+      formation.set('commanders')(commanders);
+      tacticsSearcher.set('select')(null);
+    });
 
   // TODO: case Honei is null => not save but pushState
   combineLatest(
