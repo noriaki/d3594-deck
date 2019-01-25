@@ -19,7 +19,7 @@ export const initialCommanderSearcher = {
     text: '',
     filter: {
       rarity: [5, 4],
-      army: ['弓'/*, '歩', '騎'*/],
+      army: ['弓', '歩', '騎'],
       team: ['群', '漢', '魏', '蜀', '呉'],
     },
   },
