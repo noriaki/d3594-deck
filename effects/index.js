@@ -6,7 +6,6 @@ import qs from 'qs';
 // utils
 import set from 'lodash.set';
 import isNil from 'lodash.isnil';
-import isNull from 'lodash.isnull';
 
 import { typeOf, indexOf } from './concerns/target';
 import compose from './concerns/compose';
@@ -120,22 +119,20 @@ const effects = (stores) => {
       const commanders = [...formation.get('commanders')];
       const { tactics } = data;
       set(commanders, target, tactics);
-      formation.set('commanders')(commanders);
       tacticsSearcher.set('select')(null);
+      searcher.set('target')(null);
+      formation.set('commanders')(commanders);
     });
 
   // TODO: case Honei is null => not save but pushState
-  combineLatest(
-    formation.on('commanders').pipe(filter(validCommanders)),
-    commanderSearcherSelectStream
-  )
+  formation.on('commanders').pipe(filter(validCommanders))
     .pipe(
-      filter(([, select]) => isNull(select)),
-      filter(([commanders]) => allExistsHaveTactics(commanders)),
-      map(([commanders]) => toQueryForCreateFormationAPI(commanders))
+      filter(allExistsHaveTactics),
+      map(toQueryForCreateFormationAPI)
     )
     .subscribe(async (query) => {
-      if (notNil(commanderSearcher.get('select'))) { return; }
+      if (notNil(commanderSearcher.get('select'))
+          || notNil(tacticsSearcher.get('select'))) { return; }
       const response = await fetch('/api/v1/f', {
         ...headersForAPI, method: 'POST', body: JSON.stringify(query),
       });
