@@ -13,7 +13,6 @@ import compose from './concerns/compose';
 // filters
 import { notNull, notNil, isTrue } from './filters/existance';
 import {
-  validCommanders,
   haveTactics,
   notHaveTactics,
   allExistsHaveTactics,
@@ -127,7 +126,6 @@ const effects = (stores) => {
   // TODO: case Honei is null => not save but pushState
   formation.on('commanders')
     .pipe(
-      // filter(validCommanders),
       filter(allExistsHaveTactics),
       map(toQueryForCreateFormationAPI)
     )
@@ -166,4 +164,10 @@ const effects = (stores) => {
   return stores;
 };
 
-export default compose(withLoggers, effects);
+const finalEffects = (
+  process.env.NODE_ENV === 'development'
+    ? compose(withLoggers, effects)
+    : effects
+);
+
+export default finalEffects;
