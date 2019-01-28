@@ -37,6 +37,7 @@ export const EditActionsComponent = ({ edit, formation, classes }) => {
         <Fab
           variant="extended"
           color="primary"
+          component="a"
           aria-label={label}
           className={classes.fab}>
           <Icon className={classes.icon} />
