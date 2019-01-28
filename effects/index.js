@@ -109,8 +109,8 @@ const effects = (stores) => {
       const commanders = [...formation.get('commanders')];
       const commander = buildCommander(data);
       set(commanders, target, commander);
-      formation.set('commanders')(commanders);
       if (haveTactics(data)) { commanderSearcher.set('select')(null); }
+      formation.set('commanders')(commanders);
     });
 
   combineLatest(searcher.on('target'), tacticsSearcher.on('select'))
@@ -125,8 +125,9 @@ const effects = (stores) => {
     });
 
   // TODO: case Honei is null => not save but pushState
-  formation.on('commanders').pipe(filter(validCommanders))
+  formation.on('commanders')
     .pipe(
+      // filter(validCommanders),
       filter(allExistsHaveTactics),
       map(toQueryForCreateFormationAPI)
     )
@@ -140,10 +141,10 @@ const effects = (stores) => {
         const { identifier, name, humanize } = await response.json();
         const path = `/f/edit?id=${identifier}`;
         const as = `/f/${identifier}/edit`;
-        Router.push(path, as);
         formation.set('identifier')(identifier);
         formation.set('name')(name);
         formation.set('humanize')(humanize);
+        Router.push(path, as);
       }
     });
 
