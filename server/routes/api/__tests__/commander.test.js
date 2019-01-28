@@ -3,6 +3,12 @@ import { createServer } from 'microrouter-test-server';
 
 import commanderRouters from '../commander';
 import Commander from '../../../models/Commander';
+import {
+  baseArmy,
+  baseTeam,
+  baseDistance,
+  baseCost,
+} from '../../../models/classes/Commander';
 
 import { setupDB, teardownDB } from '../../../../jest.helpers';
 
@@ -44,8 +50,10 @@ describe('Routes: `/c`', () => {
         text: '',
         filter: {
           rarity: [5, 4, 3],
-          army: ['弓', '歩', '騎'],
-          team: ['群', '漢', '魏', '蜀', '呉'],
+          army: baseArmy,
+          team: baseTeam,
+          distance: baseDistance,
+          cost: baseCost,
         },
       };
     });

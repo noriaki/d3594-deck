@@ -21,6 +21,8 @@ export const initialCommanderSearcher = {
       rarity: [5, 4],
       army: ['弓', '歩', '騎'],
       team: ['群', '漢', '魏', '蜀', '呉'],
+      distance: [5, 4, 3, 2, 1],
+      cost: [4, 3.5, 3, 2.5, 2],
     },
   },
   results: null,

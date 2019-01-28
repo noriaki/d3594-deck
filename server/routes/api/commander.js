@@ -12,7 +12,7 @@ const search = (req, res) => {
     query = query.where('name').regex(text);
   }
   if (filter != null) {
-    const filterKeys = ['rarity', 'army', 'team'];
+    const filterKeys = ['rarity', 'army', 'team', 'distance', 'cost'];
     query = filterKeys.reduce(
       (currentQuery, key) => currentQuery.where(key).in(filter[key] || []),
       query

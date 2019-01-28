@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
 // material-ui components
 import { withStyles } from '@material-ui/core/styles';
@@ -7,6 +7,8 @@ import { withStyles } from '@material-ui/core/styles';
 import RarityFilter from './RarityFilter';
 import ArmyFilter from './ArmyFilter';
 import TeamFilter from './TeamFilter';
+import DistanceFilter from './DistanceFilter';
+import CostFilter from './CostFilter';
 
 const styles = {
   root: {
@@ -22,11 +24,17 @@ export const FilterComponent = ({ classes, filter, onChange }) => {
     onChange(target, value);
   };
   return (
-    <div className={classes.root}>
-      <RarityFilter rarity={filter.rarity} onChange={handleChange} />
-      <ArmyFilter army={filter.army} onChange={handleChange} />
-      <TeamFilter team={filter.team} onChange={handleChange} />
-    </div>
+    <Fragment>
+      <div className={classes.root}>
+        <RarityFilter rarity={filter.rarity} onChange={handleChange} />
+        <ArmyFilter army={filter.army} onChange={handleChange} />
+        <TeamFilter team={filter.team} onChange={handleChange} />
+      </div>
+      <div className={classes.root}>
+        <DistanceFilter distance={filter.distance} onChange={handleChange} />
+        <CostFilter cost={filter.cost} onChange={handleChange} />
+      </div>
+    </Fragment>
   );
 };
 
