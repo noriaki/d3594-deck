@@ -8,7 +8,7 @@ const { Schema } = mongoose;
 
 const formationSchema = new Schema({
   _id: { type: String, required: true },
-  identifier: { type: String, required: true },
+  identifier: { type: String, default: null, required: true },
   name: { type: String, default: null },
   commanders: {
     type: [{

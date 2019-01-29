@@ -3,6 +3,7 @@ import { createConnectedStoreAs } from 'undux';
 import effects from '../effects';
 
 export const initialFormation = {
+  identifier: null,
   name: null,
   humanize: null,
   commanders: [null, null, null],
