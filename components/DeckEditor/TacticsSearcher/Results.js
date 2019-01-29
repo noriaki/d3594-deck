@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import groupBy from 'lodash.groupby';
 
 // material-ui components
@@ -9,7 +9,7 @@ import ListItem from '@material-ui/core/ListItem';
 // import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
 
-import Tactics from '../../Stage/Commander/Tactics';
+import Tactics from './CollapsibleTactics';
 import { baseTypes } from '../../../server/models/classes/Tactics';
 
 const styles = theme => ({
@@ -32,15 +32,11 @@ const styles = theme => ({
     width: '25%',
     padding: [0, 2, 4].map(s => `${s}px`).join(' '),
   },
-  tacticsRoot: {},
-  tacticsImage: {},
-  tacticsCaptionContainer: {
-    padding: 0,
-    '&:last-child': { paddingBottom: 0 },
-  },
 });
 
-export class ResultsComponent extends Component {
+export class ResultsComponent extends PureComponent {
+  state = { open: null };
+
   componentWillUnmount = () => {
     this.removeTouchStart();
   };
@@ -98,25 +94,54 @@ export class ResultsComponent extends Component {
     }
   };
 
+  handleToggleDetail = (identifier = null) => () => (
+    this.setState({ open: identifier })
+  );
+
+  renderTypedList = typeList => baseTypes.map((type) => {
+    if (typeList[type] == null || typeList[type].length === 0) {
+      return null;
+    }
+    const { groupedTacticsListContainer, typeHeader } = this.props.classes;
+    return (
+      <li key={type}>
+        <ul className={groupedTacticsListContainer}>
+          <ListSubheader className={typeHeader}>{type}</ListSubheader>
+          { this.renderTacticsList(typeList[type]) }
+        </ul>
+      </li>
+    );
+  });
+
+  renderTacticsList = tacticsList => tacticsList.map((tactics) => {
+    const { tacticsContainer } = this.props.classes;
+    const open = this.state.open === tactics.identifier;
+    const handleSelect = () => this.porps.onClick({ tactics });
+    return (
+      <ListItem key={tactics.identifier} className={tacticsContainer}>
+        <Tactics
+          open={open}
+          tactics={tactics}
+          onClick={this.handleToggleDetail(open ? null : tactics.identifier)}
+          onSelect={handleSelect} />
+      </ListItem>
+    );
+  });
+
   render = () => {
     const {
       tactics,
-      onClick: handleClick,
       classes,
     } = this.props;
     if (tactics === null) {
       return <div>Loading...</div>;
     }
     const groupedTactics = groupBy(tactics, 'type');
-    const {
-      root,
-      ...nextClasses
-    } = classes;
-    const mapper = buildTacticsList(groupedTactics, handleClick, nextClasses);
+    const { root } = classes;
     return (
       <RootRef rootRef={this.setRef}>
         <List className={root} subheader={<li />}>
-          {baseTypes.map(mapper)}
+          { this.renderTypedList(groupedTactics) }
         </List>
       </RootRef>
     );
@@ -130,38 +155,3 @@ export class ResultsComponent extends Component {
 }
 
 export default withStyles(styles)(ResultsComponent);
-
-const buildTacticsList = (tacticsList, handleClick, classes) => (type) => {
-  if (tacticsList[type] == null || tacticsList[type].length === 0) {
-    return null;
-  }
-  const {
-    groupedTacticsListContainer,
-    typeHeader,
-    ...nextClasses
-  } = classes;
-  return (
-    <li key={type}>
-      <ul className={groupedTacticsListContainer}>
-        <ListSubheader className={typeHeader}>{type}</ListSubheader>
-        {tacticsList[type].map(buildTactics(handleClick, nextClasses))}
-      </ul>
-    </li>
-  );
-};
-
-const buildTactics = (onClick, classes) => (tactics) => {
-  const {
-    tacticsContainer,
-    ...nextClasses
-  } = classes;
-  const handleClick = () => onClick({ tactics });
-  return (
-    <ListItem key={tactics.identifier} className={tacticsContainer}>
-      <Tactics
-        tactics={tactics}
-        onClick={handleClick}
-        classes={nextClasses} />
-    </ListItem>
-  );
-};
