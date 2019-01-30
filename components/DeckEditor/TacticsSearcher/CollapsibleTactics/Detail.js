@@ -55,18 +55,18 @@ export const CollapsibleTacticsDetailComponent = ({
           </Grid>
         </Grid>
         <Grid container spacing={8} item xs={6}>
-          <Grid item xs={5}>種別</Grid>
-          <Grid item xs={7}>{type}</Grid>
-          <Grid item xs={5}>距離</Grid>
-          <Grid item xs={7}>{distance}</Grid>
-          <Grid item xs={5}>対象</Grid>
-          <Grid item xs={7}>{target}</Grid>
+          <Grid item xs={4}>種別</Grid>
+          <Grid item xs={8}>{type}</Grid>
+          <Grid item xs={4}>距離</Grid>
+          <Grid item xs={8}>{distance}</Grid>
+          <Grid item xs={4}>対象</Grid>
+          <Grid item xs={8}>{target}</Grid>
         </Grid>
         <Grid container spacing={8} item xs={6}>
-          <Grid item xs={5}>兵種</Grid>
-          <Grid item xs={7}>{permissions && permissions.join(', ')}</Grid>
-          <Grid item xs={5}>確率</Grid>
-          <Grid item xs={7}>{rate || '--'}</Grid>
+          <Grid item xs={4}>兵種</Grid>
+          <Grid item xs={8}>{permissions && permissions.join(', ')}</Grid>
+          <Grid item xs={4}>確率</Grid>
+          <Grid item xs={8}>{rate || '--'}</Grid>
         </Grid>
         <Grid item xs={12}>{description}</Grid>
       </Grid>

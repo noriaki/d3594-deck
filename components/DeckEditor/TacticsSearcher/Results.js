@@ -11,6 +11,7 @@ import ListItem from '@material-ui/core/ListItem';
 // import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import Popper from '@material-ui/core/Popper';
+import Collapse from '@material-ui/core/Collapse';
 
 import Tactics from './CollapsibleTactics';
 import TacticsDetail from './CollapsibleTactics/Detail';
@@ -135,7 +136,9 @@ export class ResultsComponent extends PureComponent {
     const detailHeight = popperHeight + referenceHeight;
     set(data, 'offsets.popper.left', 0);
     const { anchorEl } = this.state;
-    anchorEl.parentNode.style.height = `${detailHeight + 24}px`;
+    if (anchorEl) {
+      anchorEl.parentNode.style.height = `${detailHeight + 24}px`;
+    }
 
     // arrow position
     if (this.arrowRef && data.arrowElement == null) {
@@ -201,6 +204,12 @@ export class ResultsComponent extends PureComponent {
       this.handleToggleDetail(null, data.tactics);
       onClick(data)();
     };
+    const CollapsibleTactics = ({ TransitionProps }) => (
+      <Collapse {...TransitionProps}>
+        <span className={popperArrow} ref={this.setArrowRef} />
+        <TacticsDetail tactics={targetTactics} onClick={handleSelect} />
+      </Collapse>
+    );
 
     return (
       <RootRef rootRef={this.setRef}>
@@ -211,6 +220,7 @@ export class ResultsComponent extends PureComponent {
             anchorEl={anchorEl}
             placement="bottom"
             disablePortal
+            transition
             modifiers={{
               flip: { enabled: false },
               preventOverflow: { enabled: false },
@@ -218,8 +228,7 @@ export class ResultsComponent extends PureComponent {
               arrow: { enabled: true, element: this.arrowRef },
               offset: { enabled: true, fn: this.setPopperPosition },
             }}>
-            <span className={popperArrow} ref={this.setArrowRef} />
-            <TacticsDetail tactics={targetTactics} onClick={handleSelect} />
+            { CollapsibleTactics }
           </Popper>
         </List>
       </RootRef>
