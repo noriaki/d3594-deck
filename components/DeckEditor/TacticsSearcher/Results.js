@@ -1,5 +1,7 @@
 import React, { PureComponent } from 'react';
 import groupBy from 'lodash.groupby';
+import get from 'lodash.get';
+import set from 'lodash.set';
 
 // material-ui components
 import { withStyles } from '@material-ui/core/styles';
@@ -9,7 +11,6 @@ import ListItem from '@material-ui/core/ListItem';
 // import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import Popper from '@material-ui/core/Popper';
-import Popover from '@material-ui/core/Popover';
 
 import Tactics from './CollapsibleTactics';
 import TacticsDetail from './CollapsibleTactics/Detail';
@@ -34,6 +35,26 @@ const styles = theme => ({
   tacticsContainer: {
     width: '25%',
     padding: [0, 2, 4].map(s => `${s}px`).join(' '),
+    alignItems: 'flex-start',
+  },
+  popperArrow: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    marginTop: '-0.9em',
+    width: '3em',
+    height: '1em',
+    fontSize: 7,
+    '&::before': {
+      content: '""',
+      margin: 'auto',
+      display: 'block',
+      width: 0,
+      height: 0,
+      borderStyle: 'solid',
+      borderWidth: '0 1em 1em 1em',
+      borderColor: `transparent transparent ${theme.palette.common.white} transparent`,
+    },
   },
 });
 
@@ -97,17 +118,36 @@ export class ResultsComponent extends PureComponent {
     }
   };
 
-  handleCloseDetail = () => {
-    this.setState({ anchorEl: null, targetTactics: null });
-  };
-
   handleToggleDetail = (anchorElement, tactics) => {
-    const { targetTactics } = this.state;
+    const { anchorEl, targetTactics } = this.state;
+    if (anchorEl) { anchorEl.parentNode.style.height = null; }
     if (targetTactics && tactics.identifier === targetTactics.identifier) {
-      this.handleCloseDetail();
+      this.setState({ anchorEl: null, targetTactics: null });
     } else {
       this.setState({ anchorEl: anchorElement, targetTactics: tactics });
     }
+  };
+
+  setPopperPosition = (data) => {
+    // popper position
+    const popperHeight = get(data, 'offsets.popper.height');
+    const referenceHeight = get(data, 'offsets.reference.height');
+    const detailHeight = popperHeight + referenceHeight;
+    set(data, 'offsets.popper.left', 0);
+    const { anchorEl } = this.state;
+    anchorEl.parentNode.style.height = `${detailHeight + 24}px`;
+
+    // arrow position
+    if (this.arrowRef && data.arrowElement == null) {
+      set(data, 'arrowElement', this.arrowRef);
+      const { width } = this.arrowRef.getBoundingClientRect();
+      const referenceLeft = get(data, 'offsets.reference.left');
+      const referenceWidth = get(data, 'offsets.reference.width');
+      const left = referenceLeft + (referenceWidth / 2) - (width / 2);
+      set(data, 'offsets.arrow.left', left);
+    }
+
+    return data;
   };
 
   isOpen = () => {
@@ -148,29 +188,38 @@ export class ResultsComponent extends PureComponent {
   render = () => {
     const {
       tactics,
+      onClick,
       classes,
     } = this.props;
     if (tactics === null) {
       return <div>Loading...</div>;
     }
     const groupedTactics = groupBy(tactics, 'type');
-    const { root } = classes;
+    const { root, popperArrow } = classes;
     const { anchorEl, targetTactics } = this.state;
+    const handleSelect = data => () => {
+      this.handleToggleDetail(null, data.tactics);
+      onClick(data)();
+    };
+
     return (
       <RootRef rootRef={this.setRef}>
         <List className={root} subheader={<li />}>
           { this.renderTypedList(groupedTactics) }
           <Popper
             open={this.isOpen()}
-            // onClose={this.handleCloseDetail}
             anchorEl={anchorEl}
             placement="bottom"
             disablePortal
             modifiers={{
               flip: { enabled: false },
               preventOverflow: { enabled: false },
+              hide: { enabled: false },
+              arrow: { enabled: true, element: this.arrowRef },
+              offset: { enabled: true, fn: this.setPopperPosition },
             }}>
-            <TacticsDetail tactics={targetTactics} />
+            <span className={popperArrow} ref={this.setArrowRef} />
+            <TacticsDetail tactics={targetTactics} onClick={handleSelect} />
           </Popper>
         </List>
       </RootRef>
@@ -181,6 +230,10 @@ export class ResultsComponent extends PureComponent {
     this.removeTouchStart();
     this.resultsRef = node;
     this.listenTouchStart();
+  };
+
+  setArrowRef = (node) => {
+    this.arrowRef = node;
   };
 }
 
