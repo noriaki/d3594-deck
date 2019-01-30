@@ -3,7 +3,11 @@ import React from 'react';
 // material-ui components
 import { withStyles } from '@material-ui/core/styles';
 
-const styles = theme => ({});
+const styles = theme => ({
+  root: {
+    backgroundColor: theme.palette.common.white,
+  },
+});
 
 export const CollapsibleTacticsDetailComponent = ({
   tactics,
@@ -21,7 +25,7 @@ export const CollapsibleTacticsDetailComponent = ({
   } = tactics || {};
 
   return (
-    <div>
+    <div className={classes.root}>
       {name}
       {origin}
       {permissions && permissions.join(', ')}

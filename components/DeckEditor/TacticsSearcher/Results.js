@@ -8,8 +8,8 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 // import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
+import Popper from '@material-ui/core/Popper';
 import Popover from '@material-ui/core/Popover';
-import Collapse from '@material-ui/core/Collapse';
 
 import Tactics from './CollapsibleTactics';
 import TacticsDetail from './CollapsibleTactics/Detail';
@@ -156,22 +156,22 @@ export class ResultsComponent extends PureComponent {
     const groupedTactics = groupBy(tactics, 'type');
     const { root } = classes;
     const { anchorEl, targetTactics } = this.state;
-    console.log(anchorEl);
     return (
       <RootRef rootRef={this.setRef}>
         <List className={root} subheader={<li />}>
           { this.renderTypedList(groupedTactics) }
-          <Popover
+          <Popper
             open={this.isOpen()}
-            onClose={this.handleCloseDetail}
+            // onClose={this.handleCloseDetail}
             anchorEl={anchorEl}
-            anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-            transformOrigin={{ vertical: 'top', horizontal: 'center' }}
-            hideBackdrop
-            disablePortal>
-            { /* container={this.resultsRef}> */ }
+            placement="bottom"
+            disablePortal
+            modifiers={{
+              flip: { enabled: false },
+              preventOverflow: { enabled: false },
+            }}>
             <TacticsDetail tactics={targetTactics} />
-          </Popover>
+          </Popper>
         </List>
       </RootRef>
     );
