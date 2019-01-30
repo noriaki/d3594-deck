@@ -7,7 +7,7 @@ import Commander from './Commander';
 import { withBaseStyles, withSearchStyles } from './styles';
 
 // stores
-import { withStores } from '../../../stores';
+import { withStores } from '../../stores';
 
 const Stage = ({
   edit,

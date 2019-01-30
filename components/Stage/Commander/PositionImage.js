@@ -1,7 +1,7 @@
 import React from 'react';
 
 // components
-import ResponsiveImage from '../../../ResponsiveImage';
+import ResponsiveImage from '../../ResponsiveImage';
 
 const altTexts = {
   honei: '本営',

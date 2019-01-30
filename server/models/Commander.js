@@ -5,19 +5,20 @@ const CommanderClass = require('./classes/Commander');
 const { humanizeId, identify } = require('./concerns/identify');
 
 const { Schema } = mongoose;
+const { baseRarity, baseArmy, baseTeam } = CommanderClass;
 
 const commanderSchema = new Schema({
   _id: { type: String, required: true },
   id: { type: String, required: true },
   identifier: { type: String, required: true },
   name: { type: String, required: true },
-  stage: { type: Number },
+  stage: [{ type: String, enum: ['S1', 'S2', 'S3', 'XP'] }],
   special: { type: String, enum: ['SE', 'JE', 'SP', 'XP', 'S2', 'S3', null] },
   description: { type: String },
-  rarity: { type: Number, required: true },
+  rarity: { type: Number, required: true, enum: baseRarity },
   cost: { type: Number, required: true },
-  team: { type: String, required: true, enum: ['群', '魏', '蜀', '呉', '漢'] },
-  army: { type: String, required: true, enum: ['弓', '歩', '騎'] },
+  team: { type: String, required: true, enum: baseTeam },
+  army: { type: String, required: true, enum: baseArmy },
   distance: { type: Number, required: true },
   image: { type: String },
   sortKey: { type: String, required: true },
@@ -48,8 +49,15 @@ function setIdentifier() {
 }
 commanderSchema.pre('validate', setIdentifier);
 
+/*
+ * sort by:
+ *   1. rarity(desc)
+ *   2. cost(desc)
+ *   3. team['群', '魏', '蜀', '呉', '漢']
+ *   4. army['弓', '歩', '騎']
+ *   5. identifier(asc)
+ */
 function setSortKey() {
-  const { baseRarity, baseArmy, baseTeam } = CommanderClass;
   const rarity = baseRarity.indexOf(this.rarity);
   const cost = 100 - Math.floor(this.cost * 10);
   const army = baseArmy.indexOf(this.army);
@@ -75,6 +83,7 @@ commanderSchema.method('specificTactics', specificTactics);
 function importData(json) {
   const {
     name,
+    stage: stageText,
     special,
     description,
     rarity,
@@ -85,8 +94,10 @@ function importData(json) {
     image,
     status,
   } = json;
+  const stage = stageText.split(/[\s,]+/);
   const commander = new this({
     name,
+    stage,
     special,
     description,
     rarity,

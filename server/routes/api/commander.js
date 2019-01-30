@@ -8,11 +8,11 @@ const search = (req, res) => {
   setApiHeaders(res);
   const { text, filter } = qs.parse(req.query);
   let query = Commander;
-  if (text != null) {
+  if (text != null && text !== '') {
     query = query.where('name').regex(text);
   }
   if (filter != null) {
-    const filterKeys = ['rarity', 'army', 'team'];
+    const filterKeys = ['rarity', 'army', 'team', 'distance', 'cost'];
     query = filterKeys.reduce(
       (currentQuery, key) => currentQuery.where(key).in(filter[key] || []),
       query

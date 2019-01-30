@@ -42,10 +42,10 @@ const styles = theme => ({
   },
 });
 
-export class CommanderSearcherComponent extends Component {
+export class TacticsSearcherComponent extends Component {
   componentDidMount = () => {
-    const { commanderSearcher } = this.props;
-    commanderSearcher.set('init')(true);
+    const { tacticsSearcher } = this.props;
+    tacticsSearcher.set('init')(true);
   };
 
   handleOpen = () => {};
@@ -58,16 +58,16 @@ export class CommanderSearcherComponent extends Component {
   render() {
     const {
       classes,
-      commanderSearcher, // from undux stores
+      tacticsSearcher, // from undux stores
     } = this.props;
-    const open = commanderSearcher.get('open');
+    const open = tacticsSearcher.get('open');
     const {
       updateText,
       updateFilter,
       selectData,
-    } = searchActions(commanderSearcher);
-    const { filter } = commanderSearcher.get('query');
-    const commanders = commanderSearcher.get('results');
+    } = searchActions(tacticsSearcher);
+    const { filter } = tacticsSearcher.get('query');
+    const tactics = tacticsSearcher.get('results');
     return (
       <SwipeableDrawer
         anchor="bottom"
@@ -85,12 +85,12 @@ export class CommanderSearcherComponent extends Component {
         <div>
           <Filter filter={filter} onChange={updateFilter} />
         </div>
-        <Results commanders={commanders} onClick={selectData} />
+        <Results tactics={tactics} onClick={selectData} />
       </SwipeableDrawer>
     );
   }
 }
 
 export default withStores(
-  withStyles(styles)(CommanderSearcherComponent)
+  withStyles(styles)(TacticsSearcherComponent)
 );

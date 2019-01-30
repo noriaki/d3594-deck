@@ -3,6 +3,7 @@ import { createConnectedStoreAs } from 'undux';
 import effects from '../effects';
 
 export const initialFormation = {
+  identifier: null,
   name: null,
   humanize: null,
   commanders: [null, null, null],
@@ -19,8 +20,25 @@ export const initialCommanderSearcher = {
     text: '',
     filter: {
       rarity: [5, 4],
-      army: ['弓'/*, '歩', '騎'*/],
+      army: ['弓', '歩', '騎'],
       team: ['群', '漢', '魏', '蜀', '呉'],
+      distance: [5, 4, 3, 2, 1],
+      cost: [4, 3.5, 3, 2.5, 2],
+    },
+  },
+  results: null,
+  select: null,
+};
+
+export const initialTacticsSearcher = {
+  init: false,
+  open: false,
+  query: {
+    text: '',
+    filter: {
+      origin: ['典蔵', '典籍', '季専用', '分析'],
+      type: ['指揮', '主動', '追撃', '受動'],
+      permissions: ['弓', '歩', '騎'],
     },
   },
   results: null,
@@ -31,6 +49,7 @@ export const initialStates = {
   formation: initialFormation,
   searcher: initialSearcher,
   commanderSearcher: initialCommanderSearcher,
+  tacticsSearcher: initialTacticsSearcher,
 };
 
 export const { Container, withStores } = createConnectedStoreAs(

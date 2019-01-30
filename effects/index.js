@@ -5,7 +5,7 @@ import qs from 'qs';
 
 // utils
 import set from 'lodash.set';
-import isNull from 'lodash.isnull';
+import isNil from 'lodash.isnil';
 
 import { typeOf, indexOf } from './concerns/target';
 import compose from './concerns/compose';
@@ -13,7 +13,6 @@ import compose from './concerns/compose';
 // filters
 import { notNull, notNil, isTrue } from './filters/existance';
 import {
-  validCommanders,
   haveTactics,
   notHaveTactics,
   allExistsHaveTactics,
@@ -42,7 +41,12 @@ export const fetchData = (store, path) => async (query) => {
 };
 
 const effects = (stores) => {
-  const { formation, searcher, commanderSearcher } = stores;
+  const {
+    formation,
+    searcher,
+    commanderSearcher,
+    tacticsSearcher,
+  } = stores;
 
   searcher
     .on('target')
@@ -54,12 +58,12 @@ const effects = (stores) => {
         break;
 
       case 'tactics':
-        // tacticsSearcher.set('open')(true);
+        tacticsSearcher.set('open')(true);
         break;
 
       default:
         commanderSearcher.set('open')(false);
-        // tacticsSearcher.set('open')(false);
+        tacticsSearcher.set('open')(false);
         break;
       }
     });
@@ -75,9 +79,21 @@ const effects = (stores) => {
       fetchData(commanderSearcher, 'c')(commanderSearcher.get('query'))
     ));
 
+  tacticsSearcher
+    .on('query')
+    .subscribe(fetchData(tacticsSearcher, 't'));
+
+  tacticsSearcher
+    .on('init')
+    .pipe(filter(isTrue))
+    .subscribe(() => (
+      fetchData(tacticsSearcher, 't')(tacticsSearcher.get('query'))
+    ));
+
   const indexOfTargetStream = searcher.on('target').pipe(
     filter(notNull), map(indexOf)
   );
+
   const commanderSearcherSelectStream = commanderSearcher.on('select').pipe(
     startWith(null)
   );
@@ -88,27 +104,34 @@ const effects = (stores) => {
 
   commanderSelectionStream
     .subscribe(([target, data]) => {
-      if (notNil(data)) {
-        const commanders = [...formation.get('commanders')];
-        const commander = buildCommander(data);
-        set(commanders, target, commander);
-        formation.set('commanders')(commanders);
-        if (haveTactics(data)) { commanderSearcher.set('select')(null); }
-      }
+      if (isNil(data)) { return; }
+      const commanders = [...formation.get('commanders')];
+      const commander = buildCommander(data);
+      set(commanders, target, commander);
+      if (haveTactics(data)) { commanderSearcher.set('select')(null); }
+      formation.set('commanders')(commanders);
+    });
+
+  combineLatest(searcher.on('target'), tacticsSearcher.on('select'))
+    .subscribe(([target, data]) => {
+      if (isNil(target) || isNil(data)) { return; }
+      const commanders = [...formation.get('commanders')];
+      const { tactics } = data;
+      set(commanders, target, tactics);
+      tacticsSearcher.set('select')(null);
+      searcher.set('target')(null);
+      formation.set('commanders')(commanders);
     });
 
   // TODO: case Honei is null => not save but pushState
-  combineLatest(
-    formation.on('commanders').pipe(filter(validCommanders)),
-    commanderSearcherSelectStream
-  )
+  formation.on('commanders')
     .pipe(
-      filter(([, select]) => isNull(select)),
-      filter(([commanders]) => allExistsHaveTactics(commanders)),
-      map(([commanders]) => toQueryForCreateFormationAPI(commanders))
+      filter(allExistsHaveTactics),
+      map(toQueryForCreateFormationAPI)
     )
     .subscribe(async (query) => {
-      if (notNil(commanderSearcher.get('select'))) { return; }
+      if (notNil(commanderSearcher.get('select'))
+          || notNil(tacticsSearcher.get('select'))) { return; }
       const response = await fetch('/api/v1/f', {
         ...headersForAPI, method: 'POST', body: JSON.stringify(query),
       });
@@ -116,9 +139,10 @@ const effects = (stores) => {
         const { identifier, name, humanize } = await response.json();
         const path = `/f/edit?id=${identifier}`;
         const as = `/f/${identifier}/edit`;
-        Router.push(path, as);
+        formation.set('identifier')(identifier);
         formation.set('name')(name);
         formation.set('humanize')(humanize);
+        Router.push(path, as);
       }
     });
 
@@ -140,4 +164,10 @@ const effects = (stores) => {
   return stores;
 };
 
-export default compose(withLoggers, effects);
+const finalEffects = (
+  process.env.NODE_ENV === 'development'
+    ? compose(withLoggers, effects)
+    : effects
+);
+
+export default finalEffects;

@@ -35,17 +35,31 @@ const getAllData = () => {
 };
 
 // async
-const getAllDataRemote = (repo) => {
+const fetchJson = uri => fetch(uri, {
+  headers: { 'Content-Type': 'application/json; charset=utf-8' },
+}).then(response => response.json());
+
+const getAllDataRemote = async repo => ({
+  commanders: await getAllCommandersDataRemote(repo),
+  tactics: await getAllTacticsDataRemote(repo),
+});
+
+// async
+const getAllCommandersDataRemote = (repo) => {
   const uri = `https://github.com/${repo}/raw/master/data/commanders.json`;
-  return fetch(uri, {
-    headers: { 'Content-Type': 'application/json; charset=utf-8' },
-  }).then(response => response.json());
+  return fetchJson(uri);
 };
 
-const getAllDataLocal = () => {
-  const path = './data/commanders.json';
-  return JSON.parse(readFileSync(resolve(path), 'utf8'));
+// async
+const getAllTacticsDataRemote = (repo) => {
+  const uri = `https://github.com/${repo}/raw/master/data/tactics.json`;
+  return fetchJson(uri);
 };
+
+const getAllDataLocal = () => ['commanders', 'tactics'].reduce((ret, key) => {
+  const path = `./data/${key}.json`;
+  return { ...ret, [key]: JSON.parse(readFileSync(resolve(path), 'utf8')) };
+}, {});
 
 const main = async () => {
   if (getValidEnv() === false) { throw new Error('InValid Environment'); }
@@ -58,10 +72,10 @@ const main = async () => {
   await Tactics.deleteMany({});
   await Commander.deleteMany({});
 
-  const data = await getAllData();
+  const { commanders, tactics } = await getAllData();
 
-  await Commander.importAll(data);
-  await Tactics.importAll(data);
+  await Commander.importAll(commanders);
+  await Tactics.importAll(commanders, tactics);
   if (getValidEnv() === 'local') {
     await Formation.importSampleData();
   }

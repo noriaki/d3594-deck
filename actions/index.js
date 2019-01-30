@@ -5,12 +5,6 @@ export const searchActions = (store) => {
     store.set('target')(path);
   };
 
-  return {
-    setTarget,
-  };
-};
-
-export const commanderSearchActions = (store) => {
   const updateText = (value) => {
     const { text, ...other } = store.get('query');
     store.set('query')({ ...other, text: value });
@@ -27,6 +21,7 @@ export const commanderSearchActions = (store) => {
   };
 
   return {
+    setTarget,
     updateText,
     updateFilter,
     selectData,
@@ -34,28 +29,14 @@ export const commanderSearchActions = (store) => {
 };
 
 export const formationActions = (store) => {
-  const removeCommander = (path) => {
+  const removePathData = (path) => {
     const commanders = store.get('commanders');
     set(commanders, path, null);
     store.set('commanders')(commanders);
   };
 
-  const removeTactics = (identifier) => {/*
-    const commanders = store.get('commanders');
-    let isChange = false;
-    const nextCommanders = commanders.map((commander) => {
-      if (commander === null) { return commander; }
-      const targetIndex = commander.additionalTactics.findIndex(tactics => (
-        (tactics || {}).identifier === identifier
-      ));
-      if (targetIndex > -1) {
-        commander.additionalTactics.splice(targetIndex, 1, null);
-        isChange = true;
-      }
-      return commander;
-    });
-    if (isChange) { store.set('commanders')(nextCommanders); }
-  */};
+  const removeCommander = removePathData;
+  const removeTactics = removePathData;
 
   return {
     removeCommander,
@@ -65,6 +46,5 @@ export const formationActions = (store) => {
 
 export default {
   searchActions,
-  commanderSearchActions,
   formationActions,
 };

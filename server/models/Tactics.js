@@ -1,26 +1,27 @@
 const mongoose = require('mongoose');
 const { identify, md5 } = require('./concerns/identify');
 const TacticsClass = require('./classes/Tactics');
+const { baseArmy } = require('./classes/Commander');
 
 const { Schema } = mongoose;
+const { baseTypes, baseOrigin } = TacticsClass;
 
 const tacticsSchema = new Schema({
   _id: { type: String, required: true },
   identifier: { type: String, required: true },
   name: { type: String, required: true },
-  stage: { type: Number },
-  origin: {
-    type: String,
-    enum: ['固有(初期)', '分析', '典籍', '特有(擁立)', '特有(割拠)'],
-  },
-  type: { type: String, enum: ['指揮', '主動', '追撃', '受動'] },
-  permissions: [{ type: String, enum: ['弓', '歩', '騎'] }],
+  stage: [{ type: String, enum: ['S1', 'S2', 'S3', 'XP'] }],
+  origin: { type: String, enum: baseOrigin },
+  type: { type: String, enum: baseTypes },
+  permissions: [{ type: String, enum: baseArmy }],
+  stock: { type: Number },
   rate: { type: String },
   distance: { type: String },
   target: { type: String },
   description: { type: String },
   ownerIds: [String],
   sourceCommanderIds: [String],
+  sortKey: { type: String, required: true },
   // effects: [EffectSchema],
 });
 
@@ -34,6 +35,24 @@ function setIdentifier() {
 
 tacticsSchema.pre('validate', setIdentifier);
 
+/*
+ * sort by:
+ *   1. type['指揮', '主動', '追撃', '受動']
+ *   2. origin['典蔵', '典籍', '季専用', '分析', '固有(初期)']
+ *   3. stock(asc)
+ *   4. stage.length(desc)
+ *   5. identifier(asc)
+ */
+function setSortKey() {
+  const type = baseTypes.indexOf(this.type);
+  const origin = baseOrigin.indexOf(this.origin);
+  const stock = this.stock != null ? this.stock : 9;
+  const stage = this.stage.length;
+  const identifier = this.identifier.slice(0, 6);
+  this.sortKey = [type, origin, stock, stage, identifier].join('/');
+}
+tacticsSchema.pre('validate', setSortKey);
+
 // async
 function fetchByOwnerId(id) {
   return this
@@ -43,23 +62,27 @@ function fetchByOwnerId(id) {
 tacticsSchema.static('fetchByOwnerId', fetchByOwnerId);
 
 async function importData(json, originKey, commanderId) {
-  const origins = { init: '固有(初期)', analyzable: '分析' };
   const {
     name,
+    stage: stageText,
+    origin,
     type,
     permissions,
+    stock,
     rate,
     distance,
     target,
     description,
   } = json;
-  const origin = origins[originKey];
   const identifier = tacticsIdentify(name, origin);
+  const stage = stageText.split(/[\s,]+/);
   const tactics = await this.findById(identifier) || new this({
     name,
+    stage,
     origin,
     type,
     permissions,
+    stock,
     rate,
     distance,
     target,
@@ -77,19 +100,27 @@ async function importData(json, originKey, commanderId) {
 tacticsSchema.static('importData', importData);
 
 /* eslint-disable no-restricted-syntax, no-await-in-loop */
-async function importAll(jsons) {
-  for (const data of jsons) {
-    const { tactics, ...json } = data;
+async function importAll(commanders, otherTactics) {
+  const tacticsIds = [];
+  for (const commander of commanders) {
+    const { tactics, ...json } = commander;
     const commanderId = identify(json);
     if (tactics.init != null) {
-      await this.importData(tactics.init, 'init', commanderId);
+      tacticsIds.push(
+        await this.importData(tactics.init, 'init', commanderId)
+      );
     }
-    await Promise.all(tactics.analyzables.filter(
+    tacticsIds.concat(await Promise.all(tactics.analyzables.filter(
       analyzable => (analyzable !== null)
     ).map(
       analyzable => this.importData(analyzable, 'analyzable', commanderId)
-    ));
+    )));
   }
+  await Promise.all(
+    otherTactics
+      .filter(({ identifier }) => !tacticsIds.includes(identifier))
+      .map(this.importData.bind(this))
+  );
 }
 /* eslint-enable no-restricted-syntax, no-await-in-loop */
 
