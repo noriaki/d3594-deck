@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PureComponent, createRef } from 'react';
 
 // material-ui components
 import { withStyles } from '@material-ui/core/styles';
@@ -7,6 +7,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import Typography from '@material-ui/core/Typography';
+import RootRef from '@material-ui/core/RootRef';
 
 // components
 import TacticsDetail from './Detail';
@@ -24,36 +25,41 @@ const styles = theme => ({
   },
 });
 
-export const CollapsibleTacticsComponent = ({
-  open,
-  tactics,
-  onClick: handleClick,
-  onSelect: handleSelect,
-  classes,
-}) => {
-  const { name, imageURL, imageSrcSet } = tactics;
+export class CollapsibleTacticsComponent extends PureComponent {
+  tacticsRef = createRef();
 
-  return (
-    <div className={classes.container}>
-      <Card elevation={0} square className={classes.root}>
-        <CardActionArea component="a" onClick={handleClick}>
-          <CardMedia
-            component="img"
-            title={name}
-            alt={name}
-            src={imageURL}
-            srcSet={imageSrcSet.join(', ')}
-            className={classes.image} />
-          <CardContent className={classes.captionContainer}>
-            <Typography align="center" variant="body2">{name}</Typography>
-          </CardContent>
-        </CardActionArea>
-      </Card>
-      {open && <TacticsDetail tactics={tactics} onClick={handleSelect} />}
-    </div>
-  );
-};
+  handleClick = (event) => {
+    const { tactics, onClick: handleClick } = this.props;
+    handleClick(this.tacticsRef.current, tactics);
+    event.preventDefault();
+  };
 
-export default withStores(
-  withStyles(styles)(CollapsibleTacticsComponent)
-);
+  render = () => {
+    const {
+      tactics,
+      classes,
+    } = this.props;
+    const { name, imageURL, imageSrcSet } = tactics;
+
+    return (
+      <RootRef rootRef={this.tacticsRef}>
+        <Card elevation={0} square className={classes.root}>
+          <CardActionArea component="a" onClick={this.handleClick}>
+            <CardMedia
+              component="img"
+              title={name}
+              alt={name}
+              src={imageURL}
+              srcSet={imageSrcSet.join(', ')}
+              className={classes.image} />
+            <CardContent className={classes.captionContainer}>
+              <Typography align="center" variant="body2">{name}</Typography>
+            </CardContent>
+          </CardActionArea>
+        </Card>
+      </RootRef>
+    );
+  };
+}
+
+export default withStyles(styles)(CollapsibleTacticsComponent);

@@ -18,13 +18,13 @@ export const CollapsibleTacticsDetailComponent = ({
     distance,
     target,
     description,
-  } = tactics;
+  } = tactics || {};
 
   return (
     <div>
       {name}
       {origin}
-      {permissions.join(', ')}
+      {permissions && permissions.join(', ')}
       {rate}
       {distance}
       {target}

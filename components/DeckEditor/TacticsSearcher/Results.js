@@ -8,8 +8,11 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 // import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
+import Popover from '@material-ui/core/Popover';
+import Collapse from '@material-ui/core/Collapse';
 
 import Tactics from './CollapsibleTactics';
+import TacticsDetail from './CollapsibleTactics/Detail';
 import { baseTypes } from '../../../server/models/classes/Tactics';
 
 const styles = theme => ({
@@ -35,7 +38,7 @@ const styles = theme => ({
 });
 
 export class ResultsComponent extends PureComponent {
-  state = { open: null };
+  state = { anchorEl: null, targetTactics: null };
 
   componentWillUnmount = () => {
     this.removeTouchStart();
@@ -94,15 +97,31 @@ export class ResultsComponent extends PureComponent {
     }
   };
 
-  handleToggleDetail = (identifier = null) => () => (
-    this.setState({ open: identifier })
-  );
+  handleCloseDetail = () => {
+    this.setState({ anchorEl: null, targetTactics: null });
+  };
+
+  handleToggleDetail = (anchorElement, tactics) => {
+    const { targetTactics } = this.state;
+    if (targetTactics && tactics.identifier === targetTactics.identifier) {
+      this.handleCloseDetail();
+    } else {
+      this.setState({ anchorEl: anchorElement, targetTactics: tactics });
+    }
+  };
+
+  isOpen = () => {
+    const { anchorEl } = this.state;
+    return !!anchorEl;
+  }
 
   renderTypedList = typeList => baseTypes.map((type) => {
     if (typeList[type] == null || typeList[type].length === 0) {
       return null;
     }
-    const { groupedTacticsListContainer, typeHeader } = this.props.classes;
+    const {
+      classes: { groupedTacticsListContainer, typeHeader },
+    } = this.props;
     return (
       <li key={type}>
         <ul className={groupedTacticsListContainer}>
@@ -114,16 +133,14 @@ export class ResultsComponent extends PureComponent {
   });
 
   renderTacticsList = tacticsList => tacticsList.map((tactics) => {
-    const { tacticsContainer } = this.props.classes;
-    const open = this.state.open === tactics.identifier;
-    const handleSelect = () => this.porps.onClick({ tactics });
+    const { classes: { tacticsContainer } } = this.props;
+    const { open } = this.state;
     return (
       <ListItem key={tactics.identifier} className={tacticsContainer}>
         <Tactics
           open={open}
           tactics={tactics}
-          onClick={this.handleToggleDetail(open ? null : tactics.identifier)}
-          onSelect={handleSelect} />
+          onClick={this.handleToggleDetail} />
       </ListItem>
     );
   });
@@ -138,10 +155,23 @@ export class ResultsComponent extends PureComponent {
     }
     const groupedTactics = groupBy(tactics, 'type');
     const { root } = classes;
+    const { anchorEl, targetTactics } = this.state;
+    console.log(anchorEl);
     return (
       <RootRef rootRef={this.setRef}>
         <List className={root} subheader={<li />}>
           { this.renderTypedList(groupedTactics) }
+          <Popover
+            open={this.isOpen()}
+            onClose={this.handleCloseDetail}
+            anchorEl={anchorEl}
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+            transformOrigin={{ vertical: 'top', horizontal: 'center' }}
+            hideBackdrop
+            disablePortal>
+            { /* container={this.resultsRef}> */ }
+            <TacticsDetail tactics={targetTactics} />
+          </Popover>
         </List>
       </RootRef>
     );
