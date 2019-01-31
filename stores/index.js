@@ -40,6 +40,7 @@ export const initialTacticsSearcher = {
       type: ['指揮', '主動', '追撃', '受動'],
       permissions: ['弓', '歩', '騎'],
     },
+    group: 'type',
   },
   results: null,
   select: null,

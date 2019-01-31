@@ -38,15 +38,31 @@ const connectAndClearDB = async () => {
   await clearDB();
 };
 
-const importFactoryData = async () => {
-  const commanderPath = './server/models/__factories__/commanders.json';
-  const tacticsPath = './server/models/__factories__/tactics.json';
-  const commanderData = JSON.parse(
-    readFileSync(resolve(commanderPath), 'utf8'));
-  const tacticsData = JSON.parse(readFileSync(resolve(tacticsPath), 'utf8'));
-  await Commander.importAll(commanderData);
-  await Tactics.importAll(commanderData, tacticsData);
+const loadData = (dir) => {
+  const commanderPath = resolve(dir, 'commanders.json');
+  const tacticsPath = resolve(dir, 'tactics.json');
+  return {
+    commanders: JSON.parse(readFileSync(commanderPath), 'utf8'),
+    tactics: JSON.parse(readFileSync(tacticsPath), 'utf8'),
+  };
+};
+
+const performImport = async ({ commanders, tactics }) => {
+  await Commander.importAll(commanders);
+  await Tactics.importAll(commanders, tactics);
   await Formation.importSampleData();
+};
+
+const importFactoryData = async () => {
+  const dir = './server/models/__factories__/';
+  const data = loadData(dir);
+  await performImport(data);
+};
+
+const importAllData = async () => {
+  const dir = './data/';
+  const data = loadData(dir);
+  await performImport(data);
 };
 
 const setupDB = async () => {
@@ -61,4 +77,7 @@ const teardownDB = async () => {
 module.exports = {
   setupDB,
   teardownDB,
+  connectAndClearDB,
+  importFactoryData,
+  importAllData,
 };

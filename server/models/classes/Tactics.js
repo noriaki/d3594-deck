@@ -14,16 +14,6 @@ class Tactics {
     const filename = `${fileMap[this.type]}${suffix}.png`;
     return `${assetUriBase}/${filename}`;
   }
-
-  get imageURL() { return this.buildImageURL(); }
-
-  get imageSrcSet() {
-    return [
-      this.buildImageURL(),
-      `${this.buildImageURL('2x')} 2x`,
-      `${this.buildImageURL('3x')} 3x`,
-    ];
-  }
 }
 
 Tactics.baseTypesMap = fileMap;

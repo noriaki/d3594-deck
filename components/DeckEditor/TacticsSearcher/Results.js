@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import groupBy from 'lodash.groupby';
 import get from 'lodash.get';
 import set from 'lodash.set';
 
@@ -8,7 +7,6 @@ import { withStyles } from '@material-ui/core/styles';
 import RootRef from '@material-ui/core/RootRef';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-// import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import Popper from '@material-ui/core/Popper';
 import Collapse from '@material-ui/core/Collapse';
@@ -197,7 +195,10 @@ export class ResultsComponent extends PureComponent {
     if (tactics === null) {
       return <div>Loading...</div>;
     }
-    const groupedTactics = groupBy(tactics, 'type');
+    // const groupedTactics = groupBy(tactics, 'type');
+    const groupedTactics = tactics.reduce((ret, item) => ({
+      ...ret, [item._id]: item.tactics,
+    }), {});
     const { root, popperArrow } = classes;
     const { anchorEl, targetTactics } = this.state;
     const handleSelect = data => () => {
