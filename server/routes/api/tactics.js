@@ -3,36 +3,49 @@ const qs = require('qs');
 const setApiHeaders = require('../helpers/setApiHeaders');
 const Tactics = require('../../models/Tactics');
 
+const selectKeys = [
+  '_id',
+  'id',
+  'identifier',
+  'name',
+  'origin',
+  'type',
+  'permissions',
+  'rate',
+  'distance',
+  'target',
+  'description',
+  'sortKey',
+  'imageURL',
+  'imageSrcSet',
+];
+
 const search = (req, res) => {
   setApiHeaders(res);
-  const { text, filter } = qs.parse(req.query);
-  let query = Tactics;
+  const { text, filter, group } = qs.parse(req.query);
+  if (text == null && filter == null) { return null; }
+  const ops = [];
+  const matchOp = {};
   if (text != null && text !== '') {
-    query = query.where('name').regex(text);
+    matchOp.name = { $regex: text };
   }
   if (filter != null) {
     const filterKeys = ['origin', 'type', 'permissions'];
-    query = filterKeys.reduce(
-      (currentQuery, key) => currentQuery.where(key).in(filter[key] || []),
-      query
-    );
+    filterKeys.forEach((key) => {
+      matchOp[key] = { $in: filter[key] || [] };
+    });
   }
-  return query
-    .select([
-      '_id',
-      'identifier',
-      'name',
-      'origin',
-      'type',
-      'permissions',
-      'rate',
-      'distance',
-      'target',
-      'description',
-      'sortKey',
-    ])
-    .sort('sortKey')
-    .find();
+  if (Object.keys(matchOp).length > 0) { ops.push({ $match: matchOp }); }
+  ops.push(
+    { $sort: { sortKey: 1 } }
+  );
+  ops.push(
+    { $project: selectKeys.reduce((ret, key) => ({ ...ret, [key]: 1 }), {}) }
+  );
+  if (group != null) {
+    ops.push({ $group: { _id: `$${group}`, tactics: { $push: '$$ROOT' } } });
+  }
+  return Tactics.aggregate(ops).exec();
 };
 
 module.exports = {

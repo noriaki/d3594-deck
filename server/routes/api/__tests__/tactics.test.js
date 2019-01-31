@@ -242,5 +242,44 @@ describe('Routes: `/t`', () => {
         expect(subjects).toEqual([]);
       });
     });
+
+    describe('group by', () => {
+      it('{ _id: type, tactics: [] }', async () => {
+        query.group = 'type';
+        const options = { qs: query, json: true };
+        const expectedIds = {
+          指揮: [
+            '89e523917d80d64315b7479efee8f98b', // 桃園結義-典蔵(指揮)
+            '19b519c1849ff3d5171138f205e6dbd7', // 形兵之極-典籍(指揮)
+            'ae8a6d9abc29bcd38ca84ec1553f8f62', // 形兵列陣-季専用(指揮)
+            '3f5a7a77ecd8df99438d1faf9221d5e0', // 不攻-分析(指揮)
+          ],
+          主動: [
+            '57ab3a19350045df5dfcf65ed187792a', // 十面埋伏-分析(主動)
+            '270f3fbedde0140b6c679b17d79df385', // 水淹七軍-分析(主動)
+            'e4dedbfa9c3109173f166c83c4f8e5d6', // 渾水摸魚-分析(主動)
+          ],
+          追撃: [
+            '7f13b5ee6d3d5983e272b3a719edba2e', // 火積-分析(追撃)弓
+            'b77da2245a0a101d91471ef95bef8f35', // 駆逐-分析(追撃)
+          ],
+          受動: [
+            'da77fbec8ae42d646aca4e1959dc6378', // 健卒不殆-分析(受動)弓歩
+          ],
+        };
+        const subjects = await server.get('/t', options);
+
+        expect(subjects).toEqual(
+          expect.arrayContaining(
+            ['指揮', '主動', '追撃', '受動'].map(_id => ({
+              _id,
+              tactics: expect.arrayContaining(expectedIds[_id].map(
+                identifier => expect.objectContaining({ identifier })
+              )),
+            }))
+          )
+        );
+      });
+    });
   });
 });

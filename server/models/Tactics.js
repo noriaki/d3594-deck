@@ -8,6 +8,7 @@ const { baseTypes, baseOrigin } = TacticsClass;
 
 const tacticsSchema = new Schema({
   _id: { type: String, required: true },
+  id: { type: String, required: true },
   identifier: { type: String, required: true },
   name: { type: String, required: true },
   stage: [{ type: String, enum: ['S1', 'S2', 'S3', 'XP'] }],
@@ -22,6 +23,8 @@ const tacticsSchema = new Schema({
   ownerIds: [String],
   sourceCommanderIds: [String],
   sortKey: { type: String, required: true },
+  imageURL: { type: String, required: true },
+  imageSrcSet: [{ type: String, required: true }],
   // effects: [EffectSchema],
 });
 
@@ -30,6 +33,7 @@ const tacticsIdentify = (name, origin) => md5(`${name}-${origin}`);
 function setIdentifier() {
   const identifier = tacticsIdentify(this.name, this.origin);
   this._id = identifier;
+  this.id = identifier;
   this.identifier = identifier;
 }
 
@@ -52,6 +56,16 @@ function setSortKey() {
   this.sortKey = [type, origin, stock, stage, identifier].join('/');
 }
 tacticsSchema.pre('validate', setSortKey);
+
+function setImageURLs() {
+  this.imageURL = this.buildImageURL();
+  this.imageSrcSet = [
+    this.buildImageURL(),
+    `${this.buildImageURL('2x')} 2x`,
+    `${this.buildImageURL('3x')} 3x`,
+  ];
+}
+tacticsSchema.pre('validate', setImageURLs);
 
 // async
 function fetchByOwnerId(id) {
