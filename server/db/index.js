@@ -5,12 +5,15 @@ const { resolve } = require('path');
 const resolveDbUri = require('./helpers/resolveDbUri');
 const { appName, dbUri } = require('./config');
 
+const transformOptions = {
+  transform: true, flattenDecimals: true, getters: true, virtuals: true,
+};
+
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
-mongoose.set('toJSON', {
-  transform: true, flattenDecimals: true, getters: true,
-});
+mongoose.set('toJSON', transformOptions);
+mongoose.set('toObject', transformOptions);
 mongoose.Promise = Promise;
 
 const connect = async (refresh = false) => {
