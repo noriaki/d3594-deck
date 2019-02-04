@@ -23,8 +23,6 @@ const tacticsSchema = new Schema({
   ownerIds: [String],
   sourceCommanderIds: [String],
   sortKey: { type: String, required: true },
-  imageURL: { type: String, required: true },
-  imageSrcSet: [{ type: String, required: true }],
   // effects: [EffectSchema],
 });
 
@@ -56,16 +54,6 @@ function setSortKey() {
   this.sortKey = [type, origin, stock, stage, identifier].join('/');
 }
 tacticsSchema.pre('validate', setSortKey);
-
-function setImageURLs() {
-  this.imageURL = this.buildImageURL();
-  this.imageSrcSet = [
-    this.buildImageURL(),
-    `${this.buildImageURL('2x')} 2x`,
-    `${this.buildImageURL('3x')} 3x`,
-  ];
-}
-tacticsSchema.pre('validate', setImageURLs);
 
 // async
 function fetchByOwnerId(id) {

@@ -14,9 +14,40 @@ class Tactics {
     const filename = `${fileMap[this.type]}${suffix}.png`;
     return `${assetUriBase}/${filename}`;
   }
+
+  static buildImageURL({ stage, permissions, type }, user, density) {
+    let basename = `${fileMap[type]}`;
+    if (stage && stage[0] !== 'S1') {
+      basename = `${basename}-${stage[0]}`;
+    }
+    if (permissions && user && !permissions.includes(user.army)) {
+      basename = `${basename}-nonarmy`;
+    }
+    if (density) {
+      basename = `${basename}@${density}`;
+    }
+    return `${assetUriBase}/${basename}.png`;
+  }
+
+  static getImageSrcSet(tactics, commander) {
+    return [
+      this.buildImageURL(tactics, commander),
+      `${this.buildImageURL(tactics, commander, '2x')} 2x`,
+      `${this.buildImageURL(tactics, commander, '3x')} 3x`,
+    ];
+  }
+
+  get imageURL() {
+    return this.constructor.buildImageURL(this);
+  }
+
+  get imageSrcSet() {
+    return this.constructor.getImageSrcSet(this);
+  }
 }
 
 Tactics.baseTypesMap = fileMap;
 Tactics.baseTypes = Object.keys(fileMap);
 Tactics.baseOrigin = baseOrigin;
+
 module.exports = Tactics;

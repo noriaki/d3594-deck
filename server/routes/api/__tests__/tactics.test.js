@@ -104,19 +104,19 @@ describe('Routes: `/t`', () => {
       const options = { qs: query, json: true };
       const expectedKeys = [
         '_id',
+        'id',
         'identifier',
         'name',
+        'stage',
         'origin',
         'type',
         'permissions',
+        'stock',
         'rate',
         'distance',
         'target',
         'description',
         'sortKey',
-        'id',
-        'imageURL',
-        'imageSrcSet',
       ].sort();
       const subjects = await server.get('/t', options);
       expect(subjects).toHaveLength(1);
