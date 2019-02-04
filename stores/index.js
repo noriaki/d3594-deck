@@ -28,6 +28,7 @@ export const initialCommanderSearcher = {
   },
   results: null,
   select: null,
+  source: null,
 };
 
 export const initialTacticsSearcher = {
@@ -44,6 +45,7 @@ export const initialTacticsSearcher = {
   },
   results: null,
   select: null,
+  source: null,
 };
 
 export const initialStates = {

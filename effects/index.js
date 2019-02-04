@@ -4,6 +4,7 @@ import Router from 'next/router';
 import qs from 'qs';
 
 // utils
+import get from 'lodash.get';
 import set from 'lodash.set';
 import isNil from 'lodash.isnil';
 
@@ -65,6 +66,19 @@ const effects = (stores) => {
         commanderSearcher.set('open')(false);
         tacticsSearcher.set('open')(false);
         break;
+      }
+    });
+
+  searcher
+    .on('target')
+    .pipe(filter(notNull))
+    .subscribe((target) => {
+      const commanders = [...formation.get('commanders')];
+      const commander = get(commanders, `${indexOf(target)}.commander`, null);
+      if (typeOf(target) === 'commander') {
+        commanderSearcher.set('source')(commander);
+      } else if (typeOf(target) === 'tactics') {
+        tacticsSearcher.set('source')(commander);
       }
     });
 
