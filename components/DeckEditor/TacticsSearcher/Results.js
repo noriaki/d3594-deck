@@ -174,13 +174,14 @@ export class ResultsComponent extends PureComponent {
   });
 
   renderTacticsList = tacticsList => tacticsList.map((tactics) => {
-    const { classes: { tacticsContainer } } = this.props;
+    const { acquirer, classes: { tacticsContainer } } = this.props;
     const { open } = this.state;
     return (
       <ListItem key={tactics.identifier} className={tacticsContainer}>
         <Tactics
           open={open}
           tactics={tactics}
+          acquirer={acquirer}
           onClick={this.handleToggleDetail} />
       </ListItem>
     );
@@ -195,7 +196,6 @@ export class ResultsComponent extends PureComponent {
     if (tactics === null) {
       return <div>Loading...</div>;
     }
-    // const groupedTactics = groupBy(tactics, 'type');
     const groupedTactics = tactics.reduce((ret, item) => ({
       ...ret, [item._id]: item.tactics,
     }), {});

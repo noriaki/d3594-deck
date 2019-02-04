@@ -67,6 +67,7 @@ export class TacticsSearcherComponent extends Component {
       selectData,
     } = searchActions(tacticsSearcher);
     const { filter } = tacticsSearcher.get('query');
+    const acquirer = tacticsSearcher.get('acquirer');
     const tactics = tacticsSearcher.get('results');
     return (
       <SwipeableDrawer
@@ -85,7 +86,7 @@ export class TacticsSearcherComponent extends Component {
         <div>
           <Filter filter={filter} onChange={updateFilter} />
         </div>
-        <Results tactics={tactics} onClick={selectData} />
+        <Results tactics={tactics} acquirer={acquirer} onClick={selectData} />
       </SwipeableDrawer>
     );
   }

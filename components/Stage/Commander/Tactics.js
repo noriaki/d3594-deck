@@ -8,14 +8,9 @@ import Typography from '@material-ui/core/Typography';
 import RemoveIcon from './RemoveIcon';
 import AddTactics from './AddTactics';
 
-const defaultSrcSet = [
-  '/static/images/default-tactics.png',
-  '/static/images/default-tactics@2x.png 2x',
-  '/static/images/default-tactics@3x.png 3x',
-];
+import TacticsClass from '../../../server/models/classes/Tactics';
+
 const defaultTactics = {
-  imageURL: defaultSrcSet[0],
-  imageSrcSet: defaultSrcSet,
   name: '未習得',
 };
 
@@ -31,27 +26,25 @@ const Tactics = ({
     tacticsImage,
     tacticsCaptionContainer,
   } = classes;
-  const {
-    name,
-    imageURL,
-    imageSrcSet,
-  } = (propTactics || defaultTactics);
+  const tactics = (propTactics || defaultTactics);
+  const imageURL = TacticsClass.buildImageURL(tactics);
+  const imageSrcSet = TacticsClass.getImageSrcSet(tactics);
 
   return (
     <Card elevation={0} square className={tacticsRoot}>
       <CardMedia
         component="img"
-        alt={name}
+        alt={tactics.name}
         src={imageURL}
         srcSet={imageSrcSet.join(', ')}
-        title={name}
+        title={tactics.name}
         onClick={propTactics && handleClickTo('edit')}
         className={tacticsImage} />
       {removable && <RemoveIcon onClick={handleClickTo('remove')} />}
       {editable && propTactics == null && <AddTactics onClick={handleClickTo('add')} />}
       <CardContent className={tacticsCaptionContainer}>
         <Typography align="center" variant="body2">
-          {name}
+          {tactics.name}
         </Typography>
       </CardContent>
     </Card>

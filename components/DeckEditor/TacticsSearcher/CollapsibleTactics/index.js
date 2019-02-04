@@ -9,11 +9,7 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import Typography from '@material-ui/core/Typography';
 import RootRef from '@material-ui/core/RootRef';
 
-// components
-import TacticsDetail from './Detail';
-
-// stores
-import { withStores } from '../../../../stores';
+import Tactics from '../../../../server/models/classes/Tactics';
 
 const styles = theme => ({
   container: {},
@@ -37,9 +33,12 @@ export class CollapsibleTacticsComponent extends PureComponent {
   render = () => {
     const {
       tactics,
+      acquirer,
       classes,
     } = this.props;
-    const { name, imageURL, imageSrcSet } = tactics;
+    const { name } = tactics;
+    const imageURL = Tactics.buildImageURL(tactics, acquirer);
+    const imageSrcSet = Tactics.getImageSrcSet(tactics, acquirer);
 
     return (
       <RootRef rootRef={this.tacticsRef}>

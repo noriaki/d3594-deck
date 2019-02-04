@@ -8,16 +8,16 @@ const selectKeys = [
   'id',
   'identifier',
   'name',
+  'stage',
   'origin',
   'type',
   'permissions',
+  'stock',
   'rate',
   'distance',
   'target',
   'description',
   'sortKey',
-  'imageURL',
-  'imageSrcSet',
 ];
 
 const search = (req, res) => {
