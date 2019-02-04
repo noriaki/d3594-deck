@@ -9,18 +9,13 @@ const fileMap = {
 const baseOrigin = ['典蔵', '典籍', '季専用', '分析', '固有(初期)'];
 
 class Tactics {
-  buildImageURL(density) {
-    const suffix = density != null ? `@${density}` : '';
-    const filename = `${fileMap[this.type]}${suffix}.png`;
-    return `${assetUriBase}/${filename}`;
-  }
-
-  static buildImageURL({ stage, permissions, type }, user, density) {
-    let basename = `${fileMap[type]}`;
+  static buildImageURL(tactics = {}, acquirer, density) {
+    const { stage, permissions, type } = tactics;
+    let basename = fileMap[type] || 'default';
     if (stage && stage[0] !== 'S1') {
       basename = `${basename}-${stage[0]}`;
     }
-    if (permissions && user && !permissions.includes(user.army)) {
+    if (permissions && acquirer && !permissions.includes(acquirer.army)) {
       basename = `${basename}-nonarmy`;
     }
     if (density) {
@@ -29,11 +24,11 @@ class Tactics {
     return `${assetUriBase}/${basename}.png`;
   }
 
-  static getImageSrcSet(tactics, commander) {
+  static getImageSrcSet(tactics, acquirer) {
     return [
-      this.buildImageURL(tactics, commander),
-      `${this.buildImageURL(tactics, commander, '2x')} 2x`,
-      `${this.buildImageURL(tactics, commander, '3x')} 3x`,
+      this.buildImageURL(tactics, acquirer),
+      `${this.buildImageURL(tactics, acquirer, '2x')} 2x`,
+      `${this.buildImageURL(tactics, acquirer, '3x')} 3x`,
     ];
   }
 
@@ -43,6 +38,10 @@ class Tactics {
 
   get imageSrcSet() {
     return this.constructor.getImageSrcSet(this);
+  }
+
+  buildImageURL(density) {
+    return this.constructor.buildImageURL(this, null, density);
   }
 }
 

@@ -76,9 +76,9 @@ const effects = (stores) => {
       const commanders = [...formation.get('commanders')];
       const commander = get(commanders, `${indexOf(target)}.commander`, null);
       if (typeOf(target) === 'commander') {
-        commanderSearcher.set('source')(commander);
+        commanderSearcher.set('acquirer')(commander);
       } else if (typeOf(target) === 'tactics') {
-        tacticsSearcher.set('source')(commander);
+        tacticsSearcher.set('acquirer')(commander);
       }
     });
 
