@@ -5,10 +5,10 @@ import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
   root: {
-    fontSize: '.75rem',
     padding: [
       theme.spacing.unit / 2, theme.spacing.unit,
     ].map(i => `${i}px`).join(' '),
@@ -42,34 +42,38 @@ export const CollapsibleTacticsDetailComponent = ({
 
   return (
     <Paper className={classes.root}>
-      <Grid container spacing={16} alignItems="flex-start">
-        <Grid container spacing={8} item xs={12}>
-          <Grid item xs={8} className={classes.gridCentering}>{name}</Grid>
-          <Grid item xs={4} className={classes.gridCentering}>
-            <Button
-              variant="outlined"
-              className={classes.learnButton}
-              onClick={handleSelect}>
-              習得
-            </Button>
+      <Typography component="div">
+        <Grid container spacing={16} alignItems="flex-start">
+          <Grid container spacing={8} item xs={12}>
+            <Grid item xs={8} className={classes.gridCentering}>{name}</Grid>
+            <Grid item xs={4} className={classes.gridCentering}>
+              <Button
+                variant="contained"
+                color="primary"
+                size="small"
+                className={classes.learnButton}
+                onClick={handleSelect}>
+                習得
+              </Button>
+            </Grid>
           </Grid>
+          <Grid container spacing={8} item xs={6}>
+            <Grid item xs={4}>種別</Grid>
+            <Grid item xs={8}>{type}</Grid>
+            <Grid item xs={4}>距離</Grid>
+            <Grid item xs={8}>{distance}</Grid>
+            <Grid item xs={4}>対象</Grid>
+            <Grid item xs={8}>{target}</Grid>
+          </Grid>
+          <Grid container spacing={8} item xs={6}>
+            <Grid item xs={4}>兵種</Grid>
+            <Grid item xs={8}>{permissions && permissions.join(', ')}</Grid>
+            <Grid item xs={4}>確率</Grid>
+            <Grid item xs={8}>{rate || '--'}</Grid>
+          </Grid>
+          <Grid item xs={12}>{description}</Grid>
         </Grid>
-        <Grid container spacing={8} item xs={6}>
-          <Grid item xs={4}>種別</Grid>
-          <Grid item xs={8}>{type}</Grid>
-          <Grid item xs={4}>距離</Grid>
-          <Grid item xs={8}>{distance}</Grid>
-          <Grid item xs={4}>対象</Grid>
-          <Grid item xs={8}>{target}</Grid>
-        </Grid>
-        <Grid container spacing={8} item xs={6}>
-          <Grid item xs={4}>兵種</Grid>
-          <Grid item xs={8}>{permissions && permissions.join(', ')}</Grid>
-          <Grid item xs={4}>確率</Grid>
-          <Grid item xs={8}>{rate || '--'}</Grid>
-        </Grid>
-        <Grid item xs={12}>{description}</Grid>
-      </Grid>
+      </Typography>
     </Paper>
   );
 };

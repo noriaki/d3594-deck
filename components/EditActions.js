@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 // material-ui
 import { withStyles } from '@material-ui/core/styles';
-import Fab from '@material-ui/core/Fab';
+import Button from '@material-ui/core/Button';
 import EditIcon from '@material-ui/icons/Edit';
 import DoneIcon from '@material-ui/icons/Done';
 
@@ -16,7 +16,7 @@ const styles = theme => ({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  fab: {
+  button: {
     margin: theme.spacing.unit,
   },
   icon: {
@@ -34,15 +34,15 @@ export const EditActionsComponent = ({ edit, formation, classes }) => {
   return (
     <div className={classes.root}>
       <Link href={href} as={as}>
-        <Fab
-          variant="extended"
+        <Button
+          variant="contained"
           color="primary"
           component="a"
           aria-label={label}
-          className={classes.fab}>
+          className={classes.button}>
           <Icon className={classes.icon} />
           {label}
-        </Fab>
+        </Button>
       </Link>
     </div>
   );
