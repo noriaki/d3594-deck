@@ -140,7 +140,7 @@ export default withStores(withStyles(styles)(DetailComponent));
 
 const textOfHumanizeFormation = (humanizeString) => {
   const [first, ...others] = humanizeString.split('\n');
-  return others.reduce((ret, c) => [...ret, <br />, c], [first]);
+  return others.reduce((ret, c) => [...ret, <br key={c} />, c], [first]);
 };
 
 const textOfSameArmyBonus = (commanders) => {
@@ -157,7 +157,7 @@ const textOfSameArmyBonus = (commanders) => {
     `${bonusArmy}兵系に`,
     armyBonusTypes[bonusArmy].map(b => `${b}上昇${bonusRate}%`).join('と'),
     'を付与。',
-    <br />,
+    <br key={bonusCommanders.map(c => c.identifier).join('-')} />,
     '対象武将は',
     bonusCommanders
       .map(c => `${c.commander.name}${c.commander.special || ''}`).join(', '),
@@ -184,7 +184,7 @@ const textOfSameTeamBonus = (commanders) => {
     `${bonusTeam}陣営に`,
     teamBonusTypes.map(t => `${t}上昇${bonusRate}%`).join(', '),
     'を付与。',
-    <br />,
+    <br key={bonusCommanders.map(c => c.identifier).join('-')} />,
     '対象武将は',
     bonusCommanders
       .map(c => `${c.commander.name}${c.commander.special || ''}`).join(', '),
