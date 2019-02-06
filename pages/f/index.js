@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
+// material-ui
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -10,18 +12,23 @@ import { Container as StoreContainer, initialStates } from '../../stores';
 // components
 import Title from '../../components/Title';
 import Stage from '../../components/Stage';
+import FormationDetail from '../../components/Stage/Detail';
 import EditActions from '../../components/EditActions';
 import TitleBar from '../../components/TitleBar';
 
 const styles = theme => ({
   paper: {
     ...theme.mixins.gutters(),
-    paddingLeft: theme.spacing.unit,
-    paddingRight: theme.spacing.unit,
+    paddingLeft: 0,
+    paddingRight: 0,
     padding: theme.spacing.unit,
   },
   container: {
     paddingTop: 56,
+  },
+  section: {
+    // margin: theme.spacing.unit,
+    marginBottom: theme.spacing.unit * 3,
   },
 });
 
@@ -29,22 +36,18 @@ const FormationDetailPage = ({ classes, formation }) => (
   <div>
     <TitleBar />
     <div className={classes.container}>
-      <Paper className={classes.paper}>
-        <StoreContainer initialStates={{ ...initialStates, formation }}>
-          <Title />
-          <Stage />
-          <EditActions />
-        </StoreContainer>
-      </Paper>
-      <Paper className={classes.paper}>
-        <Typography variant="h5" component="h3">コスト</Typography>
-        <Typography>{formation.cost}</Typography>
-        <Typography variant="h5" component="h3">速度</Typography>
-        <Typography>{formation.velocity}</Typography>
-        <Typography variant="h5" component="h3">攻城</Typography>
-        <Typography>{formation.siege}</Typography>
-        <pre>{formation.humanize}</pre>
-      </Paper>
+      <StoreContainer initialStates={{ ...initialStates, formation }}>
+        <section className={classes.section}>
+          <Paper square className={classes.paper}>
+            <Title />
+            <Stage />
+            <EditActions />
+          </Paper>
+        </section>
+        <section className={classes.section}>
+          <FormationDetail />
+        </section>
+      </StoreContainer>
     </div>
   </div>
 );
