@@ -53,6 +53,7 @@
     "react-dom": "^16.6.3",
     "react-event-listener": "^0.6.4",
     "react-jss": "^8.6.1",
+    "react-parallax": "^2.1.0",
     "rxjs": "^6.3.3",
     "undux": "^5.0.0-beta.18"
   },
