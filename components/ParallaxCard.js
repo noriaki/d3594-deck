@@ -56,9 +56,6 @@ export class ParallaxCardComponent extends PureComponent {
           <div className={classes.media} />
         </Parallax>
         <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-            {title}
-          </Typography>
           <Typography component="p">
             {text}
           </Typography>

@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 
 // components
 import ResponsiveImage from '../components/ResponsiveImage';
@@ -31,10 +32,12 @@ const styles = theme => ({
   description: {
     padding: `0 ${theme.spacing.unit}px`,
   },
-  paper: {
-    ...theme.mixins.gutters(),
-    paddingTop: theme.spacing.unit * 2,
-    paddingBottom: theme.spacing.unit * 2,
+  footer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 0,
+    padding: `${theme.spacing.unit}px 0`,
   },
 });
 
@@ -68,11 +71,11 @@ const IndexPage = ({ classes }) => (
       text="名前や種類で絞り込み可能。1季〜征服季で入手可能なものを揃えました。"
       url="/f/new"
       linkText="新規作成" />
-    <Paper className={classes.paper}>
-      <Typography variant="h5" component="h3">張飛</Typography>
-      <Typography>
-        <Link href="/f/43e0f069ab00049908ab34390a9c45ca">
-          <a>formation link</a>
+    <Paper square elevation={0} className={classes.footer}>
+      <Typography variant="body2" component="p" color="textSecondary">
+        (c) 2019
+        <Link href="https://twitter.com/gokuakunori">
+          <Button variant="text" component="a">極悪のり＠10鯖</Button>
         </Link>
       </Typography>
     </Paper>
