@@ -30,13 +30,14 @@ export const EditActionsComponent = ({ edit, formation, classes }) => {
   const href = `/f${path}?id=${identifier}`;
   const as = `/f/${identifier}${path}`;
   const Icon = edit ? DoneIcon : EditIcon;
-  const label = edit ? '保存' : 'コピーして編集';
+  const label = edit ? '保存' : '部隊をコピーして編集';
   return (
     <div className={classes.root}>
       <Link href={href} as={as}>
         <Button
-          variant="contained"
+          variant="outlined"
           color="primary"
+          size="small"
           component="a"
           aria-label={label}
           className={classes.button}>

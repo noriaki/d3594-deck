@@ -41,12 +41,13 @@ const FormationDetailPage = ({ classes, formation }) => (
           <Paper square className={classes.paper}>
             <Title />
             <Stage />
-            <EditActions />
           </Paper>
           <Notice />
+          <EditActions />
         </section>
         <section className={classes.section}>
           <FormationDetail />
+          <EditActions />
         </section>
       </StoreContainer>
     </div>
