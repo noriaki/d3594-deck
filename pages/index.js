@@ -7,10 +7,12 @@ import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import TwitterCircleIcon from 'mdi-material-ui/TwitterCircle';
 
 // components
 import ResponsiveImage from '../components/ResponsiveImage';
 import ParallaxCard from '../components/ParallaxCard';
+import Gallery from '../components/Gallery';
 
 const styles = theme => ({
   container: {
@@ -37,12 +39,25 @@ const styles = theme => ({
     justifyContent: 'center',
     alignItems: 'center',
     margin: 0,
-    padding: `${theme.spacing.unit}px 0`,
+    padding: `${theme.spacing.unit * 2}px 0`,
+  },
+  profile: {
+    display: 'inline-flex',
+  },
+  profileLink: {
+    padding: 0,
+    minHeight: 'unset',
+    lineHeight: 1,
+    textTransform: 'none',
+  },
+  twitterIcon: {
+    margin: '0 .1em',
+    fontSize: '1rem',
   },
 });
 
 const IndexPage = ({ classes }) => (
-  <div className={classes.container}>
+  <main className={classes.container}>
     <Typography component="h1" variant="h1" className={classes.logoArea}>
       <ResponsiveImage
         src={logoImageURL}
@@ -71,15 +86,28 @@ const IndexPage = ({ classes }) => (
       text="名前や種類で絞り込み可能。1季〜征服季で入手可能なものを揃えました。"
       url="/f/new"
       linkText="新規作成" />
-    <Paper square elevation={0} className={classes.footer}>
-      <Typography variant="body2" component="p" color="textSecondary">
-        (c) 2019
+    <Gallery />
+    <Paper component="footer" square elevation={0} className={classes.footer}>
+      <Typography
+        variant="body2"
+        component="p"
+        color="textSecondary"
+        className={classes.profile}>
+        (c) 2019 極悪のり
         <Link href="https://twitter.com/gokuakunori">
-          <Button variant="text" component="a">極悪のり＠10鯖</Button>
+          <Button
+            variant="text"
+            component="a"
+            size="small"
+            color="primary"
+            className={classes.profileLink}>
+            <TwitterCircleIcon className={classes.twitterIcon} />
+            @gokuakunori
+          </Button>
         </Link>
       </Typography>
     </Paper>
-  </div>
+  </main>
 );
 
 IndexPage.propTypes = {
