@@ -4,6 +4,7 @@ const { toIdFromInstance } = require('./concerns/identify');
 const LearnedCommander = require('./LearnedCommander');
 const FormationClass = require('./classes/Formation');
 const sampleFormationData = require('../../data/init/formations/sample');
+const halloweenCupFormationData = require('../../data/init/formations/halloweenCup');
 
 const { Schema } = mongoose;
 
@@ -76,6 +77,18 @@ async function importSampleData() {
 }
 
 formationSchema.static('importSampleData', importSampleData);
+
+async function importHalloweenCupData() {
+  const keys = ['A1', 'A2', 'A3', 'A4', 'B1', 'B2', 'B3', 'B4'];
+  await Promise.all(halloweenCupFormationData.map((formation, i) => (
+    Promise.all(formation.map(({ commander, tactics }) => (
+      LearnedCommander.createAssociation(commander, tactics)
+    ))).then(commanders => (
+      this.createAssociation(commanders, `ハロウィン杯:${keys[i]}`)
+    ))
+  )));
+}
+formationSchema.static('importHalloweenCupData', importHalloweenCupData);
 
 formationSchema.plugin(mongooseAutoPopulatePlugin);
 formationSchema.pre('validate', fillCommanders);

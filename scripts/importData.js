@@ -79,6 +79,7 @@ const main = async () => {
   if (getValidEnv() === 'local') {
     await Formation.importSampleData();
   }
+  await Formation.importHalloweenCupData();
 
   // teardown
   await disconnect();
