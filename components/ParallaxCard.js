@@ -44,7 +44,7 @@ export class ParallaxCardComponent extends PureComponent {
     const linkOpts = typeof url === 'string' ? { href: url } : url;
 
     return (
-      <Card square>
+      <Card square component="section">
         <CardHeader
           title={title}
           titleTypographyProps={{ variant: 'h5' }}
