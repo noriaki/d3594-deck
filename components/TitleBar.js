@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 
 // material-ui
 import { withStyles } from '@material-ui/core/styles';
@@ -44,10 +45,12 @@ export const TitleBarComponent = ({ classes }) => {
     <AppBar position="fixed" color="primary" elevation={0} className={appBar}>
       <Toolbar className={toolbar}>
         <div className={logoArea}>
-          <ResponsiveImage
-            src={logoImageURL}
-            alt="大三国志 部隊編成(仮)"
-            className={logoImage} />
+          <Link href="/" passHref>
+            <ResponsiveImage
+              src={logoImageURL}
+              alt="大三国志 部隊編成(仮)"
+              className={logoImage} />
+          </Link>
         </div>
         <IconButton color="inherit" className={menuButton}>
           <MenuIcon />

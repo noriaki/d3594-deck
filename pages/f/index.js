@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 // material-ui
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
 
 // stores
 import { Container as StoreContainer, initialStates } from '../../stores';
@@ -14,7 +13,9 @@ import Title from '../../components/Title';
 import Stage from '../../components/Stage';
 import FormationDetail from '../../components/Stage/Detail';
 import EditActions from '../../components/EditActions';
+import Notice from '../../components/Notice';
 import TitleBar from '../../components/TitleBar';
+import Footer from '../../components/Footer';
 
 const styles = theme => ({
   paper: {
@@ -33,7 +34,7 @@ const styles = theme => ({
 });
 
 const FormationDetailPage = ({ classes, formation }) => (
-  <div>
+  <main>
     <TitleBar />
     <div className={classes.container}>
       <StoreContainer initialStates={{ ...initialStates, formation }}>
@@ -41,15 +42,18 @@ const FormationDetailPage = ({ classes, formation }) => (
           <Paper square className={classes.paper}>
             <Title />
             <Stage />
-            <EditActions />
           </Paper>
+          <Notice />
+          <EditActions />
         </section>
         <section className={classes.section}>
           <FormationDetail />
+          <EditActions />
         </section>
       </StoreContainer>
     </div>
-  </div>
+    <Footer />
+  </main>
 );
 
 FormationDetailPage.getInitialProps = async ({ req, query }) => {

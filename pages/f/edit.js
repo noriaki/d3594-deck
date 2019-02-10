@@ -6,20 +6,23 @@ import { withStyles } from '@material-ui/core/styles';
 // components
 import TitleBar from '../../components/TitleBar';
 import DeckEditor from '../../components/DeckEditor';
+import Footer from '../../components/Footer';
 
 const styles = theme => ({
   container: {
     paddingTop: 56,
+    marginBottom: theme.spacing.unit * 4,
   },
 });
 
 const FormationEditPage = ({ formation, classes }) => (
-  <div>
+  <main>
     <TitleBar />
     <div className={classes.container}>
       <DeckEditor formation={formation} />
     </div>
-  </div>
+    <Footer />
+  </main>
 );
 
 FormationEditPage.getInitialProps = async ({ req, query }) => {
