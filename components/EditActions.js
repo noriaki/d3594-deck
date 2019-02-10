@@ -6,6 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import EditIcon from '@material-ui/icons/Edit';
 import DoneIcon from '@material-ui/icons/Done';
+import AddIcon from '@material-ui/icons/Add';
 
 // stores
 import { withStores } from '../stores';
@@ -14,10 +15,8 @@ const styles = theme => ({
   root: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center',
-  },
-  button: {
-    margin: theme.spacing.unit,
+    justifyContent: 'space-around',
+    margin: `0 ${theme.spacing.unit}px`,
   },
   icon: {
     marginRight: theme.spacing.unit,
@@ -31,20 +30,33 @@ export const EditActionsComponent = ({ edit, formation, classes }) => {
   const as = `/f/${identifier}${path}`;
   const Icon = edit ? DoneIcon : EditIcon;
   const label = edit ? '保存' : '部隊をコピーして編集';
+  const NewBotton = (
+    <Link href="/f/new" passHref>
+      <Button
+        variant="outlined"
+        color="primary"
+        size="small"
+        component="a"
+        aria-label="新規作成">
+        <AddIcon className={classes.icon} />
+        新規作成
+      </Button>
+    </Link>
+  );
   return (
     <div className={classes.root}>
-      <Link href={href} as={as}>
+      <Link href={href} as={as} passHref>
         <Button
           variant="outlined"
           color="primary"
           size="small"
           component="a"
-          aria-label={label}
-          className={classes.button}>
+          aria-label={label}>
           <Icon className={classes.icon} />
           {label}
         </Button>
       </Link>
+      { !edit && NewBotton }
     </div>
   );
 };

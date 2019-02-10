@@ -45,7 +45,7 @@ export const TitleBarComponent = ({ classes }) => {
     <AppBar position="fixed" color="primary" elevation={0} className={appBar}>
       <Toolbar className={toolbar}>
         <div className={logoArea}>
-          <Link href="/">
+          <Link href="/" passHref>
             <ResponsiveImage
               src={logoImageURL}
               alt="大三国志 部隊編成(仮)"

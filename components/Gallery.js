@@ -54,7 +54,7 @@ export const GalleryComponent = ({ classes }) => {
       <CardMedia component="img" image={getImageUrl(id)} />
       <CardActions className={actionArea}>
         <div>
-          <Link href={`/f?id=${id}`} as={`/f/${id}`}>
+          <Link href={`/f?id=${id}`} as={`/f/${id}`} passHref>
             <Button
               variant="outlined"
               color="primary"

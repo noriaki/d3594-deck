@@ -62,7 +62,7 @@ export class ParallaxCardComponent extends PureComponent {
         </CardContent>
         <CardActions className={classes.actionArea}>
           <div>
-            <Link {...linkOpts}>
+            <Link {...linkOpts} passHref>
               <Button component="a" variant="outlined" color="primary">
                 {linkText}
               </Button>
