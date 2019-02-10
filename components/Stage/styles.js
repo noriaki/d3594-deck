@@ -31,6 +31,7 @@ export const baseStyles = theme => merge({}, styles(theme), {
   root: {
     display: 'flex',
     flexDirection: 'column',
+    marginBottom: theme.spacing.unit * 2,
     '& > div': {
       paddingTop: theme.spacing.unit,
       paddingBottom: theme.spacing.unit,

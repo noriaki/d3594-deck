@@ -1,23 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Link from 'next/link';
 
 // material-ui
 import { withStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import TwitterCircleIcon from 'mdi-material-ui/TwitterCircle';
 
 // components
 import ResponsiveImage from '../components/ResponsiveImage';
 import ParallaxCard from '../components/ParallaxCard';
 import Gallery from '../components/Gallery';
+import Footer from '../components/Footer';
 
 const styles = theme => ({
   container: {
     '& > *': {
       marginBottom: theme.spacing.unit * 4,
+      '&:last-child': {
+        marginBottom: 0,
+      },
     },
   },
   logoArea: {
@@ -33,26 +33,6 @@ const styles = theme => ({
   },
   description: {
     padding: `0 ${theme.spacing.unit}px`,
-  },
-  footer: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    margin: 0,
-    padding: `${theme.spacing.unit * 2}px 0`,
-  },
-  profile: {
-    display: 'inline-flex',
-  },
-  profileLink: {
-    padding: 0,
-    minHeight: 'unset',
-    lineHeight: 1,
-    textTransform: 'none',
-  },
-  twitterIcon: {
-    margin: '0 .1em',
-    fontSize: '1rem',
   },
 });
 
@@ -87,26 +67,7 @@ const IndexPage = ({ classes }) => (
       url="/f/new"
       linkText="新規作成" />
     <Gallery />
-    <Paper component="footer" square elevation={0} className={classes.footer}>
-      <Typography
-        variant="body2"
-        component="p"
-        color="textSecondary"
-        className={classes.profile}>
-        (c) 2019 極悪のり
-        <Link href="https://twitter.com/gokuakunori">
-          <Button
-            variant="text"
-            component="a"
-            size="small"
-            color="primary"
-            className={classes.profileLink}>
-            <TwitterCircleIcon className={classes.twitterIcon} />
-            @gokuakunori
-          </Button>
-        </Link>
-      </Typography>
-    </Paper>
+    <Footer />
   </main>
 );
 
