@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Head from 'next/head';
 
 // material-ui
 import { withStyles } from '@material-ui/core/styles';
@@ -11,6 +10,7 @@ import ResponsiveImage from '../components/ResponsiveImage';
 import ParallaxCard from '../components/ParallaxCard';
 import Gallery from '../components/Gallery';
 import Footer from '../components/Footer';
+import MetaTags from '../components/MetaTags';
 
 const styles = theme => ({
   container: {
@@ -39,9 +39,7 @@ const styles = theme => ({
 
 const IndexPage = ({ classes }) => (
   <main className={classes.container}>
-    <Head>
-      <title>大三国志 部隊編成アプリ</title>
-    </Head>
+    <MetaTags />
     <Typography component="h1" variant="h1" className={classes.logoArea}>
       <ResponsiveImage
         src={logoImageURL}
