@@ -31,7 +31,7 @@ export const EditActionsComponent = ({ edit, formation, classes }) => {
   const Icon = edit ? DoneIcon : EditIcon;
   const label = edit ? '保存' : '部隊をコピーして編集';
   const NewBotton = (
-    <Link href="/f/new" passHref>
+    <Link href="/f/edit" as="/f/new" passHref>
       <Button
         variant="outlined"
         color="primary"

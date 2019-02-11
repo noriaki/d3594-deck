@@ -8,6 +8,9 @@ import TitleBar from '../../components/TitleBar';
 import DeckEditor from '../../components/DeckEditor';
 import Footer from '../../components/Footer';
 
+// class
+import Formation from '../../server/models/classes/Formation';
+
 const styles = theme => ({
   container: {
     paddingTop: 56,
@@ -32,6 +35,9 @@ FormationEditPage.getInitialProps = async ({ req, query }) => {
     return { formation };
   }
   const { id } = query;
+  if (id == null) {
+    return { formation: Formation.initialize() };
+  }
   const res = await fetch(`/api/v1/f/${id}`, {
     headers: { Accept: 'application/json' },
   });

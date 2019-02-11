@@ -9,6 +9,14 @@ const stringId = commanders => positions.map((position, index) => {
 }).join('\n');
 
 class Formation {
+  static initialize() {
+    const instance = new this();
+    instance.identifier = null;
+    instance.name = null;
+    instance.commanders = [null, null, null];
+    return instance;
+  }
+
   static get positions() { return positions; }
 
   static identify(cIdsOrInses) {

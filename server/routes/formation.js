@@ -13,6 +13,9 @@ const show = app => async (req, res) => {
 
 const edit = app => async (req, res) => {
   const { id } = req.params;
+  if (id == null) {
+    return initialize(app)(req, res);
+  }
   const formation = await Formation.fetchById(id);
   if (formation === null) {
     return app.getRequestHandler()(req, res, parse(req.url, true));
