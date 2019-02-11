@@ -13,7 +13,7 @@ const MetaTagsComponent = () => (
     <meta itemProp="description" content={description} />
     <meta itemProp="image" content={image} />
     <meta name="image" content={image} />
-    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:site" content="@gokuakunori" />
