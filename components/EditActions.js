@@ -25,6 +25,7 @@ const styles = theme => ({
 
 export const EditActionsComponent = ({ edit, formation, classes }) => {
   const identifier = formation.get('identifier');
+  const isDisable = [...formation.get('commanders')][0] == null;
   const path = edit ? '' : '/edit';
   const href = `/f${path}?id=${identifier}`;
   const as = `/f/${identifier}${path}`;
@@ -47,6 +48,7 @@ export const EditActionsComponent = ({ edit, formation, classes }) => {
     <div className={classes.root}>
       <Link href={href} as={as} passHref>
         <Button
+          disabled={isDisable}
           variant="outlined"
           color="primary"
           size="small"
