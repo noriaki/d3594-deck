@@ -18,13 +18,13 @@ const MetaTagsComponent = () => (
     <meta name="twitter:description" content={description} />
     <meta name="twitter:site" content="@gokuakunori" />
     <meta name="twitter:image:src" content={image} />
-    <meta name="og:title" content={title} />
-    <meta name="og:description" content={description} />
-    <meta name="og:image" content={image} />
-    <meta name="og:url" content="https://deck.d3594.com" />
-    <meta name="og:site_name" content={title} />
-    <meta name="og:locale" content="ja_JP" />
-    <meta name="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={image} />
+    <meta property="og:url" content="https://deck.d3594.com" />
+    <meta property="og:site_name" content={title} />
+    <meta property="og:locale" content="ja_JP" />
+    <meta property="og:type" content="website" />
   </Head>
 );
 
