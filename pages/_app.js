@@ -1,5 +1,6 @@
 import React from 'react';
 import App, { Container } from 'next/app';
+import Router from 'next/router';
 import { MuiThemeProvider, withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import JssProvider from 'react-jss/lib/JssProvider';
@@ -7,6 +8,7 @@ import EventListener from 'react-event-listener';
 import debounce from 'lodash.debounce';
 
 import getPageContext from '../contexts/getPageContext';
+import { pageview as trackPageview } from '../contexts/gtag';
 
 const globalStyles = theme => ({
   '@global': {
@@ -26,6 +28,13 @@ const setDimensionVars = () => {
   document.documentElement.style.setProperty('--ivh', `${ivh}px`);
   document.documentElement.style.setProperty('--ivw', `${ivw}px`);
 };
+
+const handleRouteChange = (url) => {
+  console.log('App is changing to: ', url);
+  trackPageview(url);
+};
+
+Router.events.on('routeChangeStart', handleRouteChange);
 
 class D3594DeckApp extends App {
   pageContext = getPageContext();
