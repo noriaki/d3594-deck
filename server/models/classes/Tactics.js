@@ -1,4 +1,5 @@
-const assetHost = '//s3-ap-northeast-1.amazonaws.com/assets.deck.d3594.com';
+const { host: assetHost } = require('../../../constants/assets');
+
 const assetUriBase = `${assetHost}/images/tactics`;
 const fileMap = {
   指揮: 'shiki',

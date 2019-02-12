@@ -7,12 +7,9 @@ import Button from '@material-ui/core/Button';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import RemoveIcon from './RemoveIcon';
 import AddCommander from './AddCommander';
+import ResponsiveImage from '../../ResponsiveImage';
 
-const defaultCommander = {
-  id: '未配置',
-  name: '未配置',
-  imageURL: '/static/images/default-commander.png',
-};
+import Commander from '../../../server/models/classes/Commander';
 
 const CommanderImage = ({
   classes,
@@ -33,7 +30,7 @@ const CommanderImage = ({
     name,
     special,
     imageURL,
-  } = (propCommander || defaultCommander);
+  } = (propCommander || Commander.initialize());
 
   return (
     <div className={commanderImageRoot}>
@@ -41,7 +38,7 @@ const CommanderImage = ({
         component="a"
         onClick={handleClickTo('edit')}
         className={commanderImageContainer}>
-        <img src={imageURL} alt={id} />
+        <ResponsiveImage src={imageURL} alt={id} />
         <GridListTileBar
           title={`${name}${special || ''}`}
           titlePosition="bottom"

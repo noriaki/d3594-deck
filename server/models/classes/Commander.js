@@ -1,8 +1,19 @@
-const assetHost = '//s3-ap-northeast-1.amazonaws.com/assets.deck.d3594.com';
+const { host: assetHost } = require('../../../constants/assets');
+
 const assetUriBase = `${assetHost}/images/commanders`;
 
 class Commander {
-  get imageURL() { return `${assetUriBase}/${this.image}`; }
+  static initialize() {
+    const instance = new this();
+    instance.id = '未配置';
+    instance.name = '未配置';
+    instance.identifier = null;
+    return instance;
+  }
+
+  get imageURL() {
+    return `${assetUriBase}/${this.identifier || 'default'}.jpg`;
+  }
 }
 
 Commander.baseRarity = [5, 4, 3, 2, 1];
