@@ -27,6 +27,9 @@ const styles = theme => ({
   logoArea: {
     flexGrow: 1,
   },
+  logoLink: {
+    padding: 0,
+  },
   logoImage: {
     height: 48,
   },
@@ -38,6 +41,7 @@ export const TitleBarComponent = ({ classes }) => {
     toolbar,
     menuButton,
     logoArea,
+    logoLink,
     logoImage,
   } = classes;
 
@@ -46,10 +50,12 @@ export const TitleBarComponent = ({ classes }) => {
       <Toolbar className={toolbar}>
         <div className={logoArea}>
           <Link href="/" passHref>
-            <ResponsiveImage
-              src={logoImageURL}
-              alt="大三国志 部隊編成(仮)"
-              className={logoImage} />
+            <IconButton component="a" className={logoLink}>
+              <ResponsiveImage
+                src={logoImageURL}
+                alt="大三国志 部隊編成(仮)"
+                className={logoImage} />
+            </IconButton>
           </Link>
         </div>
         <IconButton color="inherit" className={menuButton}>

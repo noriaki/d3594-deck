@@ -10,6 +10,7 @@ import ResponsiveImage from '../components/ResponsiveImage';
 import ParallaxCard from '../components/ParallaxCard';
 import Gallery from '../components/Gallery';
 import Footer from '../components/Footer';
+import MetaTags from '../components/MetaTags';
 
 const styles = theme => ({
   container: {
@@ -38,6 +39,7 @@ const styles = theme => ({
 
 const IndexPage = ({ classes }) => (
   <main className={classes.container}>
+    <MetaTags />
     <Typography component="h1" variant="h1" className={classes.logoArea}>
       <ResponsiveImage
         src={logoImageURL}
@@ -57,14 +59,14 @@ const IndexPage = ({ classes }) => (
       title="部隊を自由に編成"
       subtitle="武将の交代、戦法の付け替え、自由自在。"
       text="武将や戦法をタップすると交換可能。右上の赤いアイコンをタップすると取り外しも可能です。"
-      url="/f/new"
+      url={{ href: '/f/edit', as: '/f/new' }}
       linkText="新規作成" />
     <ParallaxCard
       image={selectCommandersAndTacticsImageURL}
       title="武将、戦法を検索"
       subtitle="武将347種、分析系戦法180種"
       text="名前や種類で絞り込み可能。1季〜征服季で入手可能なものを揃えました。"
-      url="/f/new"
+      url={{ href: '/f/edit', as: '/f/new' }}
       linkText="新規作成" />
     <Gallery />
     <Footer />
