@@ -1,5 +1,8 @@
 import React from 'react';
 
+// constants
+import { host as assetHost } from '../../../constants/assets';
+
 // components
 import ResponsiveImage from '../../ResponsiveImage';
 
@@ -12,7 +15,7 @@ const altTexts = {
 const PositionImage = ({ classes, position, horizontal }) => {
   const { positionRoot, positionImage } = classes;
   const suffix = horizontal ? '-h' : '';
-  const path = `/static/images/${position}${suffix}.png`;
+  const path = `${assetHost}/assets/positions/${position}${suffix}.png`;
   return (
     <div className={positionRoot}>
       <ResponsiveImage
