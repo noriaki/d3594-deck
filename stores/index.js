@@ -19,7 +19,7 @@ export const initialCommanderSearcher = {
   query: {
     text: '',
     filter: {
-      rarity: [5, 4],
+      rarity: [5],
       army: ['弓', '歩', '騎'],
       team: ['群', '漢', '魏', '蜀', '呉'],
       distance: [5, 4, 3, 2, 1],
