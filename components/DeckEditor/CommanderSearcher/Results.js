@@ -9,9 +9,15 @@ import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 
+// components
+import ResponsiveImage from '../../ResponsiveImage';
+
 const styles = theme => ({
   root: {
     height: '100%',
+  },
+  tileImage: {
+    width: '100%',
   },
   tileBarRoot: {
     height: theme.spacing.unit * 3,
@@ -140,7 +146,10 @@ const buildGridListTile = (classes, handleClick) => commander => (
     key={commander._id}
     onClick={handleClick({ commander })}
     style={{ height: 'var(--ch)' }}>
-    <img src={commander.imageURL} alt={commander.id} />
+    <ResponsiveImage
+      src={commander.imageURL}
+      alt={commander.id}
+      className={classes.tileImage} />
     <GridListTileBar
       title={`${commander.name}${commander.special || ''}`}
       titlePosition="bottom"
