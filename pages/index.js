@@ -26,7 +26,7 @@ const styles = theme => ({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: theme.palette.primary.main,
-    height: 'calc(100vw / 1.618)', // golden ratio
+    height: 'calc(var(--ivw) * 100 / 1.618)', // golden ratio
   },
   logoImage: {},
   subtitle: {

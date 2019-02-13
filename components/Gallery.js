@@ -14,7 +14,7 @@ import Typography from '@material-ui/core/Typography';
 const styles = (theme) => {
   const { unit } = theme.spacing;
   const { dark: color, contrastText } = theme.palette.primary;
-  const cardWidth = `((100vw - ${unit * 4}px) / 2) - ${unit / 2}px`;
+  const cardWidth = `((var(--ivw) * 100 - ${unit * 4}px) / 2) - ${unit / 2}px`;
   return ({
     container: {
       display: 'flex',

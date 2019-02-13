@@ -15,6 +15,8 @@ const styles = theme => ({
   appBar: {
     backgroundColor: 'transparent',
     color: theme.palette.common.white,
+    maxWidth: theme.constants.viewportMaxWidth,
+    right: 'auto',
   },
   toolbar: {
     display: 'flex',
