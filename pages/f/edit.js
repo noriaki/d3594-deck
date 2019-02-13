@@ -1,4 +1,5 @@
 import React from 'react';
+import Head from 'next/head';
 
 // material-ui
 import { withStyles } from '@material-ui/core/styles';
@@ -28,6 +29,11 @@ const styles = theme => ({
 
 const FormationEditPage = ({ formation, classes }) => (
   <main>
+    <Head>
+      { formation.identifier && (
+        <link rel="canonical" href={`/f/${formation.identifier}`} />
+      ) }
+    </Head>
     <TitleBar />
     <div className={classes.container}>
       <StoreContainer initialStates={{ ...initialStates, formation }}>
