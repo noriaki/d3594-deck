@@ -3,6 +3,8 @@
 import { SheetsRegistry } from 'jss';
 import { createMuiTheme, createGenerateClassName } from '@material-ui/core/styles';
 
+import { viewportMaxWidth } from '../constants/styles';
+
 const theme = createMuiTheme({
   typography: {
     useNextVariants: true,
@@ -55,6 +57,9 @@ const theme = createMuiTheme({
         paddingTop: '.5rem',
       },
     },
+  },
+  constants: {
+    viewportMaxWidth,
   },
 });
 

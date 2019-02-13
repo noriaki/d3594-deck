@@ -55,8 +55,8 @@ export const baseStyles = theme => merge({}, styles(theme), {
   commanderImageRoot: {
     boxSizing: 'border-box',
     flexShrink: 0,
-    width: 'calc((100vw - 64px) * 4 / 13)',
-    height: 'calc(((100vw - 64px) * 4 / 13) * 1.371345029239765)',
+    width: 'calc((var(--ivw) * 100 - 64px) * 4 / 13)',
+    height: 'calc((var(--ivw) * 100 - 64px) * 4 / 13) * 1.371345029239765)',
   },
   commanderImageContainer: {
     height: '100%',
