@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import ResponsiveImage from '../components/ResponsiveImage';
 import ParallaxCard from '../components/ParallaxCard';
 import Gallery from '../components/Gallery';
+import UpdateHistory from '../components/UpdateHistory';
 import Footer from '../components/Footer';
 import MetaTags from '../components/MetaTags';
 
@@ -69,6 +70,7 @@ const IndexPage = ({ classes }) => (
       url={{ href: '/f/edit', as: '/f/new' }}
       linkText="新規作成" />
     <Gallery />
+    <UpdateHistory />
     <Footer />
   </main>
 );
