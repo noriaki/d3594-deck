@@ -9,14 +9,19 @@ import debounce from 'lodash.debounce';
 
 import getPageContext from '../contexts/getPageContext';
 import { pageview as trackPageview } from '../contexts/gtag';
+import { viewportMaxWidth } from '../constants/styles';
 
 const globalStyles = theme => ({
   '@global': {
     html: {
       height: '100%',
-      fontSize: '5vmin',
+      fontSize: 'calc(var(--ivw) * 5)',
+      maxWidth: theme.constants.viewportMaxWidth,
+      margin: '0 auto',
     },
-    body: { height: '100%' },
+    body: {
+      height: '100%',
+    },
   },
 });
 
@@ -24,7 +29,7 @@ const StyledCssBaseline = withStyles(globalStyles)(CssBaseline);
 
 const setDimensionVars = () => {
   const ivh = window.innerHeight * 0.01;
-  const ivw = window.innerWidth * 0.01;
+  const ivw = Math.min(window.innerWidth, viewportMaxWidth) * 0.01;
   document.documentElement.style.setProperty('--ivh', `${ivh}px`);
   document.documentElement.style.setProperty('--ivw', `${ivw}px`);
 };
