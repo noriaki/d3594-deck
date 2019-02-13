@@ -14,10 +14,11 @@ import { viewportMaxWidth } from '../constants/styles';
 const globalStyles = theme => ({
   '@global': {
     html: {
-      height: '100%',
+      minHeight: '100%',
       fontSize: 'calc(var(--ivw) * 5)',
       maxWidth: theme.constants.viewportMaxWidth,
       margin: '0 auto',
+      backgroundColor: theme.palette.grey[300],
     },
     body: {
       height: '100%',
