@@ -25,7 +25,7 @@ const styles = theme => ({
   },
   updates: {
     alignSelf: 'stretch',
-    '& > ol': {
+    '& > ul': {
       width: 'calc(var(--ivw) * 63 + 1.5em)',
       paddingLeft: '1.5em',
       height: '100%',
@@ -84,22 +84,22 @@ const updateHistories = [
     version: '1.0.1',
     date: '2019/02/13',
     content: (
-      <ol>
+      <ul>
         <li>
           最新OSのスマホでの利用を激しく推奨しますが、
           PCでもそれなりに使いやすくなるよう表示を調整しました
         </li>
         <li>このアプリ更新履歴を追加しました</li>
-      </ol>
+      </ul>
     ),
   },
   {
     version: '1.0.0',
     date: '2019/02/13',
     content: (
-      <ol>
+      <ul>
         <li>アプリを公開しました</li>
-      </ol>
+      </ul>
     ),
   },
 ];
