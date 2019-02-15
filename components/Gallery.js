@@ -11,6 +11,9 @@ import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
+// constants
+import { host as assetHost } from '../constants/assets';
+
 const styles = (theme) => {
   const { unit } = theme.spacing;
   const { dark: color, contrastText } = theme.palette.primary;
@@ -84,9 +87,7 @@ export const GalleryComponent = ({ classes }) => {
 
 export default withStyles(styles)(GalleryComponent);
 
-const getImageUrl = id => (
-  `//s3-ap-northeast-1.amazonaws.com/assets.deck.d3594.com/assets/formations/${id}.jpg`
-);
+const getImageUrl = id => `${assetHost}/assets/formations/${id}.jpg`;
 
 const formationIds = [
   '1cb7dac3a4c360b71935e9fcd4ba60ab', // A1 曹純、馬超、張遼
