@@ -11,6 +11,9 @@ import MenuIcon from '@material-ui/icons/Menu';
 // components
 import ResponsiveImage from './ResponsiveImage';
 
+// constants
+import { host as assetHost } from '../constants/assets';
+
 const styles = theme => ({
   appBar: {
     backgroundColor: 'transparent',
@@ -70,4 +73,4 @@ export const TitleBarComponent = ({ classes }) => {
 
 export default withStyles(styles)(TitleBarComponent);
 
-const logoImageURL = '//s3-ap-northeast-1.amazonaws.com/assets.deck.d3594.com/assets/logo.png';
+const logoImageURL = `${assetHost}/assets/logo.png`;

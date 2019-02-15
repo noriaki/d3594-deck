@@ -81,6 +81,15 @@ const UpdateContent = ({
 
 const updateHistories = [
   {
+    version: '1.0.3',
+    date: '2019/02/15',
+    content: (
+      <ul>
+        <li>武将や戦法画像の読み込みを高速化しました</li>
+      </ul>
+    ),
+  },
+  {
     version: '1.0.2',
     date: '2019/02/14',
     content: (

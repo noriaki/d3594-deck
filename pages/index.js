@@ -13,6 +13,9 @@ import UpdateHistory from '../components/UpdateHistory';
 import Footer from '../components/Footer';
 import MetaTags from '../components/MetaTags';
 
+// constants
+import { host as assetHost } from '../constants/assets';
+
 const styles = theme => ({
   container: {
     '& > *': {
@@ -81,8 +84,8 @@ IndexPage.propTypes = {
 
 export default withStyles(styles)(IndexPage);
 
-const logoImageURL = '//s3-ap-northeast-1.amazonaws.com/assets.deck.d3594.com/assets/logo.png';
+const logoImageURL = `${assetHost}/assets/logo.png`;
 
-const editFormationImageURL = '//s3-ap-northeast-1.amazonaws.com/assets.deck.d3594.com/assets/editFormation.jpg';
+const editFormationImageURL = `${assetHost}/assets/editFormation.jpg`;
 
-const selectCommandersAndTacticsImageURL = '//s3-ap-northeast-1.amazonaws.com/assets.deck.d3594.com/assets/selectCommandersAndTactics.jpg';
+const selectCommandersAndTacticsImageURL = `${assetHost}/assets/selectCommandersAndTactics.jpg`;
