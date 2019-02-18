@@ -146,13 +146,17 @@ const textOfHumanizeFormation = (humanizeString) => {
 const textOfSameArmyBonus = (commanders) => {
   const armyGroupedCommanders = groupBy(commanders, 'commander.army');
   const bonusArmy = Object.keys(armyGroupedCommanders).find(
-    army => armyGroupedCommanders[army].length > 1
+    army => (
+      Object.keys(armyBonusTypes).includes(army)
+        && armyGroupedCommanders[army].length > 1
+    )
   );
   if (typeof bonusArmy === 'undefined') {
     return '--';
   }
   const bonusCommanders = armyGroupedCommanders[bonusArmy];
   const bonusRate = (bonusCommanders.length - 1) * 5.0;
+
   return [
     `${bonusArmy}兵系に`,
     armyBonusTypes[bonusArmy].map(b => `${b}上昇${bonusRate}%`).join('と'),
@@ -173,7 +177,9 @@ const armyBonusTypes = {
 const textOfSameTeamBonus = (commanders) => {
   const teamGroupedCommanders = groupBy(commanders, 'commander.team');
   const bonusTeam = Object.keys(teamGroupedCommanders).find(
-    team => teamGroupedCommanders[team].length > 1
+    team => (
+      teamBonusTypes.includes(team) && teamGroupedCommanders[team].length > 1
+    )
   );
   if (typeof bonusTeam === 'undefined') {
     return '--';
