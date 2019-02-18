@@ -23,6 +23,7 @@ const styles = theme => ({
   commanderImageTitleWrap: {},
   commanderImageTitleInner: {},
   tacticsRoot: {},
+  tacticsContainer: {},
   tacticsImage: {},
   tacticsCaptionContainer: {},
 });
@@ -126,11 +127,10 @@ export const searchStyles = theme => merge({}, styles(theme), {
     display: 'none',
   },
   tacticsRoot: {
-    padding: '.0625rem .125rem',
+    padding: '0 .125rem',
     background: 'rgba(255,255,255,0.8)',
     gridColumn: '2 / 4',
     gridRow: '3',
-    display: 'flex',
     alignItems: 'center',
     '&:nth-child(4)': {
       gridRow: '4',
@@ -138,6 +138,10 @@ export const searchStyles = theme => merge({}, styles(theme), {
     '&:nth-child(5)': {
       gridRow: '5',
     },
+  },
+  tacticsContainer: {
+    display: 'flex',
+    justifyContent: 'flex-start',
   },
   tacticsImage: {
     height: '1rem',
