@@ -31,12 +31,16 @@ const CommanderImage = ({
     special,
     imageURL,
   } = (propCommander || Commander.initialize());
+  const handleClickToEdit = (
+    editable && propCommander ? handleClickTo('edit') : () => {}
+  );
+  const addable = editable && propCommander == null;
 
   return (
     <div className={commanderImageRoot}>
       <Button
         component="a"
-        onClick={handleClickTo('edit')}
+        onClick={handleClickToEdit}
         className={commanderImageContainer}>
         <ResponsiveImage src={imageURL} alt={id} />
         <GridListTileBar
@@ -44,7 +48,7 @@ const CommanderImage = ({
           titlePosition="bottom"
           classes={{ root, titleWrap, title }} />
         {removable && <RemoveIcon onClick={handleClickTo('remove')} />}
-        {editable && propCommander == null && <AddCommander onClick={handleClickTo('add')} />}
+        {addable && <AddCommander onClick={handleClickTo('add')} />}
       </Button>
     </div>
   );
