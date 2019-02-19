@@ -25,7 +25,9 @@ class MyDocument extends Document {
             name="viewport"
             content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no" />
           {/* PWA primary color */}
-          <meta name="theme-color" content={pageContext.theme.palette.primary.main} />
+          <meta
+            name="theme-color"
+            content={pageContext ? pageContext.theme.palette.primary.main : null} />
           {/* Global site tag (gtag.js) - Google Analytics */}
           <script async src={`https://www.googletagmanager.com/gtag/js?id=${gTagId}`} />
           <script dangerouslySetInnerHTML={{ __html: gTagScript }} />
@@ -81,6 +83,12 @@ MyDocument.getInitialProps = (ctx) => {
     return WrappedComponent;
   });
 
+  let css;
+  // It might be undefined, e.g. after an error.
+  if (pageContext) {
+    css = pageContext.sheetsRegistry.toString();
+  }
+
   return {
     ...page,
     pageContext,
@@ -90,7 +98,7 @@ MyDocument.getInitialProps = (ctx) => {
         <style
           id="jss-server-side"
           // eslint-disable-next-line react/no-danger
-          dangerouslySetInnerHTML={{ __html: pageContext.sheetsRegistry.toString() }} />
+          dangerouslySetInnerHTML={{ __html: css }} />
         {flush() || null}
       </>
     ),
