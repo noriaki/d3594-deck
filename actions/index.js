@@ -55,7 +55,8 @@ export const tacticsActions = () => {
 
   const scrollToTactics = id => (event) => {
     event.preventDefault();
-    document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+    document.getElementById(id)
+      .scrollIntoView({ block: 'center', behavior: 'smooth' });
   };
 
   return {
