@@ -6,6 +6,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import JssProvider from 'react-jss/lib/JssProvider';
 import EventListener from 'react-event-listener';
 import debounce from 'lodash.debounce';
+import smoothscroll from 'smoothscroll-polyfill';
 
 import getPageContext from '../contexts/getPageContext';
 import { pageview as trackPageview } from '../contexts/gtag';
@@ -48,11 +49,16 @@ class D3594DeckApp extends App {
   handleResize = () => setDimensionVars();
 
   componentDidMount() {
+    // jss
     const jssStyles = document.querySelector('#jss-server-side');
     if (jssStyles && jssStyles.parentNode) {
       jssStyles.parentNode.removeChild(jssStyles);
     }
+    // set viewport dimension
     setDimensionVars();
+
+    // scrolling polyfill
+    smoothscroll.polyfill();
   }
 
   render() {
