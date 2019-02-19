@@ -100,7 +100,7 @@ const stylesTacticsTable = theme => ({
   },
   unlearned: {
     width: '100%',
-    padding: `0 ${theme.spacing.unit}px`,
+    padding: `0 ${theme.spacing.unit * 2}px`,
   },
 });
 
