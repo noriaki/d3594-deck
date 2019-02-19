@@ -55,8 +55,18 @@ export const tacticsActions = () => {
 
   const scrollToTactics = id => (event) => {
     event.preventDefault();
-    document.getElementById(id)
-      .scrollIntoView({ block: 'center', behavior: 'smooth' });
+    const offset = 8 * 8;
+    let scrollY;
+    if (window.pageYOffset !== undefined) {
+      scrollY = window.pageYOffset;
+    } else {
+      const isCSS1Compat = (document.compatMode || '') === 'CSS1Compat';
+      scrollY = isCSS1Compat
+        ? document.documentElement.scrollTop
+        : document.body.scrollTop;
+    }
+    const { top } = document.getElementById(id).getBoundingClientRect();
+    window.scroll({ top: top + scrollY - offset, behavior: 'smooth' });
   };
 
   return {
