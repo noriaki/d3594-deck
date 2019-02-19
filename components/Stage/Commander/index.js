@@ -11,7 +11,8 @@ import { withStores } from '../../../stores';
 // actions
 import { searchActions, formationActions } from '../../../actions';
 
-const defaultCommander = { additionalTactics: [] };
+// classes
+import LearnedCommander from '../../../server/models/classes/LearnedCommander';
 
 const positions = ['honei', 'chuei', 'zenei'];
 
@@ -28,7 +29,7 @@ const Commander = ({
     commander,
     tactics,
     additionalTactics,
-  } = (propCommander || defaultCommander);
+  } = (propCommander || LearnedCommander.initialize());
   const { container } = classes;
   const { setTarget } = searchActions(searcher);
   const { removeCommander, removeTactics } = formationActions(formation);

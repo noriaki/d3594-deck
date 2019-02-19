@@ -7,23 +7,28 @@ const LearnedCommanderClass = require('./classes/LearnedCommander');
 const { Schema } = mongoose;
 
 const learnedCommanderSchema = new Schema({
-  _id: { type: String },
-  identifier: { type: String },
+  _id: { type: String, required: true },
+  identifier: { type: String, default: null, required: true },
   commander: {
     type: String,
+    default: null,
     ref: 'Commander',
     autopopulate: true,
   },
   tactics: {
     type: String,
+    default: null,
     ref: 'Tactics',
     autopopulate: true,
   },
-  additionalTactics: [{
-    type: String,
-    ref: 'Tactics',
-    autopopulate: { options: { retainNullValues: true } },
-  }],
+  additionalTactics: {
+    type: [{
+      type: String,
+      ref: 'Tactics',
+      autopopulate: { options: { retainNullValues: true } },
+    }],
+    default: [null, null],
+  },
 });
 
 function setIdentifier() {
