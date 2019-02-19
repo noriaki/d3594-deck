@@ -11,6 +11,9 @@ import Divider from '@material-ui/core/Divider';
 // constants
 import { host as assetHost } from '../../../constants/assets';
 
+// actions
+import { tacticsActions } from '../../../actions';
+
 // components
 import ResponsiveImage from '../../ResponsiveImage';
 import TacticsIcon from '../Commander/Tactics';
@@ -31,23 +34,30 @@ const styles = theme => ({
   },
 });
 
+const { generateId } = tacticsActions();
 export const TacticsListItemComponent = ({
-  commander,
   tactics,
   additionalTactics = [],
+  position,
   classes,
 }) => (
   <List className={classes.list}>
     <ListItem className={classes.item}>
-      { tactics && <TacticsTable tactics={tactics} /> }
+      <TacticsTable
+        id={generateId('detail', position, 0)}
+        tactics={tactics} />
     </ListItem>
     <Divider variant="middle" className={classes.divider} />
     <ListItem className={classes.item}>
-      <TacticsTable tactics={additionalTactics[0]} />
+      <TacticsTable
+        id={generateId('detail', position, 1)}
+        tactics={additionalTactics[0]} />
     </ListItem>
     <Divider variant="middle" className={classes.divider} />
     <ListItem className={classes.item}>
-      <TacticsTable tactics={additionalTactics[1]} />
+      <TacticsTable
+        id={generateId('detail', position, 2)}
+        tactics={additionalTactics[1]} />
     </ListItem>
   </List>
 );
@@ -94,7 +104,14 @@ const stylesTacticsTable = theme => ({
   },
 });
 
+const scrollTop = () => (event) => {
+  event.preventDefault();
+  document.getElementById('pagetop')
+    .scrollIntoView({ block: 'start', behavior: 'smooth' });
+};
+
 const TacticsTable = withStyles(stylesTacticsTable)(({
+  id = null,
   tactics,
   classes,
 }) => {
@@ -135,7 +152,7 @@ const TacticsTable = withStyles(stylesTacticsTable)(({
   const head = isSpecifc ? origin : '習得戦法';
 
   return (
-    <Typography component="div">
+    <Typography id={id} component="div">
       <Grid container spacing={16} className={container}>
         <Grid item xs={4}>
           <Typography
@@ -146,7 +163,10 @@ const TacticsTable = withStyles(stylesTacticsTable)(({
             className={header}>
             { head }
           </Typography>
-          <TacticsIcon tactics={tactics} classes={tacticsIconClasses} />
+          <TacticsIcon
+            tactics={tactics}
+            onClick={scrollTop}
+            classes={tacticsIconClasses} />
         </Grid>
         <Grid
           item

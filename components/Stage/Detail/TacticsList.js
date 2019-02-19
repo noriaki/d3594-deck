@@ -43,7 +43,6 @@ export const TacticsListComponent = ({
   const [honeiCommander, ...others] = commanders;
 
   const lists = others.reduce((list, propCommander, index) => {
-    const { key: position } = positionsMap[index + 1];
     const key = propCommander ? propCommander.identifier : `null-${index}`;
 
     return [
@@ -51,14 +50,14 @@ export const TacticsListComponent = ({
       <Divider key={`hr-before-${key}`} className={divider} />,
       <TacticsDetailList
         key={key}
-        position={position}
+        position={index + 1}
         commander={propCommander}
         classes={innerClasses} />,
     ];
   }, [(
     <TacticsDetailList
       key={honeiCommander ? honeiCommander.identifier : 'null-0'}
-      position={positionsMap[0].key}
+      position={0}
       commander={honeiCommander}
       classes={innerClasses} />
   )]);
@@ -87,13 +86,14 @@ const TacticsDetailList = ({
     tactics,
     additionalTactics,
   } = orgCommander || LearnedCommander.initialize();
+  const { key: positionKey } = positionsMap[position];
 
   return (
     <div className={container}>
       <Typography component="h3" variant="h6">
         <PositionImage
           horizontal
-          position={position}
+          position={positionKey}
           classes={{ positionRoot, positionImage }} />
         <div className={header}>
           { commander ? commander.id : '未配置' }
@@ -103,7 +103,8 @@ const TacticsDetailList = ({
         <TacticsListItem
           commander={commander}
           tactics={tactics}
-          additionalTactics={additionalTactics} />
+          additionalTactics={additionalTactics}
+          position={position} />
       ) }
     </div>
   );

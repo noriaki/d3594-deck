@@ -9,7 +9,11 @@ import Tactics from './Tactics';
 import { withStores } from '../../../stores';
 
 // actions
-import { searchActions, formationActions } from '../../../actions';
+import {
+  searchActions,
+  formationActions,
+  tacticsActions,
+} from '../../../actions';
 
 // classes
 import LearnedCommander from '../../../server/models/classes/LearnedCommander';
@@ -33,14 +37,8 @@ const Commander = ({
   const { container } = classes;
   const { setTarget } = searchActions(searcher);
   const { removeCommander, removeTactics } = formationActions(formation);
-  const targets = {
-    index: `[${position}]`,
-    commander: `[${position}].commander`,
-    tactics: [
-      `[${position}].additionalTactics[0]`,
-      `[${position}].additionalTactics[1]`,
-    ],
-  };
+  const { generateId, scrollToTactics } = tacticsActions();
+  const targets = LearnedCommander.paths(position);
   const handleCommanderClick = operation => (event) => {
     switch (operation) {
     case 'add':
@@ -65,6 +63,9 @@ const Commander = ({
     case 'remove':
       removeTactics(targets.tactics[pos]);
       break;
+    case 'scroll':
+      scrollToTactics(generateId('detail', position, pos))(event);
+      break;
     default:
     }
     event.stopPropagation();
@@ -83,18 +84,19 @@ const Commander = ({
         classes={classes} />
       <Tactics
         tactics={tactics}
+        onClick={handleTacticsClick(0)}
         classes={classes} />
       <Tactics
         tactics={additionalTactics[0]}
         editable={editable && commander != null}
         removable={editable && additionalTactics[0] != null}
-        onClick={handleTacticsClick(0)}
+        onClick={handleTacticsClick(1)}
         classes={classes} />
       <Tactics
         tactics={additionalTactics[1]}
         editable={editable && commander != null}
         removable={editable && additionalTactics[1] != null}
-        onClick={handleTacticsClick(1)}
+        onClick={handleTacticsClick(2)}
         classes={classes} />
     </div>
   );

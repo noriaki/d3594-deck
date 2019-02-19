@@ -72,7 +72,9 @@ class D3594DeckApp extends App {
             theme={this.pageContext.theme}
             sheetsManager={this.pageContext.sheetsManager}>
             <StyledCssBaseline />
-            <Component pageContext={this.pageContext} {...pageProps} />
+            <div id="pagetop">
+              <Component pageContext={this.pageContext} {...pageProps} />
+            </div>
             <EventListener
               target="window"
               onResize={debounce(this.handleResize)} />

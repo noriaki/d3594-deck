@@ -1,5 +1,8 @@
 import set from 'lodash.set';
 
+// classes
+import LearnedCommander from '../server/models/classes/LearnedCommander';
+
 export const searchActions = (store) => {
   const setTarget = (path) => {
     store.set('target')(path);
@@ -41,6 +44,23 @@ export const formationActions = (store) => {
   return {
     removeCommander,
     removeTactics,
+  };
+};
+
+export const tacticsActions = () => {
+  const generateId = (targetType, position, index) => {
+    const { tactics } = LearnedCommander.paths(position);
+    return `${targetType}_${tactics[index]}`;
+  };
+
+  const scrollToTactics = id => (event) => {
+    event.preventDefault();
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+  };
+
+  return {
+    generateId,
+    scrollToTactics,
   };
 };
 

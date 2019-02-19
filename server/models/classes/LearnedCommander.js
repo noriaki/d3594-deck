@@ -16,6 +16,18 @@ class LearnedCommander {
     return md5(`${cId}(${tIds.join()})`);
   }
 
+  static paths(position) {
+    return {
+      index: `[${position}]`,
+      commander: `[${position}].commander`,
+      tactics: [
+        `[${position}].tactics`,
+        `[${position}].additionalTactics[0]`,
+        `[${position}].additionalTactics[1]`,
+      ],
+    };
+  }
+
   get humanize() {
     const additionalTacticsNames = this.additionalTactics.map(
       t => (t != null ? t.name : '未習得')

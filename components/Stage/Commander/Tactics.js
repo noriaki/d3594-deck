@@ -20,7 +20,7 @@ const Tactics = ({
   tactics: propTactics,
   editable,
   removable,
-  onClick: handleClickTo = () => {},
+  onClick: handleClickTo = () => () => {},
 }) => {
   const {
     tacticsRoot,
@@ -31,16 +31,17 @@ const Tactics = ({
   const tactics = (propTactics || defaultTactics);
   const imageURL = TacticsClass.buildImageURL(tactics);
   const imageSrcSet = TacticsClass.getImageSrcSet(tactics);
-  const handleClickToEdit = (
-    editable && propTactics ? handleClickTo('edit') : () => {}
-  );
+  let handleClick = handleClickTo('noop');
+  if (propTactics) {
+    handleClick = editable ? handleClickTo('edit') : handleClickTo('scroll');
+  }
   const addable = editable && propTactics == null;
 
   return (
     <Card elevation={0} square className={tacticsRoot}>
       <CardActionArea
         component="a"
-        onClick={handleClickToEdit}
+        onClick={handleClick}
         className={tacticsContainer}>
         <CardMedia
           component="img"
