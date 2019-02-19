@@ -9,18 +9,34 @@ import Chip from '@material-ui/core/Chip';
 import Divider from '@material-ui/core/Divider';
 
 // stores
-import { withStores } from '../../stores';
+import { withStores } from '../../../stores';
+
+// components
+import TacticsList from './TacticsList';
+
+// classes
+import { baseTeam } from '../../../server/models/classes/Commander';
 
 const to = unit => value => `${value}${unit}`;
 const styles = theme => ({
   header: {
-    margin: `0 ${theme.spacing.unit}px`,
+    margin: [0, theme.spacing.unit].map(to('px')).join(' '),
+    '& > h2': {
+      display: 'inline-flex',
+      alignItems: 'center',
+    },
+    '& > h2 > span': {
+      marginRight: '.5rem',
+      borderRadius: theme.spacing.unit,
+    },
   },
   paper: {
     padding: [0, theme.spacing.unit].map(to('px')).join(' '),
+    marginBottom: theme.spacing.unit * 3,
   },
   dl: {
     padding: '.5em 0',
+    margin: 0,
     '& > *': {
       margin: '.5em 0',
     },
@@ -52,7 +68,7 @@ const styles = theme => ({
   },
 });
 
-export const DetailComponent = ({ formation, classes }) => {
+export const DetailComponent = ({ formation, edit, classes }) => {
   const {
     header,
     paper,
@@ -67,10 +83,28 @@ export const DetailComponent = ({ formation, classes }) => {
   const humanizeString = formation.get('humanize');
   const commanders = [...formation.get('commanders')];
 
+  const EditingChip = (
+    <Chip
+      label="編成中"
+      component="span"
+      color="secondary"
+      variant="outlined" />
+  );
+
   return (
     <Fragment>
       <div className={header}>
+        <Typography gutterBottom component="h2" variant="h4">
+          { edit && EditingChip }
+          習得戦法一覧
+        </Typography>
+      </div>
+      <Paper square className={paper}>
+        <TacticsList commanders={commanders} />
+      </Paper>
+      <div className={header}>
         <Typography component="h2" variant="h4">
+          { edit && EditingChip }
           部隊データ
         </Typography>
         <Typography color="textSecondary" gutterBottom>
@@ -146,13 +180,17 @@ const textOfHumanizeFormation = (humanizeString) => {
 const textOfSameArmyBonus = (commanders) => {
   const armyGroupedCommanders = groupBy(commanders, 'commander.army');
   const bonusArmy = Object.keys(armyGroupedCommanders).find(
-    army => armyGroupedCommanders[army].length > 1
+    army => (
+      Object.keys(armyBonusTypes).includes(army)
+        && armyGroupedCommanders[army].length > 1
+    )
   );
   if (typeof bonusArmy === 'undefined') {
     return '--';
   }
   const bonusCommanders = armyGroupedCommanders[bonusArmy];
   const bonusRate = (bonusCommanders.length - 1) * 5.0;
+
   return [
     `${bonusArmy}兵系に`,
     armyBonusTypes[bonusArmy].map(b => `${b}上昇${bonusRate}%`).join('と'),
@@ -173,7 +211,9 @@ const armyBonusTypes = {
 const textOfSameTeamBonus = (commanders) => {
   const teamGroupedCommanders = groupBy(commanders, 'commander.team');
   const bonusTeam = Object.keys(teamGroupedCommanders).find(
-    team => teamGroupedCommanders[team].length > 1
+    team => (
+      baseTeam.includes(team) && teamGroupedCommanders[team].length > 1
+    )
   );
   if (typeof bonusTeam === 'undefined') {
     return '--';

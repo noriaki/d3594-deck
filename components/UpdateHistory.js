@@ -81,6 +81,17 @@ const UpdateContent = ({
 
 const updateHistories = [
   {
+    version: '1.0.4',
+    date: '2019/02/20',
+    content: (
+      <ul>
+        <li>部隊の作成画面にも部隊データを表示するようにしました</li>
+        <li>部隊に付けた戦法の詳細を、部隊作成画面と詳細画面に表示するようにしました</li>
+        <li>戦法のアイコンをタップすると、戦法詳細と部隊の間をスクロールするようにしました</li>
+      </ul>
+    ),
+  },
+  {
     version: '1.0.3',
     date: '2019/02/15',
     content: (

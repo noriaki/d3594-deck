@@ -23,6 +23,7 @@ const styles = theme => ({
   commanderImageTitleWrap: {},
   commanderImageTitleInner: {},
   tacticsRoot: {},
+  tacticsContainer: {},
   tacticsImage: {},
   tacticsCaptionContainer: {},
 });
@@ -56,7 +57,7 @@ export const baseStyles = theme => merge({}, styles(theme), {
     boxSizing: 'border-box',
     flexShrink: 0,
     width: 'calc((var(--ivw) * 100 - 64px) * 4 / 13)',
-    height: 'calc((var(--ivw) * 100 - 64px) * 4 / 13) * 1.371345029239765)',
+    height: 'calc(((var(--ivw) * 100 - 64px) * 4 / 13) * 1.371345029239765)',
   },
   commanderImageContainer: {
     height: '100%',
@@ -65,7 +66,7 @@ export const baseStyles = theme => merge({}, styles(theme), {
     overflow: 'unset',
   },
   commanderImageTitleRoot: {
-    height: '2rem',
+    height: theme.typography.pxToRem(13 * 2),
     background: [
       'linear-gradient(to top',
       'rgba(0,0,0,0.7) 0%',
@@ -74,11 +75,12 @@ export const baseStyles = theme => merge({}, styles(theme), {
     ].join(', '),
   },
   commanderImageTitleWrap: {
-    marginLeft: '.5rem',
-    marginRight: '.5rem',
+    marginLeft: theme.typography.pxToRem(8),
+    marginRight: theme.typography.pxToRem(8),
   },
   commanderImageTitleInner: {
     lineHeight: 'unset',
+    fontSize: theme.typography.pxToRem(13),
   },
   tacticsRoot: {
     overflow: 'unset',
@@ -126,11 +128,10 @@ export const searchStyles = theme => merge({}, styles(theme), {
     display: 'none',
   },
   tacticsRoot: {
-    padding: '.0625rem .125rem',
+    padding: '0 .125rem',
     background: 'rgba(255,255,255,0.8)',
     gridColumn: '2 / 4',
     gridRow: '3',
-    display: 'flex',
     alignItems: 'center',
     '&:nth-child(4)': {
       gridRow: '4',
@@ -138,6 +139,10 @@ export const searchStyles = theme => merge({}, styles(theme), {
     '&:nth-child(5)': {
       gridRow: '5',
     },
+  },
+  tacticsContainer: {
+    display: 'flex',
+    justifyContent: 'flex-start',
   },
   tacticsImage: {
     height: '1rem',

@@ -22,6 +22,10 @@ const styles = theme => ({
   tileBarRoot: {
     height: theme.spacing.unit * 3,
   },
+  tileBarTitleWrap: {
+    marginLeft: theme.typography.pxToRem(8),
+    marginRight: theme.typography.pxToRem(8),
+  },
 });
 
 export class ResultsComponent extends Component {
@@ -141,7 +145,11 @@ export class ResultsComponent extends Component {
 
 export default withStyles(styles)(ResultsComponent);
 
-const buildGridListTile = (classes, handleClick) => commander => (
+const buildGridListTile = ({
+  tileImage,
+  tileBarRoot: root,
+  tileBarTitleWrap: titleWrap,
+}, handleClick) => commander => (
   <GridListTile
     key={commander._id}
     onClick={handleClick({ commander })}
@@ -149,10 +157,10 @@ const buildGridListTile = (classes, handleClick) => commander => (
     <ResponsiveImage
       src={commander.imageURL}
       alt={commander.id}
-      className={classes.tileImage} />
+      className={tileImage} />
     <GridListTileBar
       title={`${commander.name}${commander.special || ''}`}
       titlePosition="bottom"
-      classes={{ root: classes.tileBarRoot }} />
+      classes={{ root, titleWrap }} />
   </GridListTile>
 );
