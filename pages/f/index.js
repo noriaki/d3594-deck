@@ -28,7 +28,6 @@ const styles = theme => ({
     paddingTop: 56,
   },
   section: {
-    // margin: theme.spacing.unit,
     marginBottom: theme.spacing.unit * 3,
   },
 });

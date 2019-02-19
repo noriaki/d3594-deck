@@ -3,9 +3,14 @@ import React from 'react';
 // material-ui
 import { withStyles } from '@material-ui/core/styles';
 
+// stores
+import { Container as StoreContainer, initialStates } from '../../stores';
+
 // components
+import Title from '../../components/Title';
 import TitleBar from '../../components/TitleBar';
 import DeckEditor from '../../components/DeckEditor';
+import FormationDetail from '../../components/Stage/Detail';
 import Footer from '../../components/Footer';
 
 // class
@@ -16,13 +21,24 @@ const styles = theme => ({
     paddingTop: 56,
     marginBottom: theme.spacing.unit * 4,
   },
+  section: {
+    marginBottom: theme.spacing.unit * 4,
+  },
 });
 
 const FormationEditPage = ({ formation, classes }) => (
   <main>
     <TitleBar />
     <div className={classes.container}>
-      <DeckEditor formation={formation} />
+      <StoreContainer initialStates={{ ...initialStates, formation }}>
+        <Title />
+        <section className={classes.section}>
+          <DeckEditor />
+        </section>
+        <section className={classes.section}>
+          <FormationDetail edit />
+        </section>
+      </StoreContainer>
     </div>
     <Footer />
   </main>
