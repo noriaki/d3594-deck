@@ -14,6 +14,9 @@ import { withStores } from '../../../stores';
 // components
 import TacticsList from './TacticsList';
 
+// classes
+import { baseTeam } from '../../../server/models/classes/Commander';
+
 const to = unit => value => `${value}${unit}`;
 const styles = theme => ({
   header: {
@@ -209,7 +212,7 @@ const textOfSameTeamBonus = (commanders) => {
   const teamGroupedCommanders = groupBy(commanders, 'commander.team');
   const bonusTeam = Object.keys(teamGroupedCommanders).find(
     team => (
-      teamBonusTypes.includes(team) && teamGroupedCommanders[team].length > 1
+      baseTeam.includes(team) && teamGroupedCommanders[team].length > 1
     )
   );
   if (typeof bonusTeam === 'undefined') {
