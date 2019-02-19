@@ -1,6 +1,13 @@
 const { md5, toIdFromInstance } = require('../concerns/identify');
 
-const positions = ['本営', '中衛', '前衛'];
+const positionsMap = [
+  { key: 'honei', value: '本営' },
+  { key: 'chuei', value: '中衛' },
+  { key: 'zenei', value: '前衛' },
+];
+
+const positionKeys = positionsMap.map(p => p.key);
+const positions = positionsMap.map(p => p.value);
 
 const stringId = commanders => positions.map((position, index) => {
   const commander = commanders[index];
@@ -16,6 +23,10 @@ class Formation {
     instance.commanders = [null, null, null];
     return instance;
   }
+
+  static get positionsMap() { return positionsMap; }
+
+  static get positionKeys() { return positionKeys; }
 
   static get positions() { return positions; }
 

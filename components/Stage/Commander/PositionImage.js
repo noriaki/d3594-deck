@@ -6,21 +6,20 @@ import { host as assetHost } from '../../../constants/assets';
 // components
 import ResponsiveImage from '../../ResponsiveImage';
 
-const altTexts = {
-  honei: '本営',
-  chuei: '中衛',
-  zenei: '前衛',
-};
+import {
+  positionsMap as altTexts,
+} from '../../../server/models/classes/Formation';
 
 const PositionImage = ({ classes, position, horizontal }) => {
   const { positionRoot, positionImage } = classes;
   const suffix = horizontal ? '-h' : '';
   const path = `${assetHost}/assets/positions/${position}${suffix}.png`;
+  const alt = altTexts.find(a => a.key === position);
   return (
     <div className={positionRoot}>
       <ResponsiveImage
         className={positionImage}
-        alt={altTexts[position]}
+        alt={alt && alt.value}
         src={path} />
     </div>
   );

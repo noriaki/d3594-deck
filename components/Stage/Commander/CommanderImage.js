@@ -9,6 +9,7 @@ import RemoveIcon from './RemoveIcon';
 import AddCommander from './AddCommander';
 import ResponsiveImage from '../../ResponsiveImage';
 
+// classes
 import Commander from '../../../server/models/classes/Commander';
 
 const CommanderImage = ({

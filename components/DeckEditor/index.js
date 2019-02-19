@@ -1,27 +1,34 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
-// stores
-import { Container as StoreContainer, initialStates } from '../../stores';
+// material-ui
+import { withStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
 
 // components
-import Title from '../Title';
 import Stage from '../Stage';
 import EditActions from '../EditActions';
 import CommanderSearcher from './CommanderSearcher';
 import TacticsSearcher from './TacticsSearcher';
 
-const DeckEditor = (props) => {
-  const { formation } = props;
-  const states = { ...initialStates, formation };
-  return (
-    <StoreContainer initialStates={states}>
-      <Title />
+const styles = theme => ({
+  container: {
+    paddingBottom: theme.spacing.unit * 2,
+  },
+});
+
+const DeckEditor = ({
+  classes: {
+    container,
+  },
+}) => (
+  <Fragment>
+    <Paper square className={container}>
       <Stage edit />
       <EditActions edit />
-      <CommanderSearcher />
-      <TacticsSearcher />
-    </StoreContainer>
-  );
-};
+    </Paper>
+    <CommanderSearcher />
+    <TacticsSearcher />
+  </Fragment>
+);
 
-export default DeckEditor;
+export default withStyles(styles)(DeckEditor);
