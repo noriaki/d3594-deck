@@ -34,13 +34,10 @@ export const FormationImageComponent = ({ classes }) => (
 export default withStyles(styles)(FormationImageComponent);
 
 const handleClickToDownload = (event) => {
-  console.log(event.target);
-  const data = event.target.toDataURL({
-    mimeTyep: 'image/jpeg',
-    quality: 0.8,
-  });
+  const mimeTyep = 'image/jpeg';
+  const data = event.target.toDataURL({ mimeTyep, quality: 0.8 });
   const link = document.createElement('a');
-  link.href = data;
+  link.href = data.replace(mimeTyep, 'image/octet-stream');
   link.download = 'file.jpg';
   link.click();
 };
