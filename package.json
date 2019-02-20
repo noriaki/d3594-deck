@@ -54,6 +54,7 @@
     "react": "^16.8.2",
     "react-dom": "^16.8.2",
     "react-event-listener": "^0.6.4",
+    "react-is": "^16.8.2",
     "react-jss": "^8.6.1",
     "react-parallax": "^2.1.0",
     "rxjs": "^6.3.3",
