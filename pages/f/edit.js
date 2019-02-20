@@ -11,6 +11,7 @@ import { Container as StoreContainer, initialStates } from '../../stores';
 import Title from '../../components/Title';
 import TitleBar from '../../components/TitleBar';
 import DeckEditor from '../../components/DeckEditor';
+import FormationImage from '../../components/FormationImage';
 import FormationDetail from '../../components/Stage/Detail';
 import Footer from '../../components/Footer';
 
@@ -27,28 +28,35 @@ const styles = theme => ({
   },
 });
 
-const FormationEditPage = ({ formation, classes }) => (
-  <main>
-    <Head>
-      { formation.identifier && (
-        <link rel="canonical" href={`/f/${formation.identifier}`} />
-      ) }
-    </Head>
-    <TitleBar />
-    <div className={classes.container}>
-      <StoreContainer initialStates={{ ...initialStates, formation }}>
-        <Title />
-        <section className={classes.section}>
-          <DeckEditor />
-        </section>
-        <section className={classes.section}>
-          <FormationDetail edit />
-        </section>
-      </StoreContainer>
-    </div>
-    <Footer />
-  </main>
-);
+const FormationEditPage = ({ formation, classes }) => {
+  const canonicalToDetail = formation.identifier && (
+    <link rel="canonical" href={`/f/${formation.identifier}`} />
+  );
+
+  return (
+    <main>
+      <Head>
+        { canonicalToDetail }
+      </Head>
+      <TitleBar />
+      <div className={classes.container}>
+        <StoreContainer initialStates={{ ...initialStates, formation }}>
+          <Title />
+          <section className={classes.section}>
+            <DeckEditor />
+          </section>
+          <section className={classes.section}>
+            <FormationImage />
+          </section>
+          <section className={classes.section}>
+            <FormationDetail edit />
+          </section>
+        </StoreContainer>
+      </div>
+      <Footer />
+    </main>
+  );
+};
 
 FormationEditPage.getInitialProps = async ({ req, query }) => {
   const isServer = !!req;
