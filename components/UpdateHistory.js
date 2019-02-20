@@ -81,6 +81,15 @@ const UpdateContent = ({
 
 const updateHistories = [
   {
+    version: '1.0.5',
+    date: '2019/02/20',
+    content: (
+      <ul>
+        <li>検索エンジン向けの細かい修正を行いました</li>
+      </ul>
+    ),
+  },
+  {
     version: '1.0.4',
     date: '2019/02/20',
     content: (
