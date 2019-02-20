@@ -13,7 +13,11 @@ import {
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 
-const styles = theme => ({});
+const styles = theme => ({
+  canvasContainer: {
+    display: 'none',
+  },
+});
 
 export const FormationImageComponent = ({ classes }) => {
   const canvasRef = useRef(null);
@@ -27,7 +31,7 @@ export const FormationImageComponent = ({ classes }) => {
 
   return (
     <Fragment>
-      <Paper square>
+      <Paper square className={classes.canvasContainer}>
         <Stage width={300} height={200} ref={canvasRef}>
           <Layer>
             <Circle x={100} y={100} radius={50} fill="green" />
