@@ -5,6 +5,7 @@ import {
   Stage,
   Layer,
   Rect,
+  Circle,
   Text,
 } from 'react-konva';
 
@@ -29,12 +30,15 @@ export const FormationImageComponent = ({ classes }) => {
       <Paper square>
         <Stage width={300} height={200} ref={canvasRef}>
           <Layer>
+            <Circle x={100} y={100} radius={50} fill="green" />
+          </Layer>
+          <Layer>
             <Text text="TTT Canvas" />
             <Rect
               x={20}
               y={20}
-              width={50}
-              height={50}
+              width={100}
+              height={100}
               fill="#fff"
               shadowBlur={5} />
           </Layer>
