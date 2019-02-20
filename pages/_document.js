@@ -4,6 +4,7 @@ import Document, { Head, Main, NextScript } from 'next/document';
 import flush from 'styled-jsx/server';
 
 import { gTagId } from '../contexts/gtag';
+import { host as assetHost } from '../constants/assets';
 
 const gTagScript = `
   window.dataLayer = window.dataLayer || [];
@@ -35,6 +36,10 @@ class MyDocument extends Document {
           <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" />
+          {/* nprogress */}
+          <link
+            rel="stylesheet"
+            href={`https:${assetHost}/assets/nprogress.css`} />
         </Head>
         <body>
           <Main />
