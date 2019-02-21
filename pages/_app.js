@@ -1,6 +1,7 @@
 import React from 'react';
 import App, { Container } from 'next/app';
 import Router from 'next/router';
+import NProgress from 'nprogress';
 import { MuiThemeProvider, withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import JssProvider from 'react-jss/lib/JssProvider';
@@ -38,10 +39,13 @@ const setDimensionVars = () => {
 
 const handleRouteChange = (url) => {
   console.log('App is changing to: ', url);
+  NProgress.start();
   trackPageview(url);
 };
 
 Router.events.on('routeChangeStart', handleRouteChange);
+Router.events.on('routeChangeComplete', () => NProgress.done());
+Router.events.on('routeChangeError', () => NProgress.done());
 
 class D3594DeckApp extends App {
   pageContext = getPageContext();
