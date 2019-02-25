@@ -39,6 +39,7 @@ const styles = theme => ({
   text: {
     color: theme.palette.primary.contrastText,
     fontSize: 32,
+    fontFamily: theme.typography.fontFamilyJP,
   },
 });
 
