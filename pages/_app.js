@@ -47,6 +47,10 @@ Router.events.on('routeChangeStart', handleRouteChange);
 Router.events.on('routeChangeComplete', () => NProgress.done());
 Router.events.on('routeChangeError', () => NProgress.done());
 
+const isStaticPage = router => (
+  router && ['/f/ss'].includes(router.pathname)
+);
+
 class D3594DeckApp extends App {
   pageContext = getPageContext();
 
@@ -58,15 +62,25 @@ class D3594DeckApp extends App {
     if (jssStyles && jssStyles.parentNode) {
       jssStyles.parentNode.removeChild(jssStyles);
     }
-    // set viewport dimension
-    setDimensionVars();
 
-    // scrolling polyfill
-    smoothscroll.polyfill();
+    if (!isStaticPage(this.props.router)) {
+      // set viewport dimension
+      setDimensionVars();
+
+      // scrolling polyfill
+      smoothscroll.polyfill();
+    }
   }
 
   render() {
-    const { Component, pageProps } = this.props;
+    const { Component, pageProps, router } = this.props;
+    const isDynamic = !isStaticPage(router);
+    const eventListener = (isDynamic && (
+      <EventListener
+        target="window"
+        onResize={debounce(this.handleResize)} />
+    ));
+
     return (
       <Container>
         <JssProvider
@@ -75,13 +89,11 @@ class D3594DeckApp extends App {
           <MuiThemeProvider
             theme={this.pageContext.theme}
             sheetsManager={this.pageContext.sheetsManager}>
-            <StyledCssBaseline />
+            { isDynamic ? <StyledCssBaseline /> : <CssBaseline /> }
             <div id="pagetop">
               <Component pageContext={this.pageContext} {...pageProps} />
             </div>
-            <EventListener
-              target="window"
-              onResize={debounce(this.handleResize)} />
+            { eventListener }
           </MuiThemeProvider>
         </JssProvider>
       </Container>
