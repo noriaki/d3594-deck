@@ -10,6 +10,16 @@ const fileMap = {
 const baseOrigin = ['典蔵', '典籍', '季専用', '分析', '固有(初期)'];
 
 class Tactics {
+  static initialize(tactics) {
+    const { name, origin, type } = tactics || {};
+    if (name != null && origin != null && type != null) { return tactics; }
+    const instance = new this();
+    instance.name = '未習得';
+    instance.origin = null;
+    instance.type = null;
+    return instance;
+  }
+
   static buildImageURL(tactics = {}, acquirer, density) {
     const { stage, permissions, type } = tactics;
     let basename = fileMap[type] || 'default';
