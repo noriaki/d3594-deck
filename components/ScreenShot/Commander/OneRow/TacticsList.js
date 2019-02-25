@@ -11,7 +11,7 @@ import Tactics from './Tactics';
 
 const initializeTactics = TacticsClass.initialize.bind(TacticsClass);
 
-const styles = theme => ({
+const styles = {
   root: {
     width: 688,
     height: '100%',
@@ -22,7 +22,7 @@ const styles = theme => ({
     justifyContent: 'space-between',
     padding: '0 41px',
   },
-});
+};
 
 export const TacticsListComponent = ({ list, classes }) => {
   const { root } = classes;

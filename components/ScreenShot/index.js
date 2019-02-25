@@ -9,7 +9,7 @@ import OneRowCommander from './Commander/OneRow';
 // classes
 import LearnedCommander from '../../server/models/classes/LearnedCommander';
 
-const styles = theme => ({
+const styles = {
   root: {
     height: '100%',
     width: '100%',
@@ -18,7 +18,7 @@ const styles = theme => ({
     justifyContent: 'space-around',
     alignItems: 'center',
   },
-});
+};
 
 export const ScreenShotComponent = ({ commanders, classes }) => {
   const [honei, chuei, zenei] = commanders.map(

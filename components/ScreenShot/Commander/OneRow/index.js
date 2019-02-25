@@ -9,7 +9,7 @@ import PositionImage from '../../../Stage/Commander/PositionImage';
 import FaceDetail from './FaceDetail';
 import TacticsList from './TacticsList';
 
-const styles = theme => ({
+const styles = {
   root: {
     width: 1060,
     height: 180,
@@ -28,7 +28,7 @@ const styles = theme => ({
   positionImage: {
     width: 56,
   },
-});
+};
 
 export const OneRowCommanderComponent = ({
   commander: learnedCommander,
