@@ -1,4 +1,5 @@
 import React from 'react';
+import classnames from 'classnames';
 
 // material-ui
 import { withStyles } from '@material-ui/core/styles';
@@ -29,6 +30,9 @@ const styles = theme => ({
   text: {
     fontSize: 40,
   },
+  textDefault: {
+    color: theme.palette.grey[700],
+  },
 });
 
 export const TacticsComponent = ({ tactics, classes }) => {
@@ -37,15 +41,17 @@ export const TacticsComponent = ({ tactics, classes }) => {
     image,
     textContainer,
     text,
+    textDefault,
   } = classes;
-  const { name } = tactics;
+  const { identifier, name } = tactics;
   const src = Tactics.buildImageURL(tactics, null, '2x');
+  const textClasses = classnames(text, { [textDefault]: !identifier });
 
   return (
     <div className={root}>
-      <img src={src} alt={tactics.name} className={image} />
+      <img src={src} alt={name} className={image} />
       <div className={textContainer}>
-        <Typography variant="h6" className={text}>{name}</Typography>
+        <Typography variant="h6" className={textClasses}>{name}</Typography>
       </div>
     </div>
   );

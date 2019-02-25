@@ -26,7 +26,7 @@ const styles = {
     alignItems: 'center',
   },
   positionImage: {
-    width: 56,
+    width: 48,
   },
 };
 
