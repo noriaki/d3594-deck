@@ -16,6 +16,7 @@ module.exports = app => ([
   get(`${apiNamespace}/t`, tacticsApiRouter.search),
   // pages
   get('/f/new', formationRouter.initialize(app)),
+  get('/f/:id.png', formationRouter.screenshot(app)),
   get('/f/:id', formationRouter.show(app)),
   get('/f/:id/edit', formationRouter.edit(app)),
 ]);
