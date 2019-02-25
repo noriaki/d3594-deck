@@ -39,7 +39,7 @@ class MyDocument extends Document {
           {/* nprogress */}
           <link
             rel="stylesheet"
-            href={`https:${assetHost}/assets/nprogress.css`} />
+            href={`${assetHost}/assets/nprogress.css`} />
         </Head>
         <body>
           <Main />

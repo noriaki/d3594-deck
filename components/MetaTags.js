@@ -6,7 +6,7 @@ import { host as assetHost } from '../constants/assets';
 
 const title = '大三国志 部隊編成アプリ';
 const description = 'ゲーム｢大三国志｣の部隊を自由に編成して共有できるアプリ。分城を増やさなくても、校場や統帥庁のLvを上げなくても、 好きなだけ部隊が組める。 経験値を気にせず戦法を付け外しできる。 そんな夢のようなアプリ、できました。';
-const image = `https:${assetHost}/assets/cover.jpg`;
+const image = `${assetHost}/assets/cover.jpg`;
 
 const MetaTagsComponent = () => (
   <Head>
