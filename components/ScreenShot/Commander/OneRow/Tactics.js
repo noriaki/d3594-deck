@@ -29,6 +29,8 @@ const styles = theme => ({
   },
   text: {
     fontSize: 40,
+    fontFamily: theme.typography.fontFamilyJP,
+    fontWeight: 400,
   },
   textDefault: {
     color: theme.palette.grey[700],

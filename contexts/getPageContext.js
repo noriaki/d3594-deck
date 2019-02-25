@@ -9,6 +9,7 @@ const theme = createMuiTheme({
   typography: {
     useNextVariants: true,
     fontSize: 12,
+    fontFamilyJP: '"Noto Sans JP", "Helvetica", "Arial", sans-serif',
   },
   palette: {
     primary: {
