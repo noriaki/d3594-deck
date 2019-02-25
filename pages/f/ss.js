@@ -1,4 +1,5 @@
 import React from 'react';
+import Head from 'next/head';
 
 // material-ui
 import { withStyles } from '@material-ui/core/styles';
@@ -31,6 +32,12 @@ const styles = theme => ({
 
 const SsPage = ({ formation, classes }) => (
   <main className={classes.main}>
+    <Head>
+      {/* Japanese fonts */}
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Noto+Sans+JP:400" />
+    </Head>
     <FormationScreenShot commanders={formation.commanders} />
   </main>
 );
