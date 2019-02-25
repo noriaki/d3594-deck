@@ -3,7 +3,11 @@ const { host: assetHost } = require('../../../constants/assets');
 const assetUriBase = `${assetHost}/images/commanders`;
 
 class Commander {
-  static initialize() {
+  static initialize(commander = {}) {
+    const { id, name, identifier } = commander;
+    if (id != null && name != null && identifier != null) {
+      return commander;
+    }
     const instance = new this();
     instance.id = '未配置';
     instance.name = '未配置';
