@@ -5,9 +5,6 @@ import classnames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
-// components
-import ResponsiveImage from '../../../ResponsiveImage';
-
 const styles = theme => ({
   root: {
     width: 290,
@@ -86,7 +83,7 @@ export const FaceDetailComponent = ({
 
   return (
     <div className={root}>
-      <ResponsiveImage src={imageSrc} alt={id} className={image} />
+      <img src={imageSrc} alt={id} className={image} />
       <div className={detail}>
         <Text>{ `Cost ${cost}` }</Text>
         <Text>{ special }</Text>
