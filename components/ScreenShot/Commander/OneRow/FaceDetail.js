@@ -40,6 +40,8 @@ const styles = theme => ({
     color: theme.palette.primary.contrastText,
     fontSize: 32,
     fontFamily: theme.typography.fontFamilyJP,
+    fontStyle: theme.typography.fontStyleJP,
+    fontWeight: theme.typography.fontWeightJP,
   },
 });
 
