@@ -4,6 +4,7 @@ import Document, { Head, Main, NextScript } from 'next/document';
 import flush from 'styled-jsx/server';
 
 import { gTagId } from '../contexts/gtag';
+import { getLoadFontScript } from '../contexts/fonts';
 import { host as assetHost } from '../constants/assets';
 
 const gTagScript = `
@@ -12,6 +13,8 @@ const gTagScript = `
   gtag('js', new Date());
   gtag('config', '${gTagId}');
 `;
+
+const fontScript = getLoadFontScript();
 
 class MyDocument extends Document {
   render() {
@@ -36,6 +39,8 @@ class MyDocument extends Document {
           <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" />
+          {/* Adobe fonts */}
+          <script dangerouslySetInnerHTML={{ __html: fontScript }} />
           {/* nprogress */}
           <link
             rel="stylesheet"

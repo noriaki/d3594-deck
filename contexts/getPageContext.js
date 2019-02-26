@@ -4,12 +4,23 @@ import { SheetsRegistry } from 'jss';
 import { createMuiTheme, createGenerateClassName } from '@material-ui/core/styles';
 
 import { viewportMaxWidth } from '../constants/styles';
+import { fontStyles } from './fonts';
+
+const defaultFontFamily = ['"Helvetica"', '"Arial"', 'sans-serif'];
+const fontFamilyJP = [
+  '"Roboto"',
+  '"Noto Sans JP"',
+  `"${fontStyles[0].family}"`,
+  ...defaultFontFamily,
+].join(', ');
 
 const theme = createMuiTheme({
   typography: {
     useNextVariants: true,
     fontSize: 12,
-    fontFamilyJP: '"Roboto", "Noto Sans JP", "Helvetica", "Arial", sans-serif',
+    fontFamilyJP,
+    fontStyleJP: fontStyles[0].style,
+    fontWeightJP: fontStyles[0].weight,
   },
   palette: {
     primary: {
