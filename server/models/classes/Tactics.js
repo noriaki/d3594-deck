@@ -1,6 +1,7 @@
 const { host: assetHost } = require('../../../constants/assets');
 
 const assetUriBase = `${assetHost}/images/tactics`;
+const assetSvgUriBase = `${assetHost}/svgs/tactics`;
 const fileMap = {
   指揮: 'shiki',
   主動: 'shudo',
@@ -53,6 +54,16 @@ class Tactics {
 
   buildImageURL(density) {
     return this.constructor.buildImageURL(this, null, density);
+  }
+
+  static buildNameSvgURL(tactics = {}) {
+    const { identifier } = tactics;
+    const id = identifier || 'default';
+    return `${assetSvgUriBase}/${id}.svg`;
+  }
+
+  get nameSvgURL() {
+    return this.constructor.buildNameSvgURL(this);
   }
 }
 

@@ -85,7 +85,8 @@ describe('Routes: `/c`', () => {
       query.text = '周瑜';
       const options = { qs: query, json: true };
       const expectedKeys = [
-        '_id', 'id', 'identifier', 'name', 'special', 'image', 'imageURL',
+        '_id', 'id', 'identifier', 'name', 'special', 'image',
+        'imageURL', 'nameSvgURL', 'armySvgURL', 'teamSvgURL',
       ].sort();
       const subjects = await server.get('/c', options);
       expect(subjects).toHaveLength(1);
