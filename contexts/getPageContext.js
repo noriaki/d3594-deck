@@ -9,7 +9,6 @@ import { fontStyles } from './fonts';
 const defaultFontFamily = ['"Helvetica"', '"Arial"', 'sans-serif'];
 const fontFamilyJP = [
   '"Roboto"',
-  '"Noto Sans JP"',
   `"${fontStyles[0].family}"`,
   ...defaultFontFamily,
 ].join(', ');
