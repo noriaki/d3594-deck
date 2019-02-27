@@ -29,6 +29,9 @@ const styles = theme => ({
     alignItems: 'center',
     marginLeft: -41,
     backgroundColor: 'rgba(255,255,255,0.6)',
+    '& > div': {
+      display: 'inline-flex',
+    },
   },
   text: {
     fontSize: 40,
