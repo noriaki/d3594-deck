@@ -3,7 +3,9 @@ import classnames from 'classnames';
 
 // material-ui
 import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
+
+// components
+import Svg from 'react-svg';
 
 // classes
 import Tactics from '../../../../server/models/classes/Tactics';
@@ -24,17 +26,15 @@ const styles = theme => ({
     height: 56,
     display: 'flex',
     justifyContent: 'center',
+    alignItems: 'center',
     marginLeft: -41,
     backgroundColor: 'rgba(255,255,255,0.6)',
   },
   text: {
     fontSize: 40,
-    fontFamily: theme.typography.fontFamilyJP,
-    fontStyle: theme.typography.fontStyleJP,
-    fontWeight: theme.typography.fontWeightJP,
   },
   textDefault: {
-    color: theme.palette.grey[700],
+    fill: theme.palette.grey[700],
   },
 });
 
@@ -48,14 +48,17 @@ export const TacticsComponent = ({ tactics, classes }) => {
   } = classes;
   const { identifier, name } = tactics;
   const src = Tactics.buildImageURL(tactics, null, '2x');
+  const svgSrc = Tactics.buildNameSvgURL(tactics);
   const textClasses = classnames(text, { [textDefault]: !identifier });
 
   return (
     <div className={root}>
       <img src={src} alt={name} className={image} />
-      <div className={textContainer}>
-        <Typography variant="h6" className={textClasses}>{name}</Typography>
-      </div>
+      <Svg
+        src={svgSrc}
+        className={textContainer}
+        svgStyle={{ height: 40, width: 40 * name.length }}
+        svgClassName={textClasses} />
     </div>
   );
 };

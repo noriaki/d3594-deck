@@ -5,6 +5,12 @@ import classnames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
+// components
+import Svg from 'react-svg';
+
+// classes
+import Commander from '../../../../server/models/classes/Commander';
+
 const styles = theme => ({
   root: {
     width: 290,
@@ -39,9 +45,21 @@ const styles = theme => ({
   text: {
     color: theme.palette.primary.contrastText,
     fontSize: 32,
+    lineHeight: 1,
     fontFamily: theme.typography.fontFamilyJP,
     fontStyle: theme.typography.fontStyleJP,
     fontWeight: theme.typography.fontWeightJP,
+  },
+  textSvg: {
+    height: 40 * 0.8,
+    fill: theme.palette.primary.contrastText,
+  },
+  textDefault: {
+    width: 120 * 0.8,
+  },
+  textArmy: {
+    width: 40 * 0.8,
+    height: 40 * 0.6,
   },
 });
 
@@ -55,14 +73,19 @@ export const FaceDetailComponent = ({
     imageNone,
     detail,
     text,
+    textSvg,
+    textDefault,
+    textArmy,
   } = classes;
 
-  if (commander == null) {
+  if (commander === null) {
+    const svgSrc = Commander.buildNameSvgURL();
     return (
       <div className={root}>
-        <div className={classnames(image, imageNone)}>
-          <Typography className={text}>未配置</Typography>
-        </div>
+        <Svg
+          src={svgSrc}
+          className={classnames(image, imageNone)}
+          svgClassName={classnames(textSvg, textDefault)} />
       </div>
     );
   }
@@ -71,7 +94,6 @@ export const FaceDetailComponent = ({
     id,
     cost,
     special,
-    army,
     distance,
     imageURL,
   } = commander;
@@ -83,6 +105,7 @@ export const FaceDetailComponent = ({
       </Typography>
     )
   );
+  const armySvgSrc = Commander.buildArmySvgURL(commander);
 
   return (
     <div className={root}>
@@ -90,7 +113,13 @@ export const FaceDetailComponent = ({
       <div className={detail}>
         <Text>{ `Cost ${cost}` }</Text>
         <Text>{ special }</Text>
-        <Text>{ `${army} ${distance}` }</Text>
+        <Text>
+          <Svg
+            src={armySvgSrc}
+            wrapper="span"
+            svgClassName={classnames(textSvg, textArmy)} />
+          <span>{ distance }</span>
+        </Text>
       </div>
     </div>
   );
