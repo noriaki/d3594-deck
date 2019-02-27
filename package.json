@@ -57,6 +57,7 @@
     "react-is": "^16.8.2",
     "react-jss": "^8.6.1",
     "react-parallax": "^2.1.0",
+    "react-svg": "^7.2.7",
     "rxjs": "^6.3.3",
     "smoothscroll-polyfill": "^0.4.3",
     "undux": "^5.0.0-beta.18"
