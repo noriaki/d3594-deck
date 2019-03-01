@@ -164,6 +164,20 @@ const effects = (stores) => {
         formation.set('humanize')(humanize);
         formation.set('published')(published);
         Router.push(path, as);
+
+        // prefetch og:image
+        const { hostname } = new URL(document.URL);
+        if (hostname === 'deck.d3594.com') {
+          fetch(
+            `https://d3594-ss.now.sh/${identifier}.png`,
+            { redirect: 'manual' }
+          );
+        } else if (hostname === 'deck-stg.d3594.com') {
+          fetch(
+            `https://d3594-ss-stg.now.sh/${identifier}.png`,
+            { redirect: 'manual' }
+          );
+        }
       }
     });
 
