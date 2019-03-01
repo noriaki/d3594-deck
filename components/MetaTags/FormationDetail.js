@@ -10,14 +10,17 @@ const FormationDetailMeta = ({ formation }) => {
     getTitle,
     getDescription,
     getImageURL,
+    getPublishStatus,
   } = createActions(formation);
   const url = getURL();
   const title = getTitle();
   const description = getDescription();
   const imageURL = getImageURL();
+  const isPublished = getPublishStatus();
   return (
     <Head>
       <title>{title}</title>
+      { !isPublished && <meta name="robots" content="noindex,nofollow" /> }
       <meta name="description" content={description} />
       <meta itemProp="name" content={title} />
       <meta itemProp="description" content={description} />
@@ -117,11 +120,14 @@ const createActions = (store) => {
     return `https://d3594-ss.now.sh/${identifier}.png`;
   };
 
+  const getPublishStatus = () => !!store.get('published');
+
   return {
     getURL,
     getAppName,
     getTitle,
     getDescription,
     getImageURL,
+    getPublishStatus,
   };
 };
