@@ -1,6 +1,6 @@
 {
   "name": "d3594-deck",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "main": "server/index.js",
   "repository": "git@github.com:noriaki/d3594-deck.git",
   "author": {
@@ -26,6 +26,7 @@
   "dependencies": {
     "@material-ui/core": "^3.6.0",
     "@material-ui/icons": "^3.0.1",
+    "aws-sdk": "^2.412.0",
     "classnames": "^2.2.6",
     "isomorphic-fetch": "^2.2.1",
     "jss": "^9.8.7",
@@ -59,6 +60,7 @@
     "react-parallax": "^2.1.0",
     "react-svg": "^7.2.7",
     "rxjs": "^6.3.3",
+    "sitemap": "^2.1.0",
     "smoothscroll-polyfill": "^0.4.3",
     "undux": "^5.0.0-beta.18"
   },

@@ -81,6 +81,15 @@ const UpdateContent = ({
 
 const updateHistories = [
   {
+    version: '1.1.1',
+    date: '2019/03/01',
+    content: (
+      <ul>
+        <li>検索エンジン向けのsitemap.xmlを追加しました</li>
+      </ul>
+    ),
+  },
+  {
     version: '1.1.0',
     date: '2019/03/01',
     content: (
