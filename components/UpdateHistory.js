@@ -81,6 +81,20 @@ const UpdateContent = ({
 
 const updateHistories = [
   {
+    version: '1.1.0',
+    date: '2019/03/01',
+    content: (
+      <ul>
+        <li>
+          部隊詳細ページをTwitterなどへ共有した際、
+          部隊画像を表示できるようにしました
+        </li>
+        <li>ページ移動時に読み込み中のバーを表示するようにしました</li>
+        <li>ページの読み込み・表示速度を改善しました</li>
+      </ul>
+    ),
+  },
+  {
     version: '1.0.5',
     date: '2019/02/20',
     content: (
