@@ -35,13 +35,14 @@ function fillCommanders() {
   );
 }
 
-async function createAssociation(commanders, name) {
+async function createAssociation(commanders, name, published = false) {
   const identifier = FormationClass.identify(commanders);
   let formation = await this.findById(identifier);
   if (formation == null) {
     const commanderIds = commanders.map(toIdFromInstance);
     formation = new this({
       name,
+      published,
       commanders: commanderIds,
     });
     await formation.save();
@@ -61,7 +62,7 @@ async function importSampleData() {
     )
   ));
   // /f/43e0f069ab00049908ab34390a9c45ca
-  await this.createAssociation(commanders, '大都督（呉レンジャー）');
+  await this.createAssociation(commanders, '大都督（呉レンジャー）', true);
 
   const immatureData = sampleFormationData.immatureCommander;
   const immatureCommander = await LearnedCommander.createAssociation(
@@ -69,11 +70,11 @@ async function importSampleData() {
   );
   // /f/8f112238f2392424f26f740360629aae
   await this.createAssociation(
-    [commanders[0], immatureCommander], '前衛不在の大都督'
+    [commanders[0], immatureCommander], '前衛不在の大都督', true
   );
   // /f/688d618a2fd4261edb5b972681873209
   await this.createAssociation(
-    [commanders[0], null, immatureCommander], '中衛不在の大都督'
+    [commanders[0], null, immatureCommander], '中衛不在の大都督', true
   );
 }
 
@@ -85,7 +86,7 @@ async function importHalloweenCupData() {
     Promise.all(formation.map(({ commander, tactics }) => (
       LearnedCommander.createAssociation(commander, tactics)
     ))).then(commanders => (
-      this.createAssociation(commanders, `ハロウィン杯:${keys[i]}`)
+      this.createAssociation(commanders, `ハロウィン杯:${keys[i]}`, true)
     ))
   )));
 }
