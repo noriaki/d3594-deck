@@ -20,6 +20,7 @@ const formationSchema = new Schema({
     }],
     default: [null, null, null],
   },
+  published: { type: Boolean, default: false, required: true },
 });
 
 function setIdentifier() {

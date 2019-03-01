@@ -9,7 +9,7 @@ import Paper from '@material-ui/core/Paper';
 import { Container as StoreContainer, initialStates } from '../../stores';
 
 // components
-import Title from '../../components/Title';
+import FormationDetailMeta from '../../components/MetaTags/FormationDetail';
 import Stage from '../../components/Stage';
 import FormationDetail from '../../components/Stage/Detail';
 import EditActions from '../../components/EditActions';
@@ -39,7 +39,6 @@ const FormationDetailPage = ({ classes, formation }) => (
       <StoreContainer initialStates={{ ...initialStates, formation }}>
         <section className={classes.section}>
           <Paper square className={classes.paper}>
-            <Title />
             <Stage />
           </Paper>
           <Notice />
@@ -49,6 +48,7 @@ const FormationDetailPage = ({ classes, formation }) => (
           <FormationDetail />
           <EditActions />
         </section>
+        <FormationDetailMeta />
       </StoreContainer>
     </div>
     <Footer />
@@ -72,7 +72,7 @@ FormationDetailPage.getInitialProps = async ({ req, query }) => {
 FormationDetailPage.propTypes = {
   classes: PropTypes.objectOf(PropTypes.string).isRequired,
   formation: PropTypes.objectOf(PropTypes.oneOfType(
-    [PropTypes.string, PropTypes.number, PropTypes.array]
+    [PropTypes.string, PropTypes.number, PropTypes.array, PropTypes.bool]
   )).isRequired,
 };
 

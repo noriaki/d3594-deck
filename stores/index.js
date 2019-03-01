@@ -7,6 +7,11 @@ export const initialFormation = {
   name: null,
   humanize: null,
   commanders: [null, null, null],
+  published: false,
+};
+
+export const initialApiHandler = {
+  publishing: null,
 };
 
 export const initialSearcher = {
@@ -50,6 +55,7 @@ export const initialTacticsSearcher = {
 
 export const initialStates = {
   formation: initialFormation,
+  apiHandler: initialApiHandler,
   searcher: initialSearcher,
   commanderSearcher: initialCommanderSearcher,
   tacticsSearcher: initialTacticsSearcher,

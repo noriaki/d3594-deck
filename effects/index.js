@@ -44,6 +44,7 @@ export const fetchData = (store, path) => async (query) => {
 const effects = (stores) => {
   const {
     formation,
+    apiHandler,
     searcher,
     commanderSearcher,
     tacticsSearcher,
@@ -150,14 +151,50 @@ const effects = (stores) => {
         ...headersForAPI, method: 'POST', body: JSON.stringify(query),
       });
       if (response.ok && [200, 201].includes(response.status)) {
-        const { identifier, name, humanize } = await response.json();
+        const {
+          identifier,
+          name,
+          humanize,
+          published,
+        } = await response.json();
         const path = `/f/edit?id=${identifier}`;
         const as = `/f/${identifier}/edit`;
         formation.set('identifier')(identifier);
         formation.set('name')(name);
         formation.set('humanize')(humanize);
+        formation.set('published')(published);
+        Router.push(path, as);
+
+        // prefetch og:image
+        const { hostname } = new URL(document.URL);
+        if (hostname === 'deck.d3594.com') {
+          fetch(
+            `https://d3594-ss.now.sh/${identifier}.png`,
+            { mode: 'cors', redirect: 'manual' }
+          );
+        } else if (hostname === 'deck-stg.d3594.com') {
+          fetch(
+            `https://d3594-ss-stg.now.sh/${identifier}.png`,
+            { mode: 'cors', redirect: 'manual' }
+          );
+        }
+      }
+    });
+
+  apiHandler.on('publishing')
+    .pipe(filter(notNull))
+    .subscribe(async (identifier) => {
+      const response = await fetch(`/api/v1/f/${identifier}`, {
+        ...headersForAPI,
+        method: 'PUT',
+        body: JSON.stringify({ published: true }),
+      });
+      if (response.ok) {
+        const path = `/f?id=${identifier}`;
+        const as = `/f/${identifier}`;
         Router.push(path, as);
       }
+      apiHandler.set('publishing')(null);
     });
 
   commanderSearcherSelectStream

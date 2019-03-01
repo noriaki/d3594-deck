@@ -21,6 +21,7 @@ class Formation {
     instance.identifier = null;
     instance.name = null;
     instance.commanders = [null, null, null];
+    instance.published = false;
     return instance;
   }
 
