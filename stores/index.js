@@ -7,6 +7,7 @@ export const initialFormation = {
   name: null,
   humanize: null,
   commanders: [null, null, null],
+  published: false,
 };
 
 export const initialApiHandler = {

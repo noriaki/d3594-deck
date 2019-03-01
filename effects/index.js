@@ -151,12 +151,18 @@ const effects = (stores) => {
         ...headersForAPI, method: 'POST', body: JSON.stringify(query),
       });
       if (response.ok && [200, 201].includes(response.status)) {
-        const { identifier, name, humanize } = await response.json();
+        const {
+          identifier,
+          name,
+          humanize,
+          published,
+        } = await response.json();
         const path = `/f/edit?id=${identifier}`;
         const as = `/f/${identifier}/edit`;
         formation.set('identifier')(identifier);
         formation.set('name')(name);
         formation.set('humanize')(humanize);
+        formation.set('published')(published);
         Router.push(path, as);
       }
     });

@@ -67,7 +67,7 @@ export const EditActionsComponent = ({
           color="primary"
           size="small"
           component="a"
-          onClick={isPublished ? () => {} : publishFn}
+          onClick={edit && !isPublished ? publishFn : () => {}}
           aria-label={label}>
           <Icon className={classes.icon} />
           {label}

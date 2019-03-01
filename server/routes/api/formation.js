@@ -47,8 +47,9 @@ const create = async (req, res) => {
 
 const publish = async (req, res) => {
   setApiHeaders(res);
+  const { id: identifier } = req.params;
   const formation = await Formation.findByIdAndUpdate(
-    req.params.id, { published: true }
+    identifier, { published: true }
   );
   if (formation === null) {
     return send(res, 404, {
