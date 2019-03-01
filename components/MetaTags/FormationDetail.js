@@ -78,9 +78,19 @@ const createActions = (store) => {
   ), []).join('と');
 
   const getDescription = () => {
-    const positions = ['本営', '中衛', '前衛'];
+    // common data
     let description = 'ゲーム「大三国志」の部隊編成の詳細。';
+    description += [
+      '総合ステータス(全武将Lv50時)は、',
+      `総コスト ${store.get('cost')}、`,
+      `部隊速度 ${store.get('velocity')}、`,
+      `攻城値 ${store.get('siege')}。`,
+    ].join('');
+
+    // commanders and tactics
     const commanders = [...store.get('commanders')];
+    const positions = ['本営', '中衛', '前衛'];
+    description += '編成は、';
     description += commanders.map((lc, index) => {
       if (lc === null) {
         return `${positions[index]}は未配置`;
@@ -99,13 +109,6 @@ const createActions = (store) => {
       ].join('');
     }).join('。');
     description += '、という部隊の構成。';
-    description += [
-      '全武将がLv50のときの総合ステータスが、',
-      `総コスト ${store.get('cost')}、`,
-      `部隊速度 ${store.get('velocity')}、`,
-      `攻城値 ${store.get('siege')}、`,
-      'という部隊編成。',
-    ].join('');
     return description;
   };
 
