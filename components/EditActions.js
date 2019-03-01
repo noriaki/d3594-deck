@@ -23,14 +23,28 @@ const styles = theme => ({
   },
 });
 
-export const EditActionsComponent = ({ edit, formation, classes }) => {
+export const EditActionsComponent = ({
+  edit,
+  apiHandler,
+  formation,
+  classes,
+}) => {
   const identifier = formation.get('identifier');
-  const isDisable = [...formation.get('commanders')][0] == null;
+  const isApiPublishing = apiHandler.get('publishing');
+  const isPublished = formation.get('published');
+  const publishFn = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    apiHandler.set('publishing')(identifier);
+  };
+  const isDisable = (
+    [...formation.get('commanders')][0] == null || isApiPublishing !== null
+  );
   const path = edit ? '' : '/edit';
   const href = `/f${path}?id=${identifier}`;
   const as = `/f/${identifier}${path}`;
   const Icon = edit ? DoneIcon : EditIcon;
-  const label = edit ? '保存' : '部隊をコピーして編集';
+  const label = buildLabel(edit, isApiPublishing);
   const NewBotton = (
     <Link href="/f/edit" as="/f/new" passHref>
       <Button
@@ -53,6 +67,7 @@ export const EditActionsComponent = ({ edit, formation, classes }) => {
           color="primary"
           size="small"
           component="a"
+          onClick={isPublished ? () => {} : publishFn}
           aria-label={label}>
           <Icon className={classes.icon} />
           {label}
@@ -64,3 +79,8 @@ export const EditActionsComponent = ({ edit, formation, classes }) => {
 };
 
 export default withStores(withStyles(styles)(EditActionsComponent));
+
+const buildLabel = (isEdit, isApiPublishing) => {
+  if (!isEdit) { return '部隊をコピーして編集'; }
+  return isApiPublishing ? '保存中...' : '保存';
+};
