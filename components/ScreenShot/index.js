@@ -5,6 +5,7 @@ import { withStyles } from '@material-ui/core/styles';
 
 // components
 import OneRowCommander from './Commander/OneRow';
+import CopyRights from './CopyRights';
 
 // classes
 import LearnedCommander from '../../server/models/classes/LearnedCommander';
@@ -31,6 +32,7 @@ export const ScreenShotComponent = ({ commanders, classes }) => {
       <OneRowCommander pos="honei" commander={honei} />
       <OneRowCommander pos="chuei" commander={chuei} />
       <OneRowCommander pos="zenei" commander={zenei} />
+      <CopyRights />
     </div>
   );
 };
