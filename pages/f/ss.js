@@ -1,4 +1,5 @@
 import React from 'react';
+import Head from 'next/head';
 
 // material-ui
 import { withStyles } from '@material-ui/core/styles';
@@ -31,6 +32,11 @@ const styles = theme => ({
 
 const SsPage = ({ formation, classes }) => (
   <main className={classes.main}>
+    <Head>
+      { formation.identifier && (
+        <link rel="canonical" href={`/f/${formation.identifier}`} />
+      ) }
+    </Head>
     <FormationScreenShot commanders={formation.commanders} />
   </main>
 );
