@@ -62,3 +62,6 @@ typings/
 
 /data/
 !/data/init/
+
+# creds
+/.aws-s3-creds.json
