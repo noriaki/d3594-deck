@@ -170,12 +170,12 @@ const effects = (stores) => {
         if (hostname === 'deck.d3594.com') {
           fetch(
             `https://d3594-ss.now.sh/${identifier}.png`,
-            { redirect: 'manual' }
+            { mode: 'cors', redirect: 'manual' }
           );
         } else if (hostname === 'deck-stg.d3594.com') {
           fetch(
             `https://d3594-ss-stg.now.sh/${identifier}.png`,
-            { redirect: 'manual' }
+            { mode: 'cors', redirect: 'manual' }
           );
         }
       }
