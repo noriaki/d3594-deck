@@ -27,6 +27,7 @@ const styles = theme => ({
     width: 1200,
     height: 628,
     position: 'relative',
+    padding: '14px 0',
   },
 });
 
