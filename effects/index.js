@@ -44,6 +44,7 @@ export const fetchData = (store, path) => async (query) => {
 const effects = (stores) => {
   const {
     formation,
+    apiHandler,
     searcher,
     commanderSearcher,
     tacticsSearcher,
@@ -158,6 +159,22 @@ const effects = (stores) => {
         formation.set('humanize')(humanize);
         Router.push(path, as);
       }
+    });
+
+  apiHandler.on('publishing')
+    .pipe(filter(notNull))
+    .subscribe(async (identifier) => {
+      const response = await fetch(`/api/v1/f/${identifier}`, {
+        ...headersForAPI,
+        method: 'PUT',
+        body: JSON.stringify({ published: true }),
+      });
+      if (response.ok) {
+        const path = `/f?id=${identifier}`;
+        const as = `/f/${identifier}`;
+        Router.push(path, as);
+      }
+      apiHandler.set('publishing')(null);
     });
 
   commanderSearcherSelectStream

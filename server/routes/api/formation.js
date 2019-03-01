@@ -45,7 +45,21 @@ const create = async (req, res) => {
   return formation;
 };
 
+const publish = async (req, res) => {
+  setApiHeaders(res);
+  const formation = await Formation.findByIdAndUpdate(
+    req.params.id, { published: true }
+  );
+  if (formation === null) {
+    return send(res, 404, {
+      error: { code: 404, message: 'Formation not found' },
+    });
+  }
+  return formation;
+};
+
 module.exports = {
   show,
   create,
+  publish,
 };

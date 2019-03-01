@@ -1,4 +1,4 @@
-const { get, post } = require('microrouter');
+const { get, post, put } = require('microrouter');
 
 const formationRouter = require('./formation');
 const formationApiRouter = require('./api/formation');
@@ -10,6 +10,7 @@ const apiNamespace = '/api/v1';
 module.exports = app => ([
   // api
   get(`${apiNamespace}/f/:id`, formationApiRouter.show),
+  put(`${apiNamespace}/f/:id`, formationApiRouter.publish),
   post(`${apiNamespace}/f`, formationApiRouter.create),
   get(`${apiNamespace}/c`, commanderApiRouter.search),
   get(`${apiNamespace}/c/:id`, commanderApiRouter.fetch),
