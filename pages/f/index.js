@@ -72,7 +72,7 @@ FormationDetailPage.getInitialProps = async ({ req, query }) => {
 FormationDetailPage.propTypes = {
   classes: PropTypes.objectOf(PropTypes.string).isRequired,
   formation: PropTypes.objectOf(PropTypes.oneOfType(
-    [PropTypes.string, PropTypes.number, PropTypes.array]
+    [PropTypes.string, PropTypes.number, PropTypes.array, PropTypes.bool]
   )).isRequired,
 };
 
