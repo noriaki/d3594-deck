@@ -1,8 +1,5 @@
 {
   "name": "d3594-deck",
-  "scripts": {
-    "postdeploy": "yarn db:import"
-  },
   "env": {
     "DATA_REPO": {
       "required": true
