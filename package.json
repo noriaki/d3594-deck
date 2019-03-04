@@ -19,7 +19,14 @@
     "dev": "micro-dev --watch server",
     "build": "next build",
     "db:import:dev": "NODE_ENV=development node scripts/importData.js",
-    "db:import": "NODE_ENV=production node scripts/importData.js",
+    "db:import": "node scripts/importData.js",
+    "db:migrate:001": "node scripts/migrateOnceSetPublishedToFalseWhereNotExistsOnFormation.js",
+    "db:migrate:002": "node scripts/migrateOnceSetPublishedToTrueWhereInitialImportedOnFormation.js",
+    "db:migrate": "npm-s db:migrate:*",
+    "generate:sitemap": "node scripts/generateSitemapXML.js",
+    "app:release": "NODE_ENV=production npm-s db:import db:migrate",
+    "app:release:dev": "NODE_ENV=development npm-s db:import db:migrate",
+    "ops:sitemap": "NODE_ENV=production yarn generate:sitemap",
     "start": "NODE_ENV=production micro -l tcp://0.0.0.0:$PORT",
     "heroku-postbuild": "yarn build"
   },
@@ -81,6 +88,8 @@
     "lodash.times": "^4.3.2",
     "micro-dev": "^3.0.0",
     "microrouter-test-server": "^1.0.3",
-    "mongodb-uri": "^0.9.7"
-  }
+    "mongodb-uri": "^0.9.7",
+    "npm-run-all": "^4.1.5"
+  },
+  "heroku-run-build-script": true
 }
