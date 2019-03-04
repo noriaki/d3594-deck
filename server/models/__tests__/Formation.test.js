@@ -55,15 +55,17 @@ describe('Formation association model', () => {
           '724e437dcc3793990ee83726be27a3bb',
           'a7a476ff14e40130b89ba17a3d59b56a',
         ];
-        const commanders = await LearnedCommander.where('_id').in(expectedIds);
+        const commanders = await Promise.all(expectedIds.map(
+          id => (id ? LearnedCommander.findOne({ identifier: id }) : null)
+        ));
         await Formation.createAssociation(commanders, 'test');
 
-        const subject = await Formation.findOne();
+        const subject = await Formation.findOne({ commanders: expectedIds });
         expect(subject).not.toBeNull();
-        expect(subject._id).toBe(md5(expectedIds.join()));
+        expect(subject.identifier).toBe(md5(expectedIds.join()));
         expect(subject.name).toBe('test');
         subject.commanders.forEach((commander, index) => {
-          expect(commander).toHaveProperty('_id', expectedIds[index]);
+          expect(commander).toHaveProperty('identifier', expectedIds[index]);
         });
         const expectedStringId = [
           '本営：★5・孫堅・呉・歩 (駆逐, 戦必断金)',
@@ -77,16 +79,19 @@ describe('Formation association model', () => {
         const expectedIds = [
           '2f502d39145d35259eff1878cc78187d',
           '724e437dcc3793990ee83726be27a3bb',
+          null,
         ];
-        const commanders = await LearnedCommander.where('_id').in(expectedIds);
+        const commanders = await Promise.all(expectedIds.map(
+          id => (id ? LearnedCommander.findOne({ identifier: id }) : null)
+        ));
         await Formation.createAssociation(commanders, 'test');
 
-        const subject = await Formation.findOne();
+        const subject = await Formation.findOne({ commanders: expectedIds });
         expect(subject).not.toBeNull();
-        expect(subject._id).toBe(md5([...expectedIds, null].join()));
+        expect(subject.identifier).toBe(md5(expectedIds.join()));
         expect(subject.name).toBe('test');
-        expect(subject.commanders[0]).toHaveProperty('_id', expectedIds[0]);
-        expect(subject.commanders[1]).toHaveProperty('_id', expectedIds[1]);
+        expect(subject.commanders[0]).toHaveProperty('identifier', expectedIds[0]);
+        expect(subject.commanders[1]).toHaveProperty('identifier', expectedIds[1]);
         expect(subject.commanders[2]).toBeNull();
         const expectedStringId = [
           '本営：★5・孫堅・呉・歩 (駆逐, 戦必断金)',
@@ -103,18 +108,18 @@ describe('Formation association model', () => {
           'a7a476ff14e40130b89ba17a3d59b56a',
         ];
         const commanders = await Promise.all(expectedIds.map(
-          id => (id ? LearnedCommander.findById(id) : null)
+          id => (id ? LearnedCommander.findOne({ identifier: id }) : null)
         ));
         await Formation.createAssociation(commanders, 'test');
 
-        const subject = await Formation.findOne();
+        const subject = await Formation.findOne({ commanders: expectedIds });
         expect(subject).not.toBeNull();
-        expect(subject._id).toBe(md5(expectedIds.join()));
+        expect(subject.identifier).toBe(md5(expectedIds.join()));
         expect(subject.name).toBe('test');
         expect(subject.commanders).toHaveLength(3);
-        expect(subject.commanders[0]).toHaveProperty('_id', expectedIds[0]);
+        expect(subject.commanders[0]).toHaveProperty('identifier', expectedIds[0]);
         expect(subject.commanders[1]).toBeNull();
-        expect(subject.commanders[2]).toHaveProperty('_id', expectedIds[2]);
+        expect(subject.commanders[2]).toHaveProperty('identifier', expectedIds[2]);
         const expectedStringId = [
           '本営：★5・孫堅・呉・歩 (駆逐, 戦必断金)',
           '中衛：未配置',
@@ -126,15 +131,19 @@ describe('Formation association model', () => {
       it('when passed 1 commander', async () => {
         const expectedIds = [
           '2f502d39145d35259eff1878cc78187d',
+          null,
+          null,
         ];
-        const commanders = await LearnedCommander.where('_id').in(expectedIds);
+        const commanders = await Promise.all(expectedIds.map(
+          id => (id ? LearnedCommander.findOne({ identifier: id }) : null)
+        ));
         await Formation.createAssociation(commanders, 'test');
 
-        const subject = await Formation.findOne();
+        const subject = await Formation.findOne({ commanders: expectedIds });
         expect(subject).not.toBeNull();
-        expect(subject._id).toBe(md5([...expectedIds, null, null].join()));
+        expect(subject.identifier).toBe(md5(expectedIds.join()));
         expect(subject.name).toBe('test');
-        expect(subject.commanders[0]).toHaveProperty('_id', expectedIds[0]);
+        expect(subject.commanders[0]).toHaveProperty('identifier', expectedIds[0]);
         expect(subject.commanders[1]).toBeNull();
         expect(subject.commanders[2]).toBeNull();
         const expectedStringId = [
