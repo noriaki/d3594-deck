@@ -22,10 +22,10 @@
     "db:import": "node scripts/importData.js",
     "db:migrate:001": "node scripts/migrateOnceSetPublishedToFalseWhereNotExistsOnFormation.js",
     "db:migrate:002": "node scripts/migrateOnceSetPublishedToTrueWhereInitialImportedOnFormation.js",
-    "db:migrate": "npm-s db:migrate:*",
+    "db:migrate": "run-s db:migrate:*",
     "generate:sitemap": "node scripts/generateSitemapXML.js",
-    "app:release": "npm-s db:import db:migrate",
-    "app:release:dev": "NODE_ENV=development npm-s db:import db:migrate",
+    "app:release": "run-s db:import db:migrate",
+    "app:release:dev": "NODE_ENV=development run-s db:import db:migrate",
     "ops:sitemap": "yarn generate:sitemap",
     "start": "NODE_ENV=production micro -l tcp://0.0.0.0:$PORT",
     "heroku-postbuild": "yarn build"
@@ -56,7 +56,6 @@
     "mongoose": "^5.3.2",
     "mongoose-autopopulate": "^0.8.2",
     "next": "^8.0.3",
-    "npm-run-all": "^4.1.5",
     "nprogress": "^0.2.0",
     "prop-types": "^15.6.2",
     "qs": "^6.5.2",
@@ -89,7 +88,8 @@
     "lodash.times": "^4.3.2",
     "micro-dev": "^3.0.0",
     "microrouter-test-server": "^1.0.3",
-    "mongodb-uri": "^0.9.7"
+    "mongodb-uri": "^0.9.7",
+    "npm-run-all": "^4.1.5"
   },
   "heroku-run-build-script": true
 }
