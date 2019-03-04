@@ -151,7 +151,7 @@ const buildGridListTile = ({
   tileBarTitleWrap: titleWrap,
 }, handleClick) => commander => (
   <GridListTile
-    key={commander._id}
+    key={commander.identifier}
     onClick={handleClick({ commander })}
     style={{ height: 'var(--ch)' }}>
     <ResponsiveImage
