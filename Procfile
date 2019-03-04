@@ -1,2 +1,2 @@
-release: NODE_ENV=production yarn app:release
-web: NODE_ENV=production yarn start
+release: yarn app:release
+web: yarn start
