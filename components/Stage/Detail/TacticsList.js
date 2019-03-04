@@ -43,7 +43,7 @@ export const TacticsListComponent = ({
   const [honeiCommander, ...others] = commanders;
 
   const lists = others.reduce((list, propCommander, index) => {
-    const key = propCommander ? propCommander.identifier : `null-${index}`;
+    const key = propCommander ? propCommander.identifier : `null-${index + 1}`;
 
     return [
       ...list,
