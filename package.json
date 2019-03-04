@@ -23,8 +23,10 @@
     "db:migrate:001": "node scripts/migrateOnceSetPublishedToFalseWhereNotExistsOnFormation.js",
     "db:migrate:002": "node scripts/migrateOnceSetPublishedToTrueWhereInitialImportedOnFormation.js",
     "db:migrate": "npm-s db:migrate:*",
+    "generate:sitemap": "node scripts/generateSitemapXML.js",
     "app:release": "NODE_ENV=production npm-s db:import db:migrate",
     "app:release:dev": "NODE_ENV=development npm-s db:import db:migrate",
+    "ops:sitemap": "NODE_ENV=production yarn generate:sitemap",
     "start": "NODE_ENV=production micro -l tcp://0.0.0.0:$PORT",
     "heroku-postbuild": "yarn build"
   },
