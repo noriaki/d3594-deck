@@ -9,6 +9,7 @@ const apiNamespace = '/api/v1';
 
 module.exports = app => ([
   // api
+  get(`${apiNamespace}/f/latest`, formationApiRouter.latest),
   get(`${apiNamespace}/f/:id`, formationApiRouter.show),
   put(`${apiNamespace}/f/:id`, formationApiRouter.publish),
   post(`${apiNamespace}/f`, formationApiRouter.create),
@@ -16,6 +17,7 @@ module.exports = app => ([
   get(`${apiNamespace}/c/:id`, commanderApiRouter.fetch),
   get(`${apiNamespace}/t`, tacticsApiRouter.search),
   // pages
+  get('/', formationRouter.index(app)),
   get('/f/new', formationRouter.initialize(app)),
   get('/f/:id.png', formationRouter.screenshot(app)),
   get('/f/:id', formationRouter.show(app)),

@@ -15,6 +15,15 @@ const show = async (req, res) => {
   return formation;
 };
 
+const latest = async (req, res) => {
+  setApiHeaders(res);
+  const { limit } = { ...req.params, ...req.query };
+  const formations = await Formation.findLatest(
+    { limit: parseInt(limit, 10) }
+  );
+  return formations;
+};
+
 /* pass data[] format:
  { commander: { identifier }, additionalTactics: [{ identifier }, { identifier }] }
  { commander: { identifier }, additionalTactics: [{ identifier }, null] }
@@ -61,6 +70,7 @@ const publish = async (req, res) => {
 
 module.exports = {
   show,
+  latest,
   create,
   publish,
 };

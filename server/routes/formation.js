@@ -3,6 +3,11 @@ const { parse } = require('url');
 // models
 const Formation = require('../models/Formation');
 
+const index = app => async (req, res) => {
+  const formations = await Formation.findLatest({ limit: 4 });
+  return app.render(req, res, '/', { formations });
+};
+
 const show = app => async (req, res) => {
   const { id } = req.params;
   const formation = await Formation.fetchById(id);
@@ -39,6 +44,7 @@ const screenshot = app => async (req, res) => {
 };
 
 module.exports = {
+  index,
   show,
   edit,
   initialize,
