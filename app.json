@@ -14,7 +14,7 @@
       "required": true
     },
     "YARN_PRODUCTION": {
-      "value": false
+      "value": "false"
     }
   },
   "formation": {
