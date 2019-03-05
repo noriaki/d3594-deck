@@ -25,7 +25,7 @@ describe('LearnedCommander association model', () => {
       const { identifier } = await LearnedCommander.createAssociation(
         commander, additionalTactics
       );
-      const subject = await LearnedCommander.findById(identifier);
+      const subject = await LearnedCommander.fetchById(identifier);
 
       expect(subject).not.toBeNull();
       expect(subject).toHaveProperty(
@@ -53,7 +53,7 @@ describe('LearnedCommander association model', () => {
         await LearnedCommander.createAssociation(
           commander, additionalTactics
         );
-        const subject = await LearnedCommander.findById(
+        const subject = await LearnedCommander.fetchById(
           'c7548c9fd014798fbcf40e593fe58ece'
         );
         expect(subject.humanize).toBe(
@@ -65,7 +65,7 @@ describe('LearnedCommander association model', () => {
         await LearnedCommander.createAssociation(
           commander, [additionalTactics[0], null]
         );
-        const subject = await LearnedCommander.findById(
+        const subject = await LearnedCommander.fetchById(
           'b7d62259d10b4a5b5da22c25f233ac51'
         );
         expect(subject.humanize).toBe(
@@ -77,7 +77,7 @@ describe('LearnedCommander association model', () => {
         await LearnedCommander.createAssociation(
           commander, [null, additionalTactics[1]]
         );
-        const subject = await LearnedCommander.findById(
+        const subject = await LearnedCommander.fetchById(
           '7f4d44c7a3ac54aeeaac2284db634388'
         );
         expect(subject.humanize).toBe(

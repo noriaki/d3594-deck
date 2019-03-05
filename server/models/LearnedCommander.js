@@ -35,15 +35,19 @@ function setIdentifier() {
   const identifier = LearnedCommanderClass.identify(
     this.commander, this.additionalTactics
   );
-  this._id = identifier;
+  // this._id = identifier;
   this.identifier = identifier;
 }
 
 async function setSpecificTactics() {
   const commanderId = toIdFromInstance(this.commander);
   const specificTactics = await TacticsModel.fetchByOwnerId(commanderId);
-  this.tactics = specificTactics._id;
+  this.tactics = specificTactics.identifier;
 }
+
+// @async
+function fetchById(identifier) { return this.findOne({ identifier }); }
+learnedCommanderSchema.static('fetchById', fetchById);
 
 function fillAdditionalTactics() {
   this.additionalTactics = [...Array(2)].map(
@@ -57,7 +61,7 @@ async function createAssociation(commander, additionalTactics = []) {
   );
   const commanderId = toIdFromInstance(commander);
   const additionalTacticsIds = additionalTactics.map(toIdFromInstance);
-  let lc = await this.findById(identifier);
+  let lc = await this.fetchById(identifier);
   if (lc == null) {
     lc = new this({
       commander: commanderId,

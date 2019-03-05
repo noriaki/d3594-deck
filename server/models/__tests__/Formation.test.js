@@ -60,7 +60,9 @@ describe('Formation association model', () => {
         ));
         await Formation.createAssociation(commanders, 'test');
 
-        const subject = await Formation.findOne({ commanders: expectedIds });
+        const subject = await Formation.findOne(
+          { commanders: { $all: expectedIds } }
+        );
         expect(subject).not.toBeNull();
         expect(subject.identifier).toBe(md5(expectedIds.join()));
         expect(subject.name).toBe('test');
@@ -86,7 +88,9 @@ describe('Formation association model', () => {
         ));
         await Formation.createAssociation(commanders, 'test');
 
-        const subject = await Formation.findOne({ commanders: expectedIds });
+        const subject = await Formation.findOne(
+          { commanders: { $all: expectedIds } }
+        );
         expect(subject).not.toBeNull();
         expect(subject.identifier).toBe(md5(expectedIds.join()));
         expect(subject.name).toBe('test');
@@ -112,7 +116,9 @@ describe('Formation association model', () => {
         ));
         await Formation.createAssociation(commanders, 'test');
 
-        const subject = await Formation.findOne({ commanders: expectedIds });
+        const subject = await Formation.findOne(
+          { commanders: { $all: expectedIds } }
+        );
         expect(subject).not.toBeNull();
         expect(subject.identifier).toBe(md5(expectedIds.join()));
         expect(subject.name).toBe('test');
@@ -139,7 +145,9 @@ describe('Formation association model', () => {
         ));
         await Formation.createAssociation(commanders, 'test');
 
-        const subject = await Formation.findOne({ commanders: expectedIds });
+        const subject = await Formation.findOne(
+          { commanders: { $all: expectedIds } }
+        );
         expect(subject).not.toBeNull();
         expect(subject.identifier).toBe(md5(expectedIds.join()));
         expect(subject.name).toBe('test');
@@ -157,7 +165,7 @@ describe('Formation association model', () => {
 
     describe('.importSampleData', () => {
       it('create a formation', async () => {
-        const subject = await Formation.findById(
+        const subject = await Formation.fetchById(
           '43e0f069ab00049908ab34390a9c45ca'
         );
         expect(subject).not.toBeNull();
@@ -171,21 +179,21 @@ describe('Formation association model', () => {
       });
 
       it('.siege is sum of commanders siege', async () => {
-        const subject = await Formation.findById(
+        const subject = await Formation.fetchById(
           '43e0f069ab00049908ab34390a9c45ca'
         );
         expect(subject.siege).toBe(196);
       });
 
       it('.velocity is min of commanders velocity', async () => {
-        const subject = await Formation.findById(
+        const subject = await Formation.fetchById(
           '43e0f069ab00049908ab34390a9c45ca'
         );
         expect(subject.velocity).toBe(62);
       });
 
       it('.cost is sum of commanders cost', async () => {
-        const subject = await Formation.findById(
+        const subject = await Formation.fetchById(
           '43e0f069ab00049908ab34390a9c45ca'
         );
         expect(subject.cost).toBe(9.5);

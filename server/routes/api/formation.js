@@ -33,14 +33,14 @@ const create = async (req, res) => {
     lc && LearnedCommander.identify(lc.cId, lc.tIds)
   ));
   const formationId = Formation.identify(lcIds);
-  const formation = await Formation.findById(formationId);
+  const formation = await Formation.fetchById(formationId);
   if (formation == null) {
     const learnedCommanders = await Promise.all(lcIds.map((lcId, i) => {
       if (lcId === null) { return null; }
       return LearnedCommander.createAssociation(ids[i].cId, ids[i].tIds);
     }));
     const { id } = await Formation.createAssociation(learnedCommanders);
-    return send(res, 201, await Formation.findById(id));
+    return send(res, 201, await Formation.fetchById(id));
   }
   return formation;
 };
@@ -48,8 +48,8 @@ const create = async (req, res) => {
 const publish = async (req, res) => {
   setApiHeaders(res);
   const { id: identifier } = req.params;
-  const formation = await Formation.findByIdAndUpdate(
-    identifier, { published: true }
+  const formation = await Formation.findOneAndUpdate(
+    { identifier }, { published: true }
   );
   if (formation === null) {
     return send(res, 404, {

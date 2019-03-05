@@ -74,7 +74,7 @@ commanderSchema.pre('validate', setSortKey);
 
 // @async
 function specificTactics() {
-  return Tactics.fetchByOwnerId(this._id);
+  return Tactics.fetchByOwnerId(this.identifier);
 }
 
 commanderSchema.method('specificTactics', specificTactics);
@@ -112,6 +112,10 @@ function importData(json) {
   });
   return commander.save();
 }
+
+// @async
+function fetchById(identifier) { return this.findOne({ identifier }); }
+commanderSchema.static('fetchById', fetchById);
 
 commanderSchema.static('importData', importData);
 

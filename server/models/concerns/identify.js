@@ -23,7 +23,7 @@ const md5 = (src) => {
 };
 
 const toIdFromInstance = insOrId => (
-  (isString(insOrId) || insOrId == null) ? insOrId : insOrId._id
+  (isString(insOrId) || insOrId == null) ? insOrId : insOrId.identifier
 );
 
 module.exports = {

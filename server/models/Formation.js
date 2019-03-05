@@ -37,7 +37,7 @@ function fillCommanders() {
 
 async function createAssociation(commanders, name, published = false) {
   const identifier = FormationClass.identify(commanders);
-  let formation = await this.findById(identifier);
+  let formation = await this.fetchById(identifier);
   if (formation == null) {
     const commanderIds = commanders.map(toIdFromInstance);
     formation = new this({
@@ -51,9 +51,9 @@ async function createAssociation(commanders, name, published = false) {
 }
 formationSchema.static('createAssociation', createAssociation);
 
-function fetchById(id) { return this.findById(id); }
+// @async
+function fetchById(identifier) { return this.findOne({ identifier }); }
 formationSchema.static('fetchById', fetchById);
-
 
 async function importSampleData() {
   const commanders = await Promise.all(sampleFormationData.formation.map(
