@@ -7,8 +7,14 @@
     "MONGODB_URI": {
       "required": true
     },
+    "NODE_ENV": {
+      "required": true
+    },
     "PAPERTRAIL_API_TOKEN": {
       "required": true
+    },
+    "YARN_PRODUCTION": {
+      "value": false
     }
   },
   "formation": {
