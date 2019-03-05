@@ -199,5 +199,63 @@ describe('Formation association model', () => {
         expect(subject.cost).toBe(9.5);
       });
     });
+
+    describe('search recently saved items', () => {
+      beforeEach(async () => {
+        const commanderIds = [
+          '9daf2ffe7eec142b9231445a8ee7d831', // 龐統
+          'c78a48266ec5166844c7df427834a520', // 張春華
+          '29fb183da598388eee0cd2f73832de8e', // 呂蒙
+        ];
+        const tacticsIds = [
+          [
+            'b77da2245a0a101d91471ef95bef8f35', // 駆逐
+            'b7f524a87084af9715720d1c7e506e28', // 戦必断金
+          ],
+          [
+            'b7f524a87084af9715720d1c7e506e28', // 戦必断金
+            'f299be62db77c354324a51175c49e0b0', // 頑抗
+          ],
+          [
+            '2d3a4d3d6f2385138f5369e4e39f185e', // 回避
+            'b77da2245a0a101d91471ef95bef8f35', // 駆逐
+          ],
+        ];
+        const commanders = await Promise.all(commanderIds.map(
+          (commanderId, i) => (
+            LearnedCommander.createAssociation(commanderId, tacticsIds[i])
+          )
+        ));
+        await Formation.createAssociation(commanders, 'latest one', true);
+        await Formation.createAssociation(
+          commanders.reverse(), 'reverse one', true
+        );
+      });
+
+      it('returning 3 formations sort by updated at', async () => {
+        const expectedIds = [
+          'd33138c02f55d2407aeef516bf01047a', // reverse one
+          '43e0f069ab00049908ab34390a9c45ca', // 大都督（呉レンジャー）
+          '34f0c72392231b9a92f8ae8d699039d3', // latest one
+        ];
+        const unexpectedId = '8f112238f2392424f26f740360629aae';
+        const updateIds = [
+          expectedIds[2], expectedIds[1], unexpectedId, expectedIds[0],
+        ];
+        await updateIds.reduce((prev, identifier, i) => (
+          prev.then(() => (
+            Formation.findOneAndUpdate({ identifier }, { name: `test-${i}` })
+          ))
+        ), Promise.resolve());
+
+        const subjects = await Formation.findLatest({ limit: 3 });
+        expect(subjects).toHaveLength(3);
+        expect(subjects).toEqual(
+          expect.arrayContaining(expectedIds.map(identifier => (
+            expect.objectContaining({ identifier })
+          )))
+        );
+      });
+    });
   });
 });

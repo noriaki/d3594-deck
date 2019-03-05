@@ -56,6 +56,13 @@ formationSchema.static('createAssociation', createAssociation);
 function fetchById(identifier) { return this.findOne({ identifier }); }
 formationSchema.static('fetchById', fetchById);
 
+function findLatest(options) {
+  const fullOfCommanders = { commanders: { $size: 3, $nin: [null] } };
+  const mergedOptions = { ...options, sort: { updatedAt: 'desc' } };
+  return this.find(fullOfCommanders).setOptions(mergedOptions);
+}
+formationSchema.static('findLatest', findLatest);
+
 async function importSampleData() {
   const commanders = await Promise.all(sampleFormationData.formation.map(
     ({ commander, tactics }) => (
