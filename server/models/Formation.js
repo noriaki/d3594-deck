@@ -56,10 +56,16 @@ formationSchema.static('createAssociation', createAssociation);
 function fetchById(identifier) { return this.findOne({ identifier }); }
 formationSchema.static('fetchById', fetchById);
 
-function findLatest(options) {
-  const fullOfCommanders = { commanders: { $size: 3, $nin: [null] } };
+formationSchema.query.fullOfCommanders = function fullOfCommanders() {
+  return this.where({ commanders: { $size: 3, $nin: [null] } });
+};
+
+function findLatest(options = { limit: 3 }) {
   const mergedOptions = { ...options, sort: { updatedAt: 'desc' } };
-  return this.find(fullOfCommanders).setOptions(mergedOptions);
+  return this
+    .find({ published: true })
+    .fullOfCommanders()
+    .setOptions(mergedOptions);
 }
 formationSchema.static('findLatest', findLatest);
 
