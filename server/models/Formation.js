@@ -22,6 +22,7 @@ const formationSchema = new Schema({
   },
   published: { type: Boolean, default: false, required: true },
 });
+formationSchema.set('timestamps', true);
 
 function setIdentifier() {
   const identifier = FormationClass.identify(this.commanders);
