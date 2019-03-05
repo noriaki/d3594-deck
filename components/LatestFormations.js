@@ -36,9 +36,6 @@ const styles = (theme) => {
     text: {
       fontSize: '.6rem',
     },
-    update: {
-      fontSize: '.5rem',
-    },
     actionArea: {
       paddingRight: unit * 2,
       paddingBottom: unit * 2,
@@ -55,7 +52,6 @@ export const LatestFormationsComponent = ({ formations, classes }) => {
     subtitle,
     card,
     text,
-    update,
     actionArea,
   } = classes;
   const buildCard = ({ identifier, updatedAt, humanize }) => (
@@ -71,7 +67,7 @@ export const LatestFormationsComponent = ({ formations, classes }) => {
           component="time"
           datetime={moment(updatedAt).format()}
           title={moment(updatedAt).format()}
-          className={update}>
+          className={text}>
           { moment(updatedAt).fromNow() }
         </Typography>
         <div>
