@@ -35,7 +35,7 @@ function setIdentifier() {
   const identifier = LearnedCommanderClass.identify(
     this.commander, this.additionalTactics
   );
-  // this._id = identifier;
+  this._id = identifier;
   this.identifier = identifier;
 }
 
