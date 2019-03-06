@@ -65,7 +65,7 @@ export const LatestFormationsComponent = ({ formations, classes }) => {
       <CardActions className={actionArea}>
         <Typography
           component="time"
-          datetime={moment(updatedAt).format()}
+          dateTime={moment(updatedAt).format()}
           title={moment(updatedAt).format()}
           className={text}>
           { moment(updatedAt).fromNow() }

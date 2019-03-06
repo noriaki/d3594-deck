@@ -81,6 +81,15 @@ const UpdateContent = ({
 
 const updateHistories = [
   {
+    version: '1.1.2',
+    date: '2019/03/06',
+    content: (
+      <ul>
+        <li>トップページに最近保存された部隊編成の一覧を追加しました</li>
+      </ul>
+    ),
+  },
+  {
     version: '1.1.1',
     date: '2019/03/01',
     content: (

@@ -15,7 +15,7 @@ const main = async () => {
 
   const hostname = 'https://deck.d3594.com';
   const pfs = await Formation.find({ published: true }, 'identifier');
-  const urls = pfs.map(f => `/f/${f.identifier}`);
+  const urls = ['/', ...pfs.map(f => `/f/${f.identifier}`)];
   console.log(`Fetched published urls: count ${urls.length}`);
 
   const sitemap = sm.createSitemap({ hostname, urls }).toString();
