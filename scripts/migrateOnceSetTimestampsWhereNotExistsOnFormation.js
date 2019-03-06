@@ -6,8 +6,10 @@ const logAndExit = (error) => { console.error(error); process.exit(1); };
 
 const perform = async () => {
   const formations = await Formation.find({
-    createdAt: { $exists: false },
-    updatedAt: { $exists: false },
+    $or: [
+      { createdAt: { $exists: false } },
+      { updatedAt: { $exists: false } },
+    ],
   });
   return formations.reduce(
     (prev, formation) => prev.then(
