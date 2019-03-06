@@ -1,5 +1,5 @@
 // created_at: 2019/03/06
-const { connect, disconnect } = require('../server/db');
+const { connect, disconnect, preloadModels } = require('../server/db');
 const Formation = require('../server/models/Formation');
 
 const logAndExit = (error) => { console.error(error); process.exit(1); };
@@ -22,6 +22,7 @@ const perform = async () => {
 const main = async () => {
   // setup
   await connect();
+  preloadModels();
 
   await perform();
 
