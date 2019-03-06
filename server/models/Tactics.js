@@ -55,12 +55,14 @@ function setSortKey() {
 }
 tacticsSchema.pre('validate', setSortKey);
 
-// async
-function fetchByOwnerId(id) {
-  return this
-    .where('ownerIds').in(id).where('origin', '固有(初期)').findOne();
-}
+// @async
+function fetchById(identifier) { return this.findOne({ identifier }); }
+tacticsSchema.static('fetchById', fetchById);
 
+// async
+function fetchByOwnerId(identifier) {
+  return this.findOne({ ownerIds: identifier, origin: '固有(初期)' });
+}
 tacticsSchema.static('fetchByOwnerId', fetchByOwnerId);
 
 async function importData(json, originKey, commanderId) {
@@ -78,7 +80,7 @@ async function importData(json, originKey, commanderId) {
   } = json;
   const identifier = tacticsIdentify(name, origin);
   const stage = stageText.split(/[\s,]+/);
-  const tactics = await this.findById(identifier) || new this({
+  const tactics = await this.fetchById(identifier) || new this({
     name,
     stage,
     origin,

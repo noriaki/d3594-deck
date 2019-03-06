@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 // components
 import ResponsiveImage from '../components/ResponsiveImage';
 import ParallaxCard from '../components/ParallaxCard';
+import LatestFormations from '../components/LatestFormations';
 import Gallery from '../components/Gallery';
 import UpdateHistory from '../components/UpdateHistory';
 import Footer from '../components/Footer';
@@ -41,7 +42,7 @@ const styles = theme => ({
   },
 });
 
-const IndexPage = ({ classes }) => (
+const IndexPage = ({ formations, classes }) => (
   <main className={classes.container}>
     <MetaTags />
     <Typography component="h1" variant="h1" className={classes.logoArea}>
@@ -72,11 +73,25 @@ const IndexPage = ({ classes }) => (
       text="名前や種類で絞り込み可能。1季〜征服季で入手可能なものを揃えました。"
       url={{ href: '/f/edit', as: '/f/new' }}
       linkText="新規作成" />
+    <LatestFormations formations={formations} />
     <Gallery />
     <UpdateHistory />
     <Footer />
   </main>
 );
+
+IndexPage.getInitialProps = async ({ req, query }) => {
+  const isServer = !!req;
+  if (isServer) {
+    const { formations } = query;
+    return { formations };
+  }
+  const res = await fetch('/api/v1/f/latest?limit=4', {
+    headers: { Accept: 'application/json' },
+  });
+  const formations = await res.json();
+  return { formations };
+};
 
 IndexPage.propTypes = {
   classes: PropTypes.objectOf(PropTypes.string).isRequired,

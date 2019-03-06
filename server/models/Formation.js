@@ -22,6 +22,7 @@ const formationSchema = new Schema({
   },
   published: { type: Boolean, default: false, required: true },
 });
+formationSchema.set('timestamps', true);
 
 function setIdentifier() {
   const identifier = FormationClass.identify(this.commanders);
@@ -37,7 +38,7 @@ function fillCommanders() {
 
 async function createAssociation(commanders, name, published = false) {
   const identifier = FormationClass.identify(commanders);
-  let formation = await this.findById(identifier);
+  let formation = await this.fetchById(identifier);
   if (formation == null) {
     const commanderIds = commanders.map(toIdFromInstance);
     formation = new this({
@@ -51,9 +52,22 @@ async function createAssociation(commanders, name, published = false) {
 }
 formationSchema.static('createAssociation', createAssociation);
 
-function fetchById(id) { return this.findById(id); }
+// @async
+function fetchById(identifier) { return this.findOne({ identifier }); }
 formationSchema.static('fetchById', fetchById);
 
+formationSchema.query.fullOfCommanders = function fullOfCommanders() {
+  return this.where({ commanders: { $size: 3, $nin: [null] } });
+};
+
+function findLatest(options = { limit: 3 }) {
+  const mergedOptions = { ...options, sort: { updatedAt: 'desc' } };
+  return this
+    .find({ published: true })
+    .fullOfCommanders()
+    .setOptions(mergedOptions);
+}
+formationSchema.static('findLatest', findLatest);
 
 async function importSampleData() {
   const commanders = await Promise.all(sampleFormationData.formation.map(

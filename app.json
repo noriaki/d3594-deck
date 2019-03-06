@@ -4,11 +4,11 @@
     "DATA_REPO": {
       "required": true
     },
-    "MONGODB_URI": {
+    "NODE_ENV": {
       "required": true
     },
-    "PAPERTRAIL_API_TOKEN": {
-      "required": true
+    "YARN_PRODUCTION": {
+      "value": "false"
     }
   },
   "formation": {

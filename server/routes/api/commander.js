@@ -28,7 +28,7 @@ const search = (req, res) => {
 
 const fetch = async (req, res) => {
   setApiHeaders(res);
-  const commander = await Commander.findById(req.params.id);
+  const commander = await Commander.fetchById(req.params.id);
   if (commander === null) {
     return send(res, 404, {
       error: { code: 404, message: 'Commander not found' },

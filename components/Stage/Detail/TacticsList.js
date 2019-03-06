@@ -1,4 +1,5 @@
 import React from 'react';
+import get from 'lodash.get';
 
 // material-ui
 import { withStyles } from '@material-ui/core/styles';
@@ -43,7 +44,9 @@ export const TacticsListComponent = ({
   const [honeiCommander, ...others] = commanders;
 
   const lists = others.reduce((list, propCommander, index) => {
-    const key = propCommander ? propCommander.identifier : `null-${index}`;
+    const key = get(
+      propCommander, 'commander.identifier', `null-${index + 1}`
+    );
 
     return [
       ...list,
@@ -56,7 +59,7 @@ export const TacticsListComponent = ({
     ];
   }, [(
     <TacticsDetailList
-      key={honeiCommander ? honeiCommander.identifier : 'null-0'}
+      key={get(honeiCommander, 'commander.identifier', 'null-0')}
       position={0}
       commander={honeiCommander}
       classes={innerClasses} />

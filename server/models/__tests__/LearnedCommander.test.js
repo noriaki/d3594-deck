@@ -14,36 +14,35 @@ describe('LearnedCommander association model', () => {
     let commander;
     let additionalTactics;
     beforeEach(async () => {
-      const commanderId = '0022cae0ffb0ee3d8fce63d6d8cdc69f'; // 蒋琬
-      const tacticsIds = [
+      commander = '0022cae0ffb0ee3d8fce63d6d8cdc69f'; // 蒋琬
+      additionalTactics = [
         'b77da2245a0a101d91471ef95bef8f35', // 駆逐
         '2d3a4d3d6f2385138f5369e4e39f185e', // 回避
       ];
-      commander = await Commander.findById(commanderId);
-      additionalTactics = await Tactics.where('_id').in(tacticsIds);
     });
 
     it('commander has associates commander, tactics, additionalTactics', async () => {
-      const identifier = await LearnedCommander.createAssociation(
+      const { identifier } = await LearnedCommander.createAssociation(
         commander, additionalTactics
       );
-      const subject = await LearnedCommander.findById(identifier);
+      const subject = await LearnedCommander.fetchById(identifier);
+
       expect(subject).not.toBeNull();
       expect(subject).toHaveProperty(
-        'identifier', 'a7a476ff14e40130b89ba17a3d59b56a');
+        'identifier', 'c7548c9fd014798fbcf40e593fe58ece');
       expect(subject.commander).toBeInstanceOf(Commander);
       expect(subject.commander).toHaveProperty(
-        '_id', '0022cae0ffb0ee3d8fce63d6d8cdc69f');
+        'identifier', '0022cae0ffb0ee3d8fce63d6d8cdc69f');
       expect(subject.tactics).toBeInstanceOf(Tactics);
       expect(subject.tactics).toHaveProperty(
-        '_id', 'fd5bad37f57c3ea79808e75b9acd64ae');
+        'identifier', 'fd5bad37f57c3ea79808e75b9acd64ae');
       expect(subject.additionalTactics).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
-            _id: '2d3a4d3d6f2385138f5369e4e39f185e',
+            identifier: '2d3a4d3d6f2385138f5369e4e39f185e',
           }),
           expect.objectContaining({
-            _id: 'b77da2245a0a101d91471ef95bef8f35',
+            identifier: 'b77da2245a0a101d91471ef95bef8f35',
           }),
         ])
       );
@@ -54,23 +53,23 @@ describe('LearnedCommander association model', () => {
         await LearnedCommander.createAssociation(
           commander, additionalTactics
         );
-        const subject = await LearnedCommander.findById(
-          'a7a476ff14e40130b89ba17a3d59b56a'
+        const subject = await LearnedCommander.fetchById(
+          'c7548c9fd014798fbcf40e593fe58ece'
         );
         expect(subject.humanize).toBe(
-          '★3・蒋琬・蜀・歩 (回避, 駆逐)'
+          '★3・蒋琬・蜀・歩 (駆逐, 回避)'
         );
       });
 
       it('set single tactics', async () => {
         await LearnedCommander.createAssociation(
-          commander, [additionalTactics[0]]
+          commander, [additionalTactics[0], null]
         );
-        const subject = await LearnedCommander.findById(
-          'b92aba989efd73562c82e9e7c4047106'
+        const subject = await LearnedCommander.fetchById(
+          'b7d62259d10b4a5b5da22c25f233ac51'
         );
         expect(subject.humanize).toBe(
-          '★3・蒋琬・蜀・歩 (回避, 未習得)'
+          '★3・蒋琬・蜀・歩 (駆逐, 未習得)'
         );
       });
 
@@ -78,11 +77,11 @@ describe('LearnedCommander association model', () => {
         await LearnedCommander.createAssociation(
           commander, [null, additionalTactics[1]]
         );
-        const subject = await LearnedCommander.findById(
-          'd5a6570a48bc98d2ef9bd8c6ff2040ec'
+        const subject = await LearnedCommander.fetchById(
+          '7f4d44c7a3ac54aeeaac2284db634388'
         );
         expect(subject.humanize).toBe(
-          '★3・蒋琬・蜀・歩 (未習得, 駆逐)'
+          '★3・蒋琬・蜀・歩 (未習得, 回避)'
         );
       });
     });

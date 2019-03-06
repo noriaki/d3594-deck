@@ -23,7 +23,7 @@ const main = async () => {
   ];
 
   await Formation.updateMany(
-    { identifier: { $in: formationIds } },
+    { identifier: { $in: formationIds }, published: false },
     { published: true }
   );
 
