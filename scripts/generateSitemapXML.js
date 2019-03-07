@@ -1,5 +1,6 @@
 const sm = require('sitemap');
 const AWS = require('aws-sdk');
+const fetch = require('isomorphic-fetch');
 
 const { connect, preloadModels, disconnect } = require('../server/db');
 const Formation = require('../server/models/Formation');
@@ -30,6 +31,7 @@ const main = async () => {
     console.log(sitemap);
   } else {
     await uploadSitemap(sitemap);
+    await purgeSitemapCache();
   }
 
   // teardown
@@ -66,5 +68,32 @@ const uploadSitemap = (sitemap) => {
       console.log(`Completed.\n URI: ${data.Location}`);
       resolve(data.Location);
     });
+  });
+};
+
+const purgeSitemapCache = () => {
+  if (process.env.CLOUDFLARE_KEY == null) { return null; }
+  const {
+    CLOUDFLARE_KEY: key,
+    CLOUDFLARE_ZONE_ID: id,
+    MAIL: mail,
+  } = process.env;
+  const endpoint = `https://api.cloudflare.com/client/v4/zones/${id}/purge_cache`;
+  return fetch(endpoint, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Auth-Key': key,
+      'X-Auth-Email': mail,
+    },
+    body: JSON.stringify({
+      files: ['https://assets-deck.d3594.com/assets/sitemap.xml'],
+    }),
+  }).then(response => response.json()).then((json) => {
+    if (json.success) {
+      console.log(`Purge sitemap.xml cache. zone id: ${json.result.id}`);
+      return true;
+    }
+    return false;
   });
 };
