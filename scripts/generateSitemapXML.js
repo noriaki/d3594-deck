@@ -14,13 +14,23 @@ const main = async () => {
   preloadModels();
 
   const hostname = 'https://deck.d3594.com';
-  const pfs = await Formation.find({ published: true }, 'identifier');
-  const urls = ['/', ...pfs.map(f => `/f/${f.identifier}`)];
+  const pfs = await Formation.find(
+    { published: true },
+    'identifier updatedAt',
+    { sort: { updatedAt: 'desc' } }
+  );
+  const urls = ['/', ...pfs.map(({ identifier, updatedAt }) => ({
+    url: `/f/${identifier}`, lastmodISO: updatedAt.toISOString(),
+  }))];
   console.log(`Fetched published urls: count ${urls.length}`);
 
   const sitemap = sm.createSitemap({ hostname, urls }).toString();
   console.log('Generate sitemap.xml, Uploading...');
-  await uploadSitemap(sitemap);
+  if (isDev) {
+    console.log(sitemap);
+  } else {
+    await uploadSitemap(sitemap);
+  }
 
   // teardown
   await disconnect();
