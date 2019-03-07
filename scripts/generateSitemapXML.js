@@ -46,6 +46,8 @@ const uploadSitemap = (sitemap) => {
     // eslint-disable-next-line global-require
     const s3Options = require('../.aws-s3-creds.json');
     AWS.config.update(s3Options);
+  } else if (process.env.AWS_ACCESS_KEY_ID == null) {
+    return null;
   }
   const s3 = new AWS.S3({ apiVersion: '2006-03-01' });
   const bucket = 'assets-deck.d3594.com';
