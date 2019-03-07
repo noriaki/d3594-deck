@@ -25,8 +25,8 @@
     "db:migrate:003": "node scripts/migrateOnceSetTimestampsWhereNotExistsOnFormation.js",
     "db:migrate": "run-s db:migrate:*",
     "generate:sitemap": "node scripts/generateSitemapXML.js",
-    "app:release": "run-s db:import db:migrate",
-    "app:release:dev": "NODE_ENV=development run-s db:import db:migrate",
+    "app:release": "run-s db:import db:migrate generate:sitemap",
+    "app:release:dev": "NODE_ENV=development yarn app:release",
     "ops:sitemap": "yarn generate:sitemap",
     "start": "NODE_ENV=production micro -l tcp://0.0.0.0:$PORT",
     "heroku-postbuild": "yarn build"

@@ -1,10 +1,13 @@
 const { parse } = require('url');
-const { join } = require('path');
 const next = require('next');
 const { get, router } = require('microrouter');
 
 const db = require('./db');
 const createRoutes = require('./routes');
+const createStaticRouter = require('./routes/static');
+const reRouter = require('./routes/redirect');
+
+const { host: assetHost } = require('../constants/assets');
 
 const dev = process.env.NODE_ENV !== 'production';
 
@@ -16,20 +19,15 @@ const nextJsRouter = (req, res) => {
   return handle(req, res, parsedUrl);
 };
 
-const rootStaticFilesRouter = (mimeType = 'text/plain') => (req, res) => {
-  res.setHeader('Content-Type', mimeType);
-  const { pathname } = parse(req.url, true);
-  const path = join(__dirname, '../static', pathname);
-  return app.serveStatic(req, res, path);
-};
-
 const setup = async () => {
   await app.prepare();
   await db.connect();
   db.preloadModels();
   const routes = createRoutes(app);
+  const staticRouter = createStaticRouter(app);
   return router(...[
-    get('/robots.txt', rootStaticFilesRouter('text/plain')),
+    get('/robots.txt', staticRouter('text/plain')),
+    get('/sitemap.xml', reRouter(`${assetHost}/assets/sitemap.xml`)),
     ...routes,
     get('/*', nextJsRouter), // default route
   ]);

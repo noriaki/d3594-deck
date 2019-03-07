@@ -1,5 +1,6 @@
 const sm = require('sitemap');
 const AWS = require('aws-sdk');
+const fetch = require('isomorphic-fetch');
 
 const { connect, preloadModels, disconnect } = require('../server/db');
 const Formation = require('../server/models/Formation');
@@ -14,13 +15,24 @@ const main = async () => {
   preloadModels();
 
   const hostname = 'https://deck.d3594.com';
-  const pfs = await Formation.find({ published: true }, 'identifier');
-  const urls = ['/', ...pfs.map(f => `/f/${f.identifier}`)];
+  const pfs = await Formation.find(
+    { published: true },
+    'identifier updatedAt',
+    { sort: { updatedAt: 'desc' } }
+  );
+  const urls = ['/', ...pfs.map(({ identifier, updatedAt }) => ({
+    url: `/f/${identifier}`, lastmodISO: updatedAt.toISOString(),
+  }))];
   console.log(`Fetched published urls: count ${urls.length}`);
 
   const sitemap = sm.createSitemap({ hostname, urls }).toString();
   console.log('Generate sitemap.xml, Uploading...');
-  await uploadSitemap(sitemap);
+  if (isDev) {
+    console.log(sitemap);
+  } else {
+    await uploadSitemap(sitemap);
+    await purgeSitemapCache();
+  }
 
   // teardown
   await disconnect();
@@ -36,6 +48,8 @@ const uploadSitemap = (sitemap) => {
     // eslint-disable-next-line global-require
     const s3Options = require('../.aws-s3-creds.json');
     AWS.config.update(s3Options);
+  } else if (process.env.AWS_ACCESS_KEY_ID == null) {
+    return null;
   }
   const s3 = new AWS.S3({ apiVersion: '2006-03-01' });
   const bucket = 'assets-deck.d3594.com';
@@ -54,5 +68,32 @@ const uploadSitemap = (sitemap) => {
       console.log(`Completed.\n URI: ${data.Location}`);
       resolve(data.Location);
     });
+  });
+};
+
+const purgeSitemapCache = () => {
+  if (process.env.CLOUDFLARE_KEY == null) { return null; }
+  const {
+    CLOUDFLARE_KEY: key,
+    CLOUDFLARE_ZONE_ID: id,
+    MAIL: mail,
+  } = process.env;
+  const endpoint = `https://api.cloudflare.com/client/v4/zones/${id}/purge_cache`;
+  return fetch(endpoint, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Auth-Key': key,
+      'X-Auth-Email': mail,
+    },
+    body: JSON.stringify({
+      files: ['https://assets-deck.d3594.com/assets/sitemap.xml'],
+    }),
+  }).then(response => response.json()).then((json) => {
+    if (json.success) {
+      console.log(`Purge sitemap.xml cache. zone id: ${json.result.id}`);
+      return true;
+    }
+    return false;
   });
 };
