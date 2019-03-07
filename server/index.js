@@ -5,6 +5,9 @@ const { get, router } = require('microrouter');
 const db = require('./db');
 const createRoutes = require('./routes');
 const createStaticRouter = require('./routes/static');
+const reRouter = require('./routes/redirect');
+
+const { host: assetHost } = require('../constants/assets');
 
 const dev = process.env.NODE_ENV !== 'production';
 
@@ -24,6 +27,7 @@ const setup = async () => {
   const staticRouter = createStaticRouter(app);
   return router(...[
     get('/robots.txt', staticRouter('text/plain')),
+    get('/sitemap.xml', reRouter(`${assetHost}/assets/sitemap.xml`)),
     ...routes,
     get('/*', nextJsRouter), // default route
   ]);
