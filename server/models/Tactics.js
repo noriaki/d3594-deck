@@ -23,6 +23,7 @@ const tacticsSchema = new Schema({
   ownerIds: [String],
   sourceCommanderIds: [String],
   sortKey: { type: String, required: true },
+  originalId: { type: String },
   // effects: [EffectSchema],
 });
 
@@ -43,15 +44,17 @@ tacticsSchema.pre('validate', setIdentifier);
  *   2. origin['典蔵', '典籍', '季専用', '分析', '固有(初期)']
  *   3. stock(asc)
  *   4. stage.length(desc)
- *   5. identifier(asc)
+ *   5. originalId(asc)
+ *   6. identifier(asc)
  */
 function setSortKey() {
   const type = baseTypes.indexOf(this.type);
   const origin = baseOrigin.indexOf(this.origin);
   const stock = this.stock != null ? this.stock : 9;
   const stage = this.stage.length;
+  const orgId = this.originalId != null ? this.originalId : '999999';
   const identifier = this.identifier.slice(0, 6);
-  this.sortKey = [type, origin, stock, stage, identifier].join('/');
+  this.sortKey = [type, origin, stock, stage, orgId, identifier].join('/');
 }
 tacticsSchema.pre('validate', setSortKey);
 
@@ -77,6 +80,7 @@ async function importData(json, originKey, commanderId) {
     distance,
     target,
     description,
+    originalId,
   } = json;
   const identifier = tacticsIdentify(name, origin);
   const stage = stageText.split(/[\s,]+/);
@@ -91,6 +95,7 @@ async function importData(json, originKey, commanderId) {
     distance,
     target,
     description,
+    originalId,
   });
   if (originKey === 'init' && !tactics.ownerIds.includes(commanderId)) {
     tactics.ownerIds.push(commanderId);

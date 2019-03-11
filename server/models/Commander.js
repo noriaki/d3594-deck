@@ -22,6 +22,7 @@ const commanderSchema = new Schema({
   distance: { type: Number, required: true },
   image: { type: String },
   sortKey: { type: String, required: true },
+  originalId: { type: String },
   maxStatus: MaxStatus.schema,
   minStatus: MinStatus.schema,
   deltaStatus: DeltaStatus.schema,
@@ -55,18 +56,21 @@ commanderSchema.pre('validate', setIdentifier);
  *   2. cost(desc)
  *   3. team['群', '魏', '蜀', '呉', '漢']
  *   4. army['弓', '歩', '騎']
- *   5. identifier(asc)
+ *   5. originalId(asc)
+ *   6. identifier(asc)
  */
 function setSortKey() {
   const rarity = baseRarity.indexOf(this.rarity);
   const cost = 100 - Math.floor(this.cost * 10);
   const army = baseArmy.indexOf(this.army);
   const team = baseTeam.indexOf(this.team);
+  const orgId = this.originalId != null ? this.originalId : '999999';
   this.sortKey = [
     rarity > -1 ? rarity : baseRarity.length,
     cost,
     team > -1 ? team : baseTeam.length,
     army > -1 ? army : baseArmy.length,
+    orgId,
     this.identifier.slice(0, 6),
   ].join('/');
 }
@@ -92,6 +96,7 @@ function importData(json) {
     army,
     distance,
     image,
+    originalId,
     status,
   } = json;
   const stage = stageText.split(/[\s,]+/);
@@ -106,6 +111,7 @@ function importData(json) {
     army,
     distance,
     image,
+    originalId,
     maxStatus: status.max,
     minStatus: status.min,
     deltaStatus: status.delta,
