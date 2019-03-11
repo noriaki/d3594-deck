@@ -8,7 +8,7 @@ const fileMap = {
   追撃: 'tsuigeki',
   受動: 'judo',
 };
-const baseOrigin = ['典蔵', '典籍', '季専用', '分析', '固有(初期)'];
+const baseOrigin = ['典蔵', '典籍', '季専用', '分析', '任務', '固有(初期)'];
 
 class Tactics {
   static initialize(tactics) {
