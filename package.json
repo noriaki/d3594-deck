@@ -1,6 +1,6 @@
 {
   "name": "d3594-deck",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "main": "server/index.js",
   "repository": "git@github.com:noriaki/d3594-deck.git",
   "author": {
