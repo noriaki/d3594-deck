@@ -4,6 +4,7 @@ import React from 'react';
 import TitleBar from '../../components/TitleBar';
 import Privacy from '../../components/legal/Privacy';
 import Footer from '../../components/Footer';
+import LegalPageMetaTags from '../../components/MetaTags/Legal';
 
 // styles
 import useLegalStyles from '../../components/legal/Legal-styles';
@@ -13,6 +14,7 @@ const PrivacyPage = () => {
 
   return (
     <main>
+      <LegalPageMetaTags title="プライバシーポリシー"/>
       <TitleBar />
       <Privacy classes={legalStyleClasses} />
       <Footer />
