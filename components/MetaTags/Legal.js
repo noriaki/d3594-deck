@@ -5,7 +5,7 @@ import { name as appName } from '../../constants/app';
 
 const LegalPageMetaTags = ({ title }) => (
   <Head>
-    <title>{ `${appName} | ${title}` }</title>
+    <title>{ `${title} | ${appName}` }</title>
     <meta name="robots" content="noindex,nofollow" />
   </Head>
 );
