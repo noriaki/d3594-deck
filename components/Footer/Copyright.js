@@ -25,7 +25,7 @@ const styles = {
 export const CopyrightComponent = ({ classes }) => (
   <Typography
     variant="body2"
-    component="p"
+    component="small"
     color="textSecondary"
     className={classes.profile}>
     (c) 2019 極悪のり

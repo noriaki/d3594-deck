@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import Document, { Head, Main, NextScript } from 'next/document';
 import flush from 'styled-jsx/server';
 
+import '../contexts/bootstrapStyles';
+
 import { gTagId } from '../contexts/gtag';
 import { getLoadFontScript } from '../contexts/fonts';
 import { host as assetHost } from '../constants/assets';

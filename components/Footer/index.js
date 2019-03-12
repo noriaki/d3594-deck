@@ -5,11 +5,13 @@ import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 
 // components
+import LinksOfService from './Links';
 import Copyright from './Copyright';
 
 const styles = theme => ({
   footer: {
     display: 'flex',
+    flexWrap: 'wrap',
     justifyContent: 'center',
     alignItems: 'center',
     margin: 0,
@@ -19,6 +21,7 @@ const styles = theme => ({
 
 export const FooterComponent = ({ classes }) => (
   <Paper component="footer" square elevation={0} className={classes.footer}>
+    <LinksOfService />
     <Copyright />
   </Paper>
 );

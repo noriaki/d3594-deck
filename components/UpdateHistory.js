@@ -81,6 +81,15 @@ const UpdateContent = ({
 
 const updateHistories = [
   {
+    version: '1.1.4',
+    date: '2019/03/12',
+    content: (
+      <ul>
+        <li>サービス利用規約とプライバシーポリシーを追加し、ページ最下部からリンクしました</li>
+      </ul>
+    ),
+  },
+  {
     version: '1.1.3',
     date: '2019/03/11',
     content: (
