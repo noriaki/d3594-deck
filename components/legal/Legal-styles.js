@@ -5,6 +5,9 @@ export default makeStyles({
     padding: '56px 1rem 0',
     '& > section': {
       margin: '2rem 0',
+      '& ul > li': {
+        margin: '.75rem 0',
+      },
     },
   },
   header: {
@@ -15,7 +18,10 @@ export default makeStyles({
     paddingLeft: '.7rem',
     borderLeft: '.3rem solid #9e9e9e',
   },
-  updated: {},
+  updated: {
+    fontSize: '.75rem',
+    marginBottom: '.5rem',
+  },
   link: {
     padding: 0,
     margin: '0 .3em',
