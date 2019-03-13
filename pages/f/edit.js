@@ -35,6 +35,7 @@ const FormationEditPage = ({ formation, classes }) => (
       ) }
     </Head>
     <TitleBar />
+    { console.log(formation) || null }
     <div className={classes.container}>
       <StoreContainer initialStates={{ ...initialStates, formation }}>
         <Title />
