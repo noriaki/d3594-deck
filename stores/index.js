@@ -5,7 +5,7 @@ import effects from '../effects';
 export const initialFormation = {
   identifier: null,
   name: null,
-  humanize: null,
+  humanize: '',
   commanders: [null, null, null],
   published: false,
 };
