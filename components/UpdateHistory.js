@@ -81,6 +81,15 @@ const UpdateContent = ({
 
 const updateHistories = [
   {
+    version: '1.1.5',
+    date: '2019/03/14',
+    content: (
+      <ul>
+        <li>部隊編成画面で武将を選ぶとエラーになってしまう場合がある不具合を修正しました</li>
+      </ul>
+    ),
+  },
+  {
     version: '1.1.4',
     date: '2019/03/12',
     content: (
