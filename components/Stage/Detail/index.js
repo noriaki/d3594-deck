@@ -161,7 +161,7 @@ export const DetailComponent = ({ formation, edit, classes }) => {
               <Chip label="コピペ用の部隊編成" component="span" className={chip} />
             </Typography>
             <Typography component="dd">
-              {textOfHumanizeFormation(humanizeString)}
+              { humanizeString && textOfHumanizeFormation(humanizeString) }
             </Typography>
           </div>
         </dl>

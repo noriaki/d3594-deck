@@ -161,7 +161,8 @@ const effects = (stores) => {
         const as = `/f/${identifier}/edit`;
         formation.set('identifier')(identifier);
         formation.set('name')(name);
-        formation.set('humanize')(humanize);
+        const humanizeSetter = formation.set('humanize');
+        if (humanizeSetter) { humanizeSetter(humanize); }
         formation.set('published')(published);
         Router.push(path, as);
 
