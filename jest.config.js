@@ -5,7 +5,9 @@ const pathIgnorePatterns = [
 ];
 
 module.exports = {
-  setupTestFrameworkScriptFile: './jest.setup.js',
+  setupFilesAfterEnv: [
+    './jest.setup.js',
+  ],
   testPathIgnorePatterns: pathIgnorePatterns,
   watchPathIgnorePatterns: pathIgnorePatterns,
 };
