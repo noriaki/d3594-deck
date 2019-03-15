@@ -9,7 +9,7 @@ const positionsMap = [
 const positionKeys = positionsMap.map(p => p.key);
 const positions = positionsMap.map(p => p.value);
 
-const stringId = commanders => positions.map((position, index) => {
+const toHumanize = commanders => positions.map((position, index) => {
   const commander = commanders[index];
   const commanderStringId = commander != null ? commander.humanize : '未配置';
   return `${position}：${commanderStringId}`;
@@ -36,7 +36,7 @@ class Formation {
     return md5(cIds.join());
   }
 
-  get humanize() { return stringId(this.commanders); }
+  get humanize() { return toHumanize(this.commanders); }
 
   get siege() {
     const siegeValues = this.commanders.filter(
@@ -66,4 +66,5 @@ class Formation {
   }
 }
 
+Formation.toHumanize = toHumanize;
 module.exports = Formation;
