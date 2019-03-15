@@ -72,7 +72,7 @@
     "rxjs": "^6.3.3",
     "sitemap": "^2.1.0",
     "smoothscroll-polyfill": "^0.4.3",
-    "undux": "^5.0.0-beta.18"
+    "undux": "^5.0.0-beta.21"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
