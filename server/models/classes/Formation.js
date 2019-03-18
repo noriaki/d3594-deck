@@ -9,11 +9,38 @@ const positionsMap = [
 const positionKeys = positionsMap.map(p => p.key);
 const positions = positionsMap.map(p => p.value);
 
-const stringId = commanders => positions.map((position, index) => {
+const toHumanize = commanders => positions.map((position, index) => {
   const commander = commanders[index];
   const commanderStringId = commander != null ? commander.humanize : '未配置';
   return `${position}：${commanderStringId}`;
 }).join('\n');
+
+const calcSiege = (commanders) => {
+  const siegeValues = commanders.filter(
+    c => (c && c.commander && c.commander.maxStatus)
+  ).map(
+    ({ commander }) => (commander.maxStatus.siege)
+  );
+  return Math.floor(
+    siegeValues.reduce((total, current) => (total + current), 0)
+  );
+};
+
+const calcVelocity = (commanders) => {
+  const velocityValues = commanders.filter(
+    c => (c && c.commander && c.commander.maxStatus)
+  ).map(
+    ({ commander }) => (commander.maxStatus.velocity)
+  );
+  return Math.floor(Math.min(...velocityValues));
+};
+
+const calcCost = (commanders) => {
+  const costValues = commanders.filter(c => (c && c.commander)).map(
+    ({ commander }) => (commander.cost)
+  );
+  return costValues.reduce((total, current) => (total + current), 0);
+};
 
 class Formation {
   static initialize() {
@@ -36,34 +63,17 @@ class Formation {
     return md5(cIds.join());
   }
 
-  get humanize() { return stringId(this.commanders); }
+  get humanize() { return toHumanize(this.commanders); }
 
-  get siege() {
-    const siegeValues = this.commanders.filter(
-      c => (c && c.commander && c.commander.maxStatus)
-    ).map(
-      ({ commander }) => (commander.maxStatus.siege)
-    );
-    return Math.floor(
-      siegeValues.reduce((total, current) => (total + current), 0)
-    );
-  }
+  get siege() { return calcSiege(this.commanders); }
 
-  get velocity() {
-    const velocityValues = this.commanders.filter(
-      c => (c && c.commander && c.commander.maxStatus)
-    ).map(
-      ({ commander }) => (commander.maxStatus.velocity)
-    );
-    return Math.floor(Math.min(...velocityValues));
-  }
+  get velocity() { return calcVelocity(this.commanders); }
 
-  get cost() {
-    const costValues = this.commanders.filter(c => (c && c.commander)).map(
-      ({ commander }) => (commander.cost)
-    );
-    return costValues.reduce((total, current) => (total + current), 0);
-  }
+  get cost() { return calcCost(this.commanders); }
 }
 
+Formation.toHumanize = toHumanize;
+Formation.calcSiege = calcSiege;
+Formation.calcVelocity = calcVelocity;
+Formation.calcCost = calcCost;
 module.exports = Formation;
