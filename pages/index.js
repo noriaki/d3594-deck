@@ -73,7 +73,7 @@ const IndexPage = ({ formations, classes }) => (
       text="名前や種類で絞り込み可能。1季〜征服季で入手可能なものを揃えました。"
       url={{ href: '/f/edit', as: '/f/new' }}
       linkText="新規作成" />
-    <LatestFormations formations={formations} />
+    { /* <LatestFormations formations={formations} /> */ }
     <Gallery />
     <UpdateHistory />
     <Footer />
