@@ -69,11 +69,11 @@ const IndexPage = ({ formations, classes }) => (
     <ParallaxCard
       image={selectCommandersAndTacticsImageURL}
       title="武将、戦法を検索"
-      subtitle="武将349種、分析系戦法180種"
+      subtitle="武将352種、分析系戦法188種"
       text="名前や種類で絞り込み可能。1季〜征服季で入手可能なものを揃えました。"
       url={{ href: '/f/edit', as: '/f/new' }}
       linkText="新規作成" />
-    <LatestFormations formations={formations} />
+    { /* <LatestFormations formations={formations} /> */ }
     <Gallery />
     <UpdateHistory />
     <Footer />
